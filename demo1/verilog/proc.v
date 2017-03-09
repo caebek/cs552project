@@ -24,5 +24,129 @@ module proc (/*AUTOARG*/
    
    /* your code here */
    
+
+   wire halt_n, cin, sign, invA, invB, ofl, z, return, jump, regWrt, memWrt,
+         memEn, halt, setVal, pcOffSel, regErr;
+   wire [1:0] regDst;
+   wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, aluOp;
+   wire [15:0] pc, pcUpdated, pcIncr, jumpPc, aluOut, memOut, reg1Data, 
+         reg2Data, instr, a, base, offset;
+   reg[2:0] writeRegSel;
+   reg [4:0] hasErr;
+   reg [15:0] writeData, b;
+   // need control module
+   // and alu
+   // regs
+   // 2 memories, 1 for intruction, 1 for storage
+
+
+
+   assign err = |hasErr | regErr;
+
+   /********************** Fetch Stage **********************/
+   
+   register pcReg(.clk(clk), .rst(rst), .wData(pcUpdated), .rData(pc), .wEn(halt_n));
+   memory2c iMem(.data_out(instr), .addr(pc), .enable(1'h1), .createdump(err), 
+      .clk(clk), .rst(rst));
+
+   incr2 incrPC(.in(pc), .out(pcIncr));
+
+   /**********************************************************/
+
+
+
+   /********************** Decode Stage **********************/
+   ///////////////// Control Block /////////////////
+
+   controlBlock ctrl(.opCode(instr[15:11]), .func(instr[1:0]), 
+         .halt(halt), .sign(sign), .pcOffSel(pcOffSel), 
+         .regWrt(regWrt), .memWrt(memWrt), .memToReg(), .memEn(memEn), 
+         .jump(jump), .invA(invA), .invB(invB), .aluSrc(aluSrc), .err(err), 
+         .regDst(regDst), .regWrtSrc(regWrtSrc), .aluOp(aluOp));
+
+   /////////////////////////////////////////////////
+
+   // Mux for Write Register Select input
+   always@(*) begin
+      hasErr[1] = 0;
+      case(regDst)
+         2'h0: writeRegSel = instr[7:5];
+         2'h1: writeRegSel = instr[10:8];
+         2'h2: writeRegSel = instr[4:2];
+         2'h3: writeRegSel = 3'h7;
+         default: hasErr[1] = 1'h1;
+      endcase
+   end
+
+   // Write data Mux
+   always @(*) begin
+      hasErr[2] = 0;
+      case(regWrtSrc)
+         3'h0: writeData = memOut;
+         3'h1: writeData = aluOut;
+         3'h2: writeData = pcIncr;
+         3'h3: writeData = setVal; // probably update this name
+         3'h4: writeData = {{4'h8{instr[7]}},instr[7:0]};
+         3'h5: writeData = {reg1Data[7:0], instr[7:0]};
+         default: hasErr[2] = 1'h1;
+      endcase
+   end
+
+   assign read1Sel = instr[10:8];
+   assign read2Sel = instr[7:5];
+   rf_bypass register(.read1data(reg1Data), .read2data(reg2Data), .err(regErr), 
+      .clk(clk), .rst(rst), .read1regsel(read1Sel), .read2regsel(read2Sel), 
+      .writeregsel(writeRegSel), .writedata(writeData), .write(regWrt));
+
+
+   /**********************************************************/
+
+
+   /****************** Execute Stage ************************/
+
+   /////////// PC Update Logic ///////////
+      assign base = (return) ? reg1Data : pcIncr;
+
+      assign offset = (pcOffSel) ? {3'h5{instr[10:0]}} : {4'h8{instr[7:0]}} ;
+
+      cla16Bit adder(.A(base), .B(offset), .Cin(1'h0), .S(jumpPc));
+
+
+
+   ///////////////////////////////////////
+
+
+
+   assign a = reg1Data;
+
+   // ALU B input mux
+   always@(*) begin
+      hasErr[3] = 1'h0;
+      case(aluSrc)
+         3'h0: b = {{4'd11{instr[4]}}, instr[4:0]};
+         3'h1: b = {{4'd11{1'h0}}, instr[4:0]};
+         3'h2: b = {{4'd8{instr[7:0]}}, instr[7:0]};
+         3'h3: b = {{4'd8{1'h0}}, instr[7:0]};
+         3'h4: b = reg2Data;
+         default: hasErr[3] = 1'h1;
+      endcase
+   end
+
+   alu alu(.A(a), .B(b), .Cin(cin), .Op(aluOp), .invA(invA), .invB(invB), 
+      .sign(sign), .Out(aluOut), .Ofl(ofl), .Z(z));
+
+
+
+
+   /**********************************************************/
+
+
+   /****************** Memory Stage *********************/
+   memory2c mem(.data_out(memOut), .data_in(reg2Data), .addr(aluOut), .enable(memEn), .createdump(err), 
+      .wr(memWrt), .clk(clk), .rst(rst));
+
+   /**********************************************************/
+
+   // Write back doesn't exist
 endmodule // proc
 // DUMMY LINE FOR REV CONTROL :0:
