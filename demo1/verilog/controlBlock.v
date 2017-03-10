@@ -89,15 +89,18 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     	err = 0;
         cin = 1'h0;
 
+        aluSrc = 3'h5;
+
     	casex({opCode,func})
     		{LBI,DC}: begin
     			regWrt = 1'h1;
     			regDst = 2'h1;
     			regWrtSrc = 3'h4;
+                aluSrc = 3'h2;
     		end
 
             {SLBI, DC}: begin
-
+                aluSrc = 3'h5;
             end
 
             {ALU_OP1, ALU_ADD}: begin
@@ -115,8 +118,9 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b100;
-
+                
             end
 
             {ALU_OP1, ALU_SUB}: begin
@@ -134,6 +138,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h1;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b100;
 
             end
@@ -152,6 +157,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b110;
 
             end
@@ -170,6 +176,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h1;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b111;
 
             end
@@ -188,6 +195,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b000;
 
             end
@@ -206,6 +214,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b001;
 
             end
@@ -224,6 +233,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
                 
+                aluSrc = 3'h4;
                 //TODO:
                 //aluOp = 3'b001;
 
@@ -243,6 +253,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b011;
 
             end
@@ -261,6 +272,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b100;
 
             end
@@ -279,6 +291,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b100;
 
             end
@@ -297,6 +310,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b100;
 
             end
@@ -315,6 +329,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b100;
 
             end
@@ -334,6 +349,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h0;
                 aluOp = 3'b100;
 
             end
@@ -352,6 +368,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h1;
 
+                aluSrc = 3'h0;
                 aluOp = 3'b100;
 
             end
@@ -371,6 +388,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h1;
                 aluOp = 3'b110;
 
             end
@@ -389,6 +407,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h1;
                 cin = 1'h0;
 
+                aluSrc = 3'h1;
                 aluOp = 3'b111;
 
             end
@@ -407,6 +426,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b000;
 
             end
@@ -426,6 +446,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
+                aluSrc = 3'h4;
                 aluOp = 3'b001;
 
             end
@@ -444,6 +465,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invA = 1'h0;
                 invB = 1'h0;
                 cin = 1'h0;
+                aluSrc = 3'h4;
                 //TODO:
                 //aluOp = 3'b001;
 
@@ -464,6 +486,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
                 
+                aluSrc = 3'h4;
                 aluOp = 3'b011;
 
             end
@@ -483,6 +506,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
                 
+                aluSrc = 3'h0;
                 aluOp = 3'b100;
 
             end
@@ -502,6 +526,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
                 
+                aluSrc = 3'h0;
                 aluOp = 3'b100;
 
             end
@@ -520,6 +545,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
                 
+                aluSrc = 3'h0;
                 aluOp = 3'b100;
 
             end
