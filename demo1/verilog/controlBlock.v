@@ -4,7 +4,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     input [1:0] func;
 
     output reg halt, sign, regWrt, pcOffSel, memWrt, memToReg, memEn, jump, 
-    			invA, invB, err, return;
+    			invA, invB, err, return, cin;
     output reg [1:0] regDst;
     output reg [2:0] aluSrc, regWrtSrc, aluOp;
     // output [2:0] 
@@ -15,7 +15,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     localparam ADDI = 5'b01000;
     localparam SUBI = 5'b01001;
     localparam XORI = 5'b01010;
-    localparam ANDI = 5'b01011;
+    localparam ANDNI = 5'b01011;
     localparam ROLI = 5'b01100;
     localparam SLLI = 5'b01101;
     localparam RORI = 5'b01110;
@@ -52,7 +52,16 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     localparam HALT = 5'b00000;
     localparam NOP = 5'b00001;
 
+    localparam ALU_ADD = 2'h0;
+    localparam ALU_SUB = 2'h1;
+    localparam ALU_XOR = 2'h2;
+    localparam ALU_ANDN = 2'h3;
 
+    localparam ALU_ROL = 2'h0;
+    localparam ALU_SLL = 2'h1;
+    localparam ALU_ROR = 2'h2;
+    localparam ALU_SRL= 2'h3;
+    localparam DC = 2'hxx;
 
 
 
@@ -78,13 +87,462 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     	regWrtSrc = 0;
     	aluOp = 0;
     	err = 0;
+        cin = 1'h0;
 
     	casex({opCode,func})
-    		{LBI,2'hxx}: begin
+    		{LBI,DC}: begin
     			regWrt = 1'h1;
     			regDst = 2'h1;
     			regWrtSrc = 3'h4;
     		end
+
+            {SLBI, DC}: begin
+
+            end
+
+            {ALU_OP1, ALU_ADD}: begin
+                sign = 1'h1;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h1;
+                carry = 1'h0;
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b100;
+
+            end
+
+            {ALU_OP1, ALU_SUB}: begin
+                sign = 1'h1;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h1;
+                invB = 1'h0;
+                cin = 1'h1;
+
+                aluOp = 3'b100;
+
+            end
+            {ALU_OP1, ALU_XOR}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b110;
+
+            end
+            {ALU_OP1, ALU_ANDN}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h1;
+                cin = 1'h0;
+
+                aluOp = 3'b111;
+
+            end
+            {ALU_OP2, ALU_ROL}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b000;
+
+            end
+            {ALU_OP2, ALU_SLL}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b001;
+
+            end
+            {ALU_OP2, ALU_ROR}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+                
+                //TODO:
+                //aluOp = 3'b001;
+
+            end
+            {ALU_OP2, ALU_SRL}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b011;
+
+            end
+            {SEQ, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h3;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b100;
+
+            end
+            {SLT, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h3;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b100;
+
+            end
+            {SLE, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h3;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b100;
+
+            end
+            {SCO, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h2;
+                regWrtSrc = 3'h3;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b100;
+
+            end
+
+            {ADDI, DC}: begin
+                sign = 1'h1;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b100;
+
+            end
+            {SUBI, DC}: begin
+                sign = 1'h1;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h1;
+                invB = 1'h0;
+                cin = 1'h1;
+
+                aluOp = 3'b100;
+
+            end
+            
+            {XORI, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b110;
+
+            end
+            {ANDNI, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h1;
+                cin = 1'h0;
+
+                aluOp = 3'b111;
+
+            end
+            {ROLI, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b000;
+
+            end
+
+            {SLLI, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+
+                aluOp = 3'b001;
+
+            end
+
+            {RORI, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+                //TODO:
+                //aluOp = 3'b001;
+
+            end
+            
+            {SRLI, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h1;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+                
+                aluOp = 3'b011;
+
+            end
+            
+            {ST, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h0;
+                regDst = 2'hx;
+                regWrtSrc = 3'hx;
+
+                memWrt = 1'h1;
+                memEn = 1'h1;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+                
+                aluOp = 3'b100;
+
+            end
+            
+            {LD, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h0;
+                regWrtSrc = 3'h0;
+
+                memWrt = 1'h0;
+                memEn = 1'h1;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+                
+                aluOp = 3'b100;
+
+            end
+            {STU, DC}: begin
+                sign = 1'hx;
+                regWrt = 1'h1;
+                regDst = 2'h1;
+                regWrtSrc = 3'h0;
+
+                memWrt = 1'h1;
+                memEn = 1'h1;
+
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
+                
+                aluOp = 3'b100;
+
+            end
+            
+            // {STU, DC}: begin
+            //     sign = 1'hx;
+            //     regWrt = 1'h1;
+            //     regDst = 2'h1;
+            //     regWrtSrc = 3'h0;
+
+            //     memWrt = 1'h1;
+            //     memEn = 1'h1;
+
+            //     jump = 1'h0;
+            //     return = 1'h0;
+            //     invA = 1'h0;
+            //     invB = 1'h0;
+            //     cin = 1'h0;
+                
+            //     aluOp = 3'b100;
+
+            // end
+
 
     		default: err = 1;
     	endcase
