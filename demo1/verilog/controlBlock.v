@@ -62,7 +62,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
    	// and assign control sigs for there
     // fmtDecode fmt(.opCode(opCode), .fmt(format));
 
-    always@(*) begin
+    always@(opCode, func) begin
     	halt = 0;
     	sign = 1'hx;
     	pcOffSel = 1'hx;
@@ -80,11 +80,19 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     	err = 0;
 
     	casex({opCode,func})
-    		{LBI,2'hxx}: begin
+            {LBI,2'hxx}: begin
+                regWrt = 1'h1;
+                regDst = 2'h1;
+                regWrtSrc = 3'h4;
+            end
+    		{SLBI,2'hxx}: begin
     			regWrt = 1'h1;
     			regDst = 2'h1;
-    			regWrtSrc = 3'h4;
+    			regWrtSrc = 3'h5;
     		end
+            {HALT,2'hxx}: begin
+                halt = 1;
+            end
 
     		default: err = 1;
     	endcase

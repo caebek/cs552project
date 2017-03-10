@@ -25,7 +25,7 @@ module proc (/*AUTOARG*/
    /* your code here */
    
 
-   wire halt_n, cin, sign, invA, invB, ofl, z, return, jump, regWrt, memWrt,
+   wire haltBuf, cin, sign, invA, invB, ofl, z, return, jump, regWrt, memWrt,
          memEn, halt, setVal, pcOffSel, regErr;
    wire [1:0] regDst;
    wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, aluOp;
@@ -45,11 +45,19 @@ module proc (/*AUTOARG*/
 
    /********************** Fetch Stage **********************/
    
-   register pcReg(.clk(clk), .rst(rst), .wData(pcUpdated), .rData(pc), .wEn(halt_n));
-   memory2c iMem(.data_out(instr), .addr(pc), .enable(1'h1), .createdump(err), 
+   register pcReg(.clk(clk), .rst(rst), .wData(pcUpdated), .rData(pc), .wEn(~haltEn));
+
+   memory2c iMem(.data_out(instr), .addr(pc), .enable(1'h1), .wr(1'h0), .createdump(err|haltEn), 
       .clk(clk), .rst(rst));
 
    incr2 incrPC(.in(pc), .out(pcIncr));
+
+   // dff haltFlp(.clk(clk), .rst(rst), .d(halt), .q(haltBuf));
+
+   assign haltEn = (rst) ? 1'h0 : haltEn | halt;
+
+
+   assign pcUpdated = (jump) ? jumpPc : pcIncr;
 
    /**********************************************************/
 
@@ -105,11 +113,11 @@ module proc (/*AUTOARG*/
    /****************** Execute Stage ************************/
 
    /////////// PC Update Logic ///////////
-      assign base = (return) ? reg1Data : pcIncr;
+   assign base = (return) ? reg1Data : pcIncr;
 
-      assign offset = (pcOffSel) ? {3'h5{instr[10:0]}} : {4'h8{instr[7:0]}} ;
+   assign offset = (pcOffSel) ? {3'h5{instr[10:0]}} : {4'h8{instr[7:0]}} ;
 
-      cla16Bit adder(.A(base), .B(offset), .Cin(1'h0), .S(jumpPc));
+   cla16Bit adder(.A(base), .B(offset), .Cin(1'h0), .S(jumpPc));
 
 
 
@@ -136,13 +144,13 @@ module proc (/*AUTOARG*/
       .sign(sign), .Out(aluOut), .Ofl(ofl), .Z(z));
 
 
-
-
    /**********************************************************/
 
 
+
+
    /****************** Memory Stage *********************/
-   memory2c mem(.data_out(memOut), .data_in(reg2Data), .addr(aluOut), .enable(memEn), .createdump(err), 
+   memory2c mem(.data_out(memOut), .data_in(reg2Data), .addr(aluOut), .enable(memEn), .createdump(err|haltEn), 
       .wr(memWrt), .clk(clk), .rst(rst));
 
    /**********************************************************/

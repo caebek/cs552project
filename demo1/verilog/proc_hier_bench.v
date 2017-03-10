@@ -130,7 +130,7 @@ module proc_hier_bench();
    assign RegWrite = DUT.p0.regWrt;
    // Is memory being read, one bit signal (1 means yes, 0 means no)
    
-   assign WriteRegister = DUT.p0.regWrtSrc;
+   assign WriteRegister = DUT.p0.writeRegSel;
    // The name of the register being written to. (3 bit signal)
 
    assign WriteData = DUT.p0.writeData;
@@ -148,7 +148,7 @@ module proc_hier_bench();
    assign MemData = DUT.p0.reg2Data;
    // Data to be written to memory for memory writes (16 bits)
    
-   assign Halt = DUT.p0.halt;
+   assign Halt = DUT.p0.haltEn;
    // Is processor halted (1 bit signal)
    
    /* Add anything else you want here */
