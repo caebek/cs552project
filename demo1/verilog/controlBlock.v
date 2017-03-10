@@ -16,7 +16,6 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     localparam SUBI = 5'b01001;
     localparam XORI = 5'b01010;
     localparam ANDNI = 5'b01011;
-
     localparam ROLI = 5'b10100;
     localparam SLLI = 5'b10101;
     localparam RORI = 5'b10110;
@@ -78,7 +77,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     	pcOffSel = 1'hx;
     	regWrt = 0;
     	memWrt = 0;
-    	memToReg = 0; // needed?
+    	memToReg = 0; // needed? only for pipeline?
     	memEn = 0;
     	jump = 0;
     	return  = 0;
@@ -94,37 +93,24 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
     	casex({opCode,func})
 
-    		{LBI,DC}: begin
-    			regWrt = 1'h1;
-    			regDst = 2'h1;
-    			regWrtSrc = 3'h4;
-            end
 
-            {SLBI, DC}: begin
-                regWrt = 1'h1;
-                regDst = 2'h1;
-                regWrtSrc = 3'h5;
-            end
-
-            {HALT, DC}: begin
-                halt = 1;
-            end
+/************************ r instr ****************************/
             {BTR, DC}: begin
                 regWrt = 1'h1;
                 regDst = 2'h2;
                 regWrtSrc = 3'h6;
-                // cin = 1'h0;
-                // memWrt = 1'h0;
-                // memEn = 1'h0;
+                cin = 1'h0;
+                memWrt = 1'h0;
+                memEn = 1'h0;
 
-                // jump = 1'h0;
-                // return = 1'h0;
-                // invA = 1'h0;
-                // invB = 1'h0;
-                // cin = 1'h0;
+                jump = 1'h0;
+                return = 1'h0;
+                invA = 1'h0;
+                invB = 1'h0;
+                cin = 1'h0;
 
-                // aluSrc = 3'h4;
-                // aluOp = 3'b100;
+                aluSrc = 3'h4;
+                aluOp = 3'b100;
             end
 
             {ALU_OP1, ALU_ADD}: begin
@@ -357,6 +343,11 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 aluOp = 3'b100;
 
             end
+/****************************************************************/
+
+
+
+/********************** i1 instr ****************************/            
 
             {ADDI, DC}: begin
                 sign = 1'h1;
@@ -573,6 +564,27 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 aluOp = 3'b100;
 
             end
+/****************************************************************/
+
+/*************************** i2 instr ***************************/
+            {LBI,DC}: begin
+    			regWrt = 1'h1;
+    			regDst = 2'h1;
+    			regWrtSrc = 3'h4;
+    		end
+
+            end
+
+            {SLBI, DC}: begin
+                regWrt = 1'h1;
+                regDst = 2'h1;
+                regWrtSrc = 3'h5;
+            end
+
+            // special format
+            {HALT, DC}: begin
+                halt = 1;
+            end
             
             // {STU, DC}: begin
             //     sign = 1'hx;
@@ -594,8 +606,18 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
             // end
 
 
-    		default: err = 1;
-    	endcase
+
+
+
+
+
+
+
+               // aluSrc = 3'h2;
+
+
+            default: err = 1;
+        endcase
 
     end
 
