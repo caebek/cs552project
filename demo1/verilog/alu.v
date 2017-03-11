@@ -1,4 +1,4 @@
-module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z);
+module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, N);
    
     input [15:0] A;
     input [15:0] B;
@@ -9,7 +9,8 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z);
     input sign;
     output reg[15:0]  Out;
     output reg Ofl;
-    output reg Z;
+    output Z;
+    output N;
 
     /*
     Your code goes here
@@ -38,6 +39,10 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z);
     cla16Bit adder(.A(inA), .B(inB), .Cin(Cin), .S(addOut), .Cout(cout), .C14(c14));
 
     // TODO Add adder 
+
+
+    assign Z = ~|Out;
+    assign N = Out[15];
 
     always@(*) begin
         case (Op)
@@ -77,12 +82,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z);
                 Ofl = 0;
                 Out = 16'hZ;
             end
-
-
         endcase
-        // Z logic
-        Z = ~|Out;
-
     end
 
 

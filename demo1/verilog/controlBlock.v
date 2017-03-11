@@ -573,7 +573,6 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     			regWrtSrc = 3'h4;
     		end
 
-            end
 
             {SLBI, DC}: begin
                 regWrt = 1'h1;
@@ -581,7 +580,35 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 regWrtSrc = 3'h5;
             end
 
-            // special format
+
+            {JR, DC}: begin
+                pcOffSel = 1'h0;
+                regWrt = 1'h0;
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h1;
+                return = 1'h1;
+
+            end            
+
+
+
+/*************************** J instr ***************************/
+
+            {J, DC}: begin
+                pcOffSel = 1'h1;
+                regWrt = 1'h0;
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h1;
+                return = 1'h0;
+            end
+
+
+
+/********************** special instr **************************/
             {HALT, DC}: begin
                 halt = 1;
             end

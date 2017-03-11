@@ -29,7 +29,7 @@ module proc (/*AUTOARG*/
          memEn, halt, setVal, pcOffSel, regErr;
    wire [1:0] regDst;
    wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, aluOp;
-   wire [15:0] pc, pcUpdated, pcIncr, jumpPc, aluOut, memOut, reg1Data, 
+   wire [15:0] pc, newPc, pcIncr, jumpPc, aluOut, memOut, reg1Data, 
          reg2Data, instr, a, base, offset;
    reg[2:0] writeRegSel;
    reg [4:0] hasErr;
@@ -45,7 +45,7 @@ module proc (/*AUTOARG*/
 
    /********************** Fetch Stage **********************/
    
-   register pcReg(.clk(clk), .rst(rst), .wData(pcUpdated), .rData(pc), .wEn(~haltEn));
+   register pcReg(.clk(clk), .rst(rst), .wData(newPc), .rData(pc), .wEn(~haltEn));
 
    memory2c iMem(.data_out(instr), .addr(pc), .enable(1'h1), .wr(1'h0), .createdump(err|haltEn), 
       .clk(clk), .rst(rst));
@@ -57,7 +57,7 @@ module proc (/*AUTOARG*/
    assign haltEn = (rst) ? 1'h0 : haltEn | halt;
 
 
-   assign pcUpdated = (jump) ? jumpPc : pcIncr;
+   assign newPc = (jump) ? jumpPc : pcIncr;
 
    /**********************************************************/
 
@@ -70,7 +70,7 @@ module proc (/*AUTOARG*/
          .halt(halt), .sign(sign), .pcOffSel(pcOffSel), 
          .regWrt(regWrt), .memWrt(memWrt), .memToReg(), .memEn(memEn), 
          .jump(jump), .invA(invA), .invB(invB), .aluSrc(aluSrc), .err(err), 
-         .regDst(regDst), .regWrtSrc(regWrtSrc), .aluOp(aluOp));
+         .regDst(regDst), .regWrtSrc(regWrtSrc), .aluOp(aluOp), .cin(cin), .return(return));
 
    /////////////////////////////////////////////////
 
@@ -102,10 +102,13 @@ module proc (/*AUTOARG*/
 
    assign read1Sel = instr[10:8];
    assign read2Sel = instr[7:5];
-   rf_bypass register(.read1data(reg1Data), .read2data(reg2Data), .err(regErr), 
+   // rf_bypass register(.read1data(reg1Data), .read2data(reg2Data), .err(regErr), 
+   //    .clk(clk), .rst(rst), .read1regsel(read1Sel), .read2regsel(read2Sel), 
+   //    .writeregsel(writeRegSel), .writedata(writeData), .write(regWrt));
+
+   rf register(.read1data(reg1Data), .read2data(reg2Data), .err(regErr), 
       .clk(clk), .rst(rst), .read1regsel(read1Sel), .read2regsel(read2Sel), 
       .writeregsel(writeRegSel), .writedata(writeData), .write(regWrt));
-
 
    /**********************************************************/
 
@@ -115,7 +118,7 @@ module proc (/*AUTOARG*/
    /////////// PC Update Logic ///////////
    assign base = (return) ? reg1Data : pcIncr;
 
-   assign offset = (pcOffSel) ? {3'h5{instr[10:0]}} : {4'h8{instr[7:0]}} ;
+   assign offset = (pcOffSel) ? {{3'h5{instr[10]}}, instr[10:0]} : {{4'h8{instr[7]}}, instr[7:0]};
 
    cla16Bit adder(.A(base), .B(offset), .Cin(1'h0), .S(jumpPc));
 
@@ -136,6 +139,7 @@ module proc (/*AUTOARG*/
          3'h2: b = {{4'd8{instr[7:0]}}, instr[7:0]};
          3'h3: b = {{4'd8{1'h0}}, instr[7:0]};
          3'h4: b = reg2Data;
+         3'h5: b = 16'h0;
          default: hasErr[3] = 1'h1;
       endcase
    end
