@@ -1,11 +1,11 @@
 module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg, memEn, jump, invA, invB, aluSrc, err,
-    regDst, regWrtSrc, aluOp, return, cin);
+    regDst, regWrtSrc, aluOp, return, cin, brType);
     input [4:0] opCode;
     input [1:0] func;
 
     output reg halt, sign, regWrt, pcOffSel, memWrt, memToReg, memEn, jump, 
     			invA, invB, err, return, cin;
-    output reg [1:0] regDst;
+    output reg [3:0] regDst, brType;
     output reg [2:0] aluSrc, regWrtSrc, aluOp;
     // output [2:0] 
     
@@ -64,6 +64,15 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     localparam DC = 2'hxx;
 
 
+    // Branch Types
+   localparam NOBR = 3'h0;
+   localparam EQZ = 3'h1;
+   localparam NEZ = 3'h2;
+   localparam LTZ = 3'h3;
+   localparam GEQZ = 3'h4;
+
+
+
 
     // determine which format the instruction is
    	// is it even worth though? 
@@ -73,8 +82,8 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
     always@(opCode, func) begin
     	halt = 0;
-    	sign = 1'hx;
-    	pcOffSel = 1'hx;
+    	sign = 1'h0;
+    	pcOffSel = 1'h0;
     	regWrt = 0;
     	memWrt = 0;
     	memToReg = 0; // needed? only for pipeline?
@@ -90,6 +99,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
         cin = 1'h0;
 
         aluSrc = 3'h4;
+        brType = NOBR;
 
     	casex({opCode,func})
 
@@ -589,8 +599,78 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
                 jump = 1'h1;
                 return = 1'h1;
-
             end            
+
+
+            {BGEZ, DC}: begin
+                aluSrc = 3'h5;
+                aluOp = 3'b100;
+                invA = 1'h0;
+                invB = 1'h0;
+                sign = 1'h1;
+
+                pcOffSel = 1'h0;
+                jump = 1'h0;
+                return = 1'h0;
+                brType = GEQZ;
+
+                regWrt = 1'h0;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+            end      
+
+            {BEQZ, DC}: begin
+                aluSrc = 3'h5;
+                aluOp = 3'b100;
+                invA = 1'h0;
+                invB = 1'h0;
+                sign = 1'h1;
+
+                pcOffSel = 1'h0;
+                jump = 1'h0;
+                return = 1'h0;
+                brType = EQZ;
+
+                regWrt = 1'h0;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+            end            
+            {BNEZ, DC}: begin
+                aluSrc = 3'h5;
+                aluOp = 3'b100;
+                invA = 1'h0;
+                invB = 1'h0;
+                sign = 1'h1;
+
+                pcOffSel = 1'h0;
+                jump = 1'h0;
+                return = 1'h0;
+                brType = NEZ;
+
+                regWrt = 1'h0;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+            end            
+            {BLTZ, DC}: begin
+                aluSrc = 3'h5;
+                aluOp = 3'b100;
+                invA = 1'h0;
+                invB = 1'h0;
+                sign = 1'h1;
+
+                pcOffSel = 1'h0;
+                jump = 1'h0;
+                return = 1'h0;
+                brType = LTZ;
+
+                regWrt = 1'h0;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+            end
 
 
 

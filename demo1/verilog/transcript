@@ -1,0 +1,59 @@
+# vsim -c fmtDecode_tb -lib __work -voptargs="+acc" -wlf dump.wlf -do "log -howmany -rec /* ; run -all" 
+# Start time: 12:59:13 on Mar 08,2017
+# ** Note: (vsim-3812) Design is being optimized...
+# //  Questa Sim
+# //  Version 10.4c linux Jul 19 2015
+# //
+# //  Copyright 1991-2015 Mentor Graphics Corporation
+# //  All Rights Reserved.
+# //
+# //  THIS WORK CONTAINS TRADE SECRET AND PROPRIETARY INFORMATION
+# //  WHICH IS THE PROPERTY OF MENTOR GRAPHICS CORPORATION OR ITS
+# //  LICENSORS AND IS SUBJECT TO LICENSE TERMS.
+# //  THIS DOCUMENT CONTAINS TRADE SECRETS AND COMMERCIAL OR FINANCIAL
+# //  INFORMATION THAT ARE PRIVILEGED, CONFIDENTIAL, AND EXEMPT FROM
+# //  DISCLOSURE UNDER THE FREEDOM OF INFORMATION ACT, 5 U.S.C. SECTION 552.
+# //  FURTHERMORE, THIS INFORMATION IS PROHIBITED FROM DISCLOSURE UNDER
+# //  THE TRADE SECRETS ACT, 18 U.S.C. SECTION 1905.
+# //
+# Loading work.fmtDecode_tb(fast)
+# Loading work.fmtDecode(fast)
+# log -howmany -rec /* 
+# 4
+#  run -all
+# OpCode: 00000 Format 4
+# OpCode: 00001 Format 4
+# OpCode: 00010 Format 4
+# OpCode: 00011 Format 4
+# OpCode: 00100 Format 0
+# OpCode: 00101 Format 2
+# OpCode: 00110 Format 0
+# OpCode: 00111 Format 2
+# OpCode: 01000 Format 1
+# OpCode: 01001 Format 1
+# OpCode: 01010 Format 1
+# OpCode: 01011 Format 1
+# OpCode: 01100 Format 2
+# OpCode: 01101 Format 2
+# OpCode: 01110 Format 2
+# OpCode: 01111 Format 2
+# OpCode: 10000 Format 1
+# OpCode: 10001 Format 1
+# OpCode: 10010 Format 2
+# OpCode: 10011 Format 1
+# OpCode: 10100 Format 1
+# OpCode: 10101 Format 1
+# OpCode: 10110 Format 1
+# OpCode: 10111 Format 1
+# OpCode: 11000 Format 2
+# OpCode: 11001 Format 3
+# OpCode: 11010 Format 3
+# OpCode: 11011 Format 3
+# OpCode: 11100 Format 3
+# OpCode: 11101 Format 3
+# OpCode: 11110 Format 3
+# OpCode: 11111 Format 3
+# ** Note: $finish    : fmtDecode_tb.v(16)
+#    Time: 156 ns  Iteration: 0  Instance: /fmtDecode_tb
+# End time: 12:59:18 on Mar 08,2017, Elapsed time: 0:00:05
+# Errors: 0, Warnings: 0

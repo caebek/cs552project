@@ -23,14 +23,19 @@ module proc (/*AUTOARG*/
    
    
    /* your code here */
-   
+   localparam NOBR = 3'h0;
+   localparam EQZ = 3'h1;
+   localparam NEZ = 3'h2;
+   localparam LTZ = 3'h3;
+   localparam GEQZ = 3'h4;
 
    wire haltBuf, cin, sign, invA, invB, ofl, z, return, jump, regWrt, memWrt,
-         memEn, halt, setVal, pcOffSel, regErr;
+         memEn, halt, setVal, pcOffSel, regErr, n;
    wire [1:0] regDst;
-   wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, aluOp;
+   wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, aluOp, brType;
    wire [15:0] pc, newPc, pcIncr, jumpPc, aluOut, memOut, reg1Data, 
          reg2Data, instr, a, base, offset;
+   reg doBranch;
    reg[2:0] writeRegSel;
    reg [4:0] hasErr;
    reg [15:0] writeData, b;
@@ -57,7 +62,19 @@ module proc (/*AUTOARG*/
    assign haltEn = (rst) ? 1'h0 : haltEn | halt;
 
 
-   assign newPc = (jump) ? jumpPc : pcIncr;
+   assign newPc = (jump | doBranch) ? jumpPc : pcIncr;
+
+   always@(*) begin
+      doBranch = 1'h0;
+      case(brType)
+         NOBR: doBranch = 0;
+         EQZ: doBranch = z;
+         NEZ: doBranch = ~z;
+         LTZ: doBranch = n;
+         GEQZ: doBranch = ~n | z;
+         default: hasErr[0] = 1'h1;
+      endcase
+   end
 
    /**********************************************************/
 
@@ -70,7 +87,8 @@ module proc (/*AUTOARG*/
          .halt(halt), .sign(sign), .pcOffSel(pcOffSel), 
          .regWrt(regWrt), .memWrt(memWrt), .memToReg(), .memEn(memEn), 
          .jump(jump), .invA(invA), .invB(invB), .aluSrc(aluSrc), .err(err), 
-         .regDst(regDst), .regWrtSrc(regWrtSrc), .aluOp(aluOp), .cin(cin), .return(return));
+         .regDst(regDst), .regWrtSrc(regWrtSrc), .aluOp(aluOp), .cin(cin), 
+         .return(return), .brType(brType));
 
    /////////////////////////////////////////////////
 
@@ -145,7 +163,7 @@ module proc (/*AUTOARG*/
    end
 
    alu alu(.A(a), .B(b), .Cin(cin), .Op(aluOp), .invA(invA), .invB(invB), 
-      .sign(sign), .Out(aluOut), .Ofl(ofl), .Z(z));
+      .sign(sign), .Out(aluOut), .Ofl(ofl), .Z(z), .N(n));
 
 
    /**********************************************************/
