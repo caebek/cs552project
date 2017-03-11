@@ -46,7 +46,7 @@ module proc (/*AUTOARG*/
 
 
 
-   assign err = |hasErr | regErr;
+   assign err =  ~rst & (|hasErr | regErr);
 
    /********************** Fetch Stage **********************/
    

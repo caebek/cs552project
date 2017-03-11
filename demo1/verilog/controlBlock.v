@@ -556,10 +556,10 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
             end
             {STU, DC}: begin
-                sign = 1'hx;
+                sign = 1'h1;
                 regWrt = 1'h1;
                 regDst = 2'h1;
-                regWrtSrc = 3'h0;
+                regWrtSrc = 3'h1;
 
                 memWrt = 1'h1;
                 memEn = 1'h1;
@@ -599,26 +599,26 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
                 jump = 1'h1;
                 return = 1'h1;
-            end            
-
-
-            {BGEZ, DC}: begin
-                aluSrc = 3'h5;
-                aluOp = 3'b100;
-                invA = 1'h0;
-                invB = 1'h0;
-                sign = 1'h1;
-
+            end    
+            {JALR, DC}: begin
+                sign = 1'h0;
                 pcOffSel = 1'h0;
-                jump = 1'h0;
-                return = 1'h0;
-                brType = GEQZ;
-
-                regWrt = 1'h0;
-
+                regWrt = 1'h1;
                 memWrt = 1'h0;
                 memEn = 1'h0;
-            end      
+
+
+                jump = 1'h1;
+                return = 1'h1;
+
+                invA = 1'h0;
+                invB = 1'h0;
+
+                regDst = 2'h3;
+                regWrtSrc = 3'h2;
+
+
+            end        
 
             {BEQZ, DC}: begin
                 aluSrc = 3'h5;
@@ -671,6 +671,25 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 memWrt = 1'h0;
                 memEn = 1'h0;
             end
+            {BGEZ, DC}: begin
+                aluSrc = 3'h5;
+                aluOp = 3'b100;
+                invA = 1'h0;
+                invB = 1'h0;
+                sign = 1'h1;
+
+                pcOffSel = 1'h0;
+                jump = 1'h0;
+                return = 1'h0;
+                brType = GEQZ;
+
+                regWrt = 1'h0;
+
+                memWrt = 1'h0;
+                memEn = 1'h0;
+            end      
+            
+            
 
 
 
@@ -686,6 +705,19 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 return = 1'h0;
             end
 
+            {JAL, DC}: begin
+                pcOffSel = 1'h1;
+                regWrt = 1'h1;
+                memWrt = 1'h0;
+                memEn = 1'h0;
+
+                jump = 1'h1;
+                return = 1'h0;
+
+
+                regDst = 2'h3;
+                regWrtSrc = 3'h2;
+            end
 
 
 /********************** special instr **************************/
