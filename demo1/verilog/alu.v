@@ -1,4 +1,4 @@
-module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, N);
+module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Zero, N);
    
     input [15:0] A;
     input [15:0] B;
@@ -9,7 +9,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, N);
     input sign;
     output reg[15:0]  Out;
     output reg Ofl;
-    output Z;
+    output Zero;
     output N;
 
     /*
@@ -41,7 +41,7 @@ module alu (A, B, Cin, Op, invA, invB, sign, Out, Ofl, Z, N);
     // TODO Add adder 
 
 
-    assign Z = ~|Out;
+    assign Zero = ~|Out;
     assign N = Out[15];
 
     always@(*) begin

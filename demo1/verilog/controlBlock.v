@@ -278,7 +278,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
             end
             {SEQ, DC}: begin
-                sign = 1'hx;
+                sign = 1'h1;
                 regWrt = 1'h1;
                 regDst = 2'h2;
                 regWrtSrc = 3'h3;
@@ -289,15 +289,15 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 jump = 1'h0;
                 return = 1'h0;
                 invA = 1'h0;
-                invB = 1'h0;
-                cin = 1'h0;
+                invB = 1'h1;
+                cin = 1'h1;
 
                 aluSrc = 3'h4;
                 aluOp = 3'b100;
 
             end
             {SLT, DC}: begin
-                sign = 1'hx;
+                sign = 1'h1;
                 regWrt = 1'h1;
                 regDst = 2'h2;
                 regWrtSrc = 3'h3;
@@ -308,15 +308,15 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 jump = 1'h0;
                 return = 1'h0;
                 invA = 1'h0;
-                invB = 1'h0;
-                cin = 1'h0;
+                invB = 1'h1;
+                cin = 1'h1;
 
                 aluSrc = 3'h4;
                 aluOp = 3'b100;
 
             end
             {SLE, DC}: begin
-                sign = 1'hx;
+                sign = 1'h1;
                 regWrt = 1'h1;
                 regDst = 2'h2;
                 regWrtSrc = 3'h3;
@@ -327,15 +327,15 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 jump = 1'h0;
                 return = 1'h0;
                 invA = 1'h0;
-                invB = 1'h0;
-                cin = 1'h0;
+                invB = 1'h1;
+                cin = 1'h1;
 
                 aluSrc = 3'h4;
                 aluOp = 3'b100;
 
             end
             {SCO, DC}: begin
-                sign = 1'hx;
+                sign = 1'h1;
                 regWrt = 1'h1;
                 regDst = 2'h2;
                 regWrtSrc = 3'h3;

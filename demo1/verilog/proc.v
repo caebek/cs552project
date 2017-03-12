@@ -29,8 +29,8 @@ module proc (/*AUTOARG*/
    localparam LTZ = 3'h3;
    localparam GEQZ = 3'h4;
 
-   wire haltBuf, cin, sign, invA, invB, ofl, z, return, jump, regWrt, memWrt,
-         memEn, halt, setVal, pcOffSel, regErr, n;
+   wire haltBuf, cin, sign, invA, invB, ofl, zero, return, jump, regWrt, memWrt,
+         memEn, halt, pcOffSel, regErr, n;
    wire [1:0] regDst;
    wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, aluOp, brType;
    wire [15:0] pc, newPc, pcIncr, jumpPc, aluOut, memOut, reg1Data, 
@@ -38,7 +38,7 @@ module proc (/*AUTOARG*/
    reg doBranch;
    reg[2:0] writeRegSel;
    reg [4:0] hasErr;
-   reg [15:0] writeData, b;
+   reg [15:0] writeData, b, setVal;
    // need control module
    // and alu
    // regs
@@ -68,10 +68,10 @@ module proc (/*AUTOARG*/
       doBranch = 1'h0;
       case(brType)
          NOBR: doBranch = 0;
-         EQZ: doBranch = z;
-         NEZ: doBranch = ~z;
+         EQZ: doBranch = zero;
+         NEZ: doBranch = ~zero;
          LTZ: doBranch = n;
-         GEQZ: doBranch = ~n | z;
+         GEQZ: doBranch = ~n | zero;
          default: hasErr[0] = 1'h1;
       endcase
    end
@@ -131,6 +131,20 @@ module proc (/*AUTOARG*/
    /**********************************************************/
 
 
+   //////////////////////////////////////////////////////
+
+
+   always@(*) begin
+      hasErr[3] = 1'h0;
+      case(instr[12:11])
+         3'h0: setVal = (zero) ? 16'h1: 16'h0;
+         3'h1: setVal = (aluOut[15] ^ ofl) ? 16'h1: 16'h0;
+         3'h2: setVal = (zero | (aluOut[15] ^ ofl)) ? 16'h1: 16'h0;
+         3'h3: setVal = (ofl) ? 16'h1: 16'h0;
+         default: hasErr[3] = 1'h1;
+      endcase
+   end
+
    /****************** Execute Stage ************************/
 
    /////////// PC Update Logic ///////////
@@ -163,7 +177,7 @@ module proc (/*AUTOARG*/
    end
 
    alu alu(.A(a), .B(b), .Cin(cin), .Op(aluOp), .invA(invA), .invB(invB), 
-      .sign(sign), .Out(aluOut), .Ofl(ofl), .Z(z), .N(n));
+      .sign(sign), .Out(aluOut), .Ofl(ofl), .Zero(zero), .N(n));
 
 
    /**********************************************************/
