@@ -32,7 +32,8 @@ module proc (/*AUTOARG*/
    wire haltBuf, cin, sign, invA, invB, ofl, zero, return, jump, regWrt, memWrt,
          memEn, halt, pcOffSel, regErr, n;
    wire [1:0] regDst;
-   wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, aluOp, brType;
+   wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, brType;
+   wire [3:0] aluOp;
    wire [15:0] pc, newPc, pcIncr, jumpPc, aluOut, memOut, reg1Data, 
          reg2Data, instr, a, base, offset;
    reg doBranch;

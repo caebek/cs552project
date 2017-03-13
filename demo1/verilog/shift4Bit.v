@@ -1,6 +1,6 @@
 module shift4Bit(en, op, dataIn, out);
     input en;
-    input [1:0] op;
+    input [2:0] op;
     input [15:0] dataIn;
     output [15:0] out;
 
@@ -39,15 +39,18 @@ module shift4Bit(en, op, dataIn, out);
 
 
     always@(*) begin
-        case(op)
-            2'h0:
+        casex(op)
+            3'h0:
                 shiftOut = {dataIn[11:0], dataIn[15:12]};
-            2'h1:
+            3'h1:
                 shiftOut = {dataIn[11:0], {4{1'b0}}};
-            2'h2:
+            3'h2:
                 shiftOut = {{4{dataIn[15]}}, dataIn[15:4]};
-            2'h3:
+            3'h3:
                 shiftOut = {{4{1'b0}}, dataIn[15:4]};
+            3'b1xx:
+                shiftOut = {dataIn[3:0], dataIn[15:4]};
+
             default:
                 shiftOut = dataIn;
         endcase

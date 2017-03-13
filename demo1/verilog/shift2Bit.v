@@ -1,6 +1,6 @@
 module shift2Bit(en, op, dataIn, out);
     input en;
-    input [1:0] op;
+    input [2:0] op;
     input [15:0] dataIn;
     output [15:0] out;
 
@@ -34,15 +34,18 @@ module shift2Bit(en, op, dataIn, out);
 
     // assign out  = (en) ? shiftVal : dataIn;
     always@(*) begin
-        case(op)
-            2'h0:
+        casex(op)
+            3'h0:
                 shiftOut = {dataIn[13:0], dataIn[15:14]};
-            2'h1:
+            3'h1:
                 shiftOut = {dataIn[13:0], {2{1'b0}}};
-            2'h2:
+            3'h2:
                 shiftOut = {{2{dataIn[15]}}, dataIn[15:2]};
-            2'h3:
+            3'h3:
                 shiftOut = {{2{1'b0}}, dataIn[15:2]};
+            3'b1xx:
+                shiftOut = {dataIn[1:0], dataIn[15:2]};
+
             default:
                 shiftOut = dataIn;
         endcase

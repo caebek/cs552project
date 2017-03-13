@@ -1,6 +1,6 @@
 module shift8Bit(en, op, dataIn, out);
     input en;
-    input [1:0] op;
+    input [2:0] op;
     input [15:0] dataIn;
     output [15:0] out;
 
@@ -42,15 +42,18 @@ module shift8Bit(en, op, dataIn, out);
     // assign shiftVal[15] = (op[1]) ? msb : dataIn[7];
 
     always@(*) begin
-        case(op)
-            2'h0:
+        casex(op)
+            3'h0:
                 shiftOut = {dataIn[7:0], dataIn[15:8]};
-            2'h1:
+            3'h1:
                 shiftOut = {dataIn[7:0], {8{1'b0}}};
-            2'h2:
+            3'h2:
                 shiftOut = {{8{dataIn[15]}}, dataIn[15:8]};
-            2'h3:
+            3'h3:
                 shiftOut = {{8{1'b0}}, dataIn[15:8]};
+            3'b1xx:
+                shiftOut = {dataIn[7:0], dataIn[15:8]};
+
             default:
                 shiftOut = dataIn;
         endcase

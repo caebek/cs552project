@@ -2,7 +2,7 @@ module shifter (In, Cnt, Op, Out);
    
    input [15:0] In;
    input [3:0]  Cnt;
-   input [1:0]  Op;
+   input [2:0]  Op;
    output [15:0] Out;
    wire [15:0] Out1, Out2, Out3;
    /*
