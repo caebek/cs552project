@@ -114,7 +114,8 @@ module proc (/*AUTOARG*/
          3'h3: writeData = setVal; // probably update this name
          3'h4: writeData = {{4'h8{instr[7]}},instr[7:0]};
          3'h5: writeData = {reg1Data[7:0], instr[7:0]};
-         default: hasErr[2] = 1'h1;
+         3'h6: writeData = {a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15]}; 
+	default: hasErr[2] = 1'h1;
       endcase
    end
 
