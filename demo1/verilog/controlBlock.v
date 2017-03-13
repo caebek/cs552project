@@ -335,7 +335,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
             end
             {SCO, DC}: begin
-                sign = 1'h1;
+                sign = 1'hx;
                 regWrt = 1'h1;
                 regDst = 2'h2;
                 regWrtSrc = 3'h3;
