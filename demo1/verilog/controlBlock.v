@@ -109,7 +109,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 regWrt = 1'h1;
                 regDst = 2'h2;
                 regWrtSrc = 3'h6;
-                cin = 1'h0;
+                
                 memWrt = 1'h0;
                 memEn = 1'h0;
 
@@ -119,8 +119,8 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
                 invB = 1'h0;
                 cin = 1'h0;
 
-                aluSrc = 3'h4;
-                aluOp = 3'b100;
+                aluSrc = 3'hx;
+                aluOp = 3'hx;
             end
 
             {ALU_OP1, ALU_ADD}: begin
@@ -335,7 +335,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
             end
             {SCO, DC}: begin
-                sign = 1'hx;
+                sign = 1'h0;
                 regWrt = 1'h1;
                 regDst = 2'h2;
                 regWrtSrc = 3'h3;
