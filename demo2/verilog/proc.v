@@ -29,24 +29,28 @@ module proc (/*AUTOARG*/
 	localparam LTZ = 3'h3;
 	localparam GEQZ = 3'h4;
 
-	wire haltBuf, cin, sign, invA, invB, ofl, zero, return, jump, regWrt, memWrt,
-			memEn, halt, haltEn, pcOffSel, regErr, n;
-	wire [1:0] regDst;
-	wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, brType;
-	wire [3:0] aluOp;
-	wire [15:0] pc, newPc, pcIncr, jumpPc, aluOut, memOut, reg1Data, 
-			reg2Data, instr, a, base, offset;
+	// wire haltBuf, cin, sign, invA, invB, ofl, zero, return, jump, regWrt, memWrt,
+	// 		memEn, halt, haltEn, pcOffSel, regErr, n;
+	// wire [1:0] regDst;
+	// wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, brType;
+	// wire [3:0] aluOp;
+	// wire [15:0] pc, newPc, pcIncr, jumpPc, aluOut, memOut, reg1Data, 
+			// reg2Data, instr, a, base, offset;
 	// reg doBranch;
-	reg[2:0] writeRegSel;
-	reg [4:0] hasErr;
-	reg [15:0] writeData, b, setVal;
+	// reg[2:0] writeRegSel;
+	// reg [4:0] hasErr;
+	// reg [15:0] writeData, b, setVal;
 	// need control module
 	// and alu
 	// regs
 	// 2 memories, 1 for intruction, 1 for storage
-	wire decodeErr, exErr, memErr, wbErr;
+	wire [15:0] fInstr, dInstr, fNextPc, dNextPc, regWrtData, dReg1Data, dReg2Data, branchPc;
+	wire eErr, regWrtEn, dHalt, sign, pcOffSel, dRegWrt,dMemWrt, dMemEn, jump, invA, invB, return, cin, memToReg;
+	wire [2:0] regWrtAddr, dWriteReg, aluSrc, regWrtSrc, brType;
+	wire [3:0] aluOp;
+	// wire decodeErr, eErr, memErr, wbErr;
 
-	assign err =  ~rst & (decodeErr | exErr | memErr | wbErr);
+	// assign err =  ~rst & (decodeErr | exErr | memErr | wbErr);
 
 
 	/********************** Fetch Stage **********************/
@@ -67,13 +71,14 @@ module proc (/*AUTOARG*/
 	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(doBranch), 
 		.branchPc(branchPc), .nextPc(fNextPc), .instr(fInstr));
 	
+
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
 		.err(eErr), .regWrtData(regWrtData), .regWrtEn(regWrtEn), .regWrtAddr(regWrtAddr), 
 		.halt(dHalt), .sign(sign), .pcOffSel(pcOffSel), .regWrt(dRegWrt), .memWrt(dMemWrt), 
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
-		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(reg1Data), 
-		.reg2Data(reg2Data), .clk(clk), .rst(rst));
+		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(dReg1Data), 
+		.reg2Data(dReg2Data), .clk(clk), .rst(rst));
 
 
 	// This need to move to execute stage

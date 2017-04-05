@@ -21,7 +21,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 	output [15:0] reg1Data, reg2Data;
 
 	reg [1:0] hasErr;
-
+	reg [2:0] writeReg;
 	wire regErr, ctrlErr;
 	wire [1:0] regDst;
 	wire [2:0] read1Sel, read2Sel;
