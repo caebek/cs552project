@@ -1,16 +1,17 @@
 module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSel, regWrt, memWrt, 
-					memEn, jump, invA, invB, return, cin, memToReg, writeReg, aluSrc,regWrtDataSrc,
+					memEn, jump, invA, invB, return, cin, memToReg, writeReg, aluSrc,regWrtSrc,
 					brType, aluOp, reg1Data, reg2Data, reg1DataOut, reg2DataOut, clk, rst, jumpPc,
-					setVal, doBranch, aluOut);
+					setVal, doBranch, aluOut, regWrtOut, memWrtOut, memEnOut, regWrtSrcOut, writeRegOut);
 	
 	input halt, sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB,
 		return, cin, memToReg, clk, rst;
-	input [2:0] aluSrc, regWrtDataSrc, brType, writeReg;
+	input [2:0] aluSrc, regWrtSrc, brType, writeReg;
 	input [3:0] aluOp;
 	input [15:0] reg1Data, reg2Data;
 	input [15:0] nextPc, instr;
 
-	output err, doBranch;
+	output err, doBranch, regWrtOut, memWrtOut, memEnOut;
+	output [2:0] regWrtSrcOut, writeRegOut;
 	output [15:0] jumpPc, aluOut;
 	output [15:0] nextPcOut, instrOut;
 	output [15:0] reg1DataOut, reg2DataOut, setVal;
@@ -33,6 +34,11 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	assign reg1DataOut = reg1Data;
 	assign reg2DataOut = reg2Data;
 	assign err = |hasErr;
+	assign regWrtOut = regWrt;
+	assign memWrtOut = memWrt;
+	assign memEnOut = memEn;
+	assign writeRegOut = writeReg; 
+	assign regWrtSrcOut = regWrtSrc; 
 
 
 	// Jump/Branch PC calculation

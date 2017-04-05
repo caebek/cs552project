@@ -4,21 +4,18 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 	
 
 	// signals from writeback stage 
-	input [15:0] regWrtData;
 	input regWrtEn, clk, rst;
 	input [2:0] regWrtAddr;
-
-
+	input [15:0] regWrtData;
 	input [15:0] nextPcIn, instrIn;
-	output [15:0] nextPcOut, instrOut;
+
 
 	output err, halt, sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB,
 		return, cin, memToReg;
-
 	output [2:0] aluSrc, regWrtSrc, brType, writeReg;
 	output [3:0] aluOp;
-
 	output [15:0] reg1Data, reg2Data;
+	output [15:0] nextPcOut, instrOut;
 
 	reg [1:0] hasErr;
 	reg [2:0] writeReg;
@@ -27,7 +24,6 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 	wire [2:0] read1Sel, read2Sel;
 
 	assign err = |hasErr | regErr | ctrlErr;
-
 	assign nextPcOut = nextPcIn;
 	assign instrOut = instrIn;
 
