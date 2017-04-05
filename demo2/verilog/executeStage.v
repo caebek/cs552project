@@ -1,7 +1,8 @@
 module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSel, regWrt, memWrt, 
 					memEn, jump, invA, invB, return, cin, memToReg, writeReg, aluSrc,regWrtSrc,
 					brType, aluOp, reg1Data, reg2Data, reg1DataOut, reg2DataOut, clk, rst, jumpPc,
-					setVal, doBranch, aluOut, regWrtOut, memWrtOut, memEnOut, regWrtSrcOut, writeRegOut);
+					setVal, doBranch, aluOut, regWrtOut, memWrtOut, memEnOut, regWrtSrcOut, writeRegOut,
+					haltOut);
 	
 	input halt, sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB,
 		return, cin, memToReg, clk, rst;
@@ -10,7 +11,7 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	input [15:0] reg1Data, reg2Data;
 	input [15:0] nextPc, instr;
 
-	output err, doBranch, regWrtOut, memWrtOut, memEnOut;
+	output err, doBranch, regWrtOut, memWrtOut, memEnOut, haltOut;
 	output [2:0] regWrtSrcOut, writeRegOut;
 	output [15:0] jumpPc, aluOut;
 	output [15:0] nextPcOut, instrOut;
@@ -39,7 +40,7 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	assign memEnOut = memEn;
 	assign writeRegOut = writeReg; 
 	assign regWrtSrcOut = regWrtSrc; 
-
+	assign haltOut = halt;
 
 	// Jump/Branch PC calculation
 	assign base = (return) ? reg1Data : nextPc;

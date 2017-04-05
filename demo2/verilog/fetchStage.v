@@ -4,16 +4,16 @@ module fetchStage(clk, rst, halt, doBranch, branchPc, nextPc, instr);
     output [15:0] instr, nextPc;
 
 
-    wire [15:0] newPc, curPc;
+    wire [15:0] newPc, curPc, tempPc;
 
     register pcReg(.clk(clk), .rst(rst), .wData(newPc), .rData(curPc), .wEn(~haltEn));
 
     memory2c iMem(.data_out(instr), .addr(curPc), .enable(1'h1), .wr(1'h0), .createdump(1'h0), 
     .clk(clk), .rst(rst));
 
-    incr2 incrPC(.in(curPc), .out(nextPc));
+    incr2 incrPC(.in(curPc), .out(tempPc));
 
-    assign newPc = (doBranch) ? branchPc : nextPc;
-
+    assign newPc = (doBranch) ? branchPc : tempPc;
+    assign nextPc = tempPc;
 
 endmodule
