@@ -23,11 +23,11 @@ module proc (/*AUTOARG*/
 	
 	
 	/* your code here */
-	localparam NOBR = 3'h0;
-	localparam EQZ = 3'h1;
-	localparam NEZ = 3'h2;
-	localparam LTZ = 3'h3;
-	localparam GEQZ = 3'h4;
+	// localparam NOBR = 3'h0;
+	// localparam EQZ = 3'h1;
+	// localparam NEZ = 3'h2;
+	// localparam LTZ = 3'h3;
+	// localparam GEQZ = 3'h4;
 
 	// wire haltBuf, cin, sign, invA, invB, ofl, zero, return, jump, regWrt, memWrt,
 	// 		memEn, halt, haltEn, pcOffSel, regErr, n;
