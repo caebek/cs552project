@@ -88,8 +88,8 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     	memWrt = 0;
     	memToReg = 0; // needed? only for pipeline?
     	memEn = 0;
-    	jump = 0;
-    	return  = 0;
+    	jump = 0
+;    	return  = 0;
     	invA = 0;
     	invB = 0;
     	regDst = 0;
