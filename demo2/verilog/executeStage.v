@@ -8,21 +8,19 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 		return, cin, memToReg, clk, rst;
 	input [2:0] aluSrc, regWrtSrc, brType, writeReg;
 	input [3:0] aluOp;
-	input [15:0] reg1Data, reg2Data;
-	input [15:0] nextPc, instr;
+	input [15:0] reg1Data, reg2Data, nextPc, instr;
 
 	output err, doBranch, regWrtOut, memWrtOut, memEnOut, haltOut;
 	output [2:0] regWrtSrcOut, writeRegOut;
-	output [15:0] jumpPc, aluOut;
-	output [15:0] nextPcOut, instrOut;
-	output [15:0] reg1DataOut, reg2DataOut, setVal;
+	output [15:0] jumpPc, aluOut, nextPcOut, instrOut, reg1DataOut, reg2DataOut, setVal;
 
-	wire [15:0] base, offset, a, intJumpPc, intAluOut;
 	wire zero, neg, ofl;
-	reg [2:0] hasErr;
+	wire [15:0] base, offset, a, intJumpPc, intAluOut;
 
-	reg [15:0] b, intSetVal;
 	reg intDoBranch;
+	reg [2:0] hasErr;
+	reg [15:0] b, intSetVal;
+
 
 	localparam NOBR = 3'h0;
 	localparam EQZ = 3'h1;

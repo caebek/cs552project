@@ -22,20 +22,20 @@ module proc (/*AUTOARG*/
 	// cases that you think are illegal in your statemachines
 
 
-	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, regWrtData, dReg1Data, 
-			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData;
 	wire dErr, eErr, mErr, regWrtEn, dHalt, eHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, mRegWrt, dMemWrt, eMemWrt, 
 			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch;
 	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType;
 	wire [3:0] aluOp;
+	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, regWrtData, dReg1Data, 
+			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData;
 	
 	assign err =  ~rst & (dErr | eErr | mErr);
 
 	// Outputs of each stage are already flopped
-	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(doBranch), 
-		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr));
 	
 
+	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(doBranch), 
+		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr));
 
 
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 

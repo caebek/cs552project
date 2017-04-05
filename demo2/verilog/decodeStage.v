@@ -4,27 +4,26 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 	
 
 	// signals from writeback stage
-	input regWrtEn;
-	input [15:0] regWrtData;
+	input regWrtEn, clk, rst;
 	input [2:0] regWrtAddr;
+	input [15:0] regWrtData, nextPcIn, instrIn;
 
 	// Pass through sigs
-	input [15:0] nextPcIn, instrIn;
 
-	input clk, rst;
 
 
 	output err, halt, sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB,
 		return, cin, memToReg;
 	output [2:0] aluSrc, regWrtSrc, brType, writeReg;
 	output [3:0] aluOp;
-	output [15:0] reg1Data, reg2Data;
+	output [15:0] reg1Data, reg2Data, nextPcOut, instrOut;
 
 	// Pass through outputs
-	output [15:0] nextPcOut, instrOut;
 
 	reg hasErr;
 	reg [2:0] intWriteReg;
+
+
 	wire regErr, ctrlErr;
 	wire [1:0] regDst;
 	wire [2:0] read1Sel, read2Sel;
@@ -73,11 +72,8 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 
 
-
 	dff fPC[15:0](.d(nextPcIn), .q(nextPcOut), .clk(clk), .rst(rst));
 	dff fInst[15:0](.d(instrIn), .q(instrOut), .clk(clk), .rst(rst));
-
-
 	dff reg1F[15:0](.d(intReg1Data), .q(reg1Data), .clk(clk), .rst(rst));
 	dff reg2F[15:0](.d(intReg2Data), .q(reg2Data), .clk(clk), .rst(rst));
 

@@ -1,18 +1,21 @@
 module memoryStage(clk, rst, err, aluOut, setVal, memWrt, memEn, halt, reg2Data, reg1Data, nextPc, instr, 
 					regWrt, regWrtOut, regWrtSrc, memOut, regWriteData);
 
-	input clk, rst, halt, memEn, memWrt;
-	input [15:0] aluOut, reg1Data, reg2Data, nextPc, instr, setVal;
+	input clk, rst, halt, memEn, memWrt, regWrt;
 	input [2:0] regWrtSrc;
-	input regWrt;
+	input [15:0] aluOut, reg1Data, reg2Data, nextPc, instr, setVal;
 
+	output err, regWrtOut;
 	output [15:0] memOut, regWriteData;
-	output regWrtOut;
-	output err;
-	reg [15:0] intRegWriteData;
-	wire [15:0]intMemOut;
+
+
 	wire intRegWrtOut;
+	wire [15:0]intMemOut;
+	
 	reg intErr;
+	reg [15:0] intRegWriteData;
+	
+	
 	memory2c mem(.data_out(intMemOut), .data_in(reg2Data), .addr(aluOut), .enable(memEn), .createdump(intErr|halt), 
 		.wr(memWrt), .clk(clk), .rst(rst));
 
