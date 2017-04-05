@@ -61,7 +61,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     localparam ALU_SLL = 2'h1;
     localparam ALU_ROR = 2'h2;
     localparam ALU_SRL= 2'h3;
-    localparam DC = 2'hxx;
+    localparam DC = 2'bxx;
 
 
     // Branch Types

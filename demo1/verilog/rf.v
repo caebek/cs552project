@@ -18,7 +18,7 @@ module rf (
 
 	output [width-1:0] read1data;
 	output [width-1:0] read2data;
-	output        err;
+	output reg err;
 
 	// your code
 	reg [7:0] writeSelect;
@@ -26,6 +26,7 @@ module rf (
 
 
 	always@(writeregsel, write) begin
+		err = 1'h0;
 		case(writeregsel)
 			3'h0: writeSelect = (write) ? 8'h01 : 8'h0;
 			3'h1: writeSelect = (write) ? 8'h02 : 8'h0;
@@ -35,6 +36,7 @@ module rf (
 			3'h5: writeSelect = (write) ? 8'h20 : 8'h0;
 			3'h6: writeSelect = (write) ? 8'h40 : 8'h0;
 			3'h7: writeSelect = (write) ? 8'h80 : 8'h0;
+			default: err = 1'h1;
 		endcase
 	end
 

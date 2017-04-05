@@ -30,7 +30,7 @@ module proc (/*AUTOARG*/
    localparam GEQZ = 3'h4;
 
    wire haltBuf, cin, sign, invA, invB, ofl, zero, return, jump, regWrt, memWrt,
-         memEn, halt, pcOffSel, regErr, n;
+         memEn, halt, haltEn, pcOffSel, regErr, n;
    wire [1:0] regDst;
    wire [2:0] regWrtSrc, aluSrc, read1Sel, read2Sel, brType;
    wire [3:0] aluOp;
@@ -47,7 +47,6 @@ module proc (/*AUTOARG*/
 
 
 
-   assign err =  ~rst & (|hasErr | regErr);
 
    /********************** Fetch Stage **********************/
    
@@ -62,11 +61,13 @@ module proc (/*AUTOARG*/
 
    assign haltEn = (rst) ? 1'h0 : haltEn | halt;
 
-
    assign newPc = (jump | doBranch) ? jumpPc : pcIncr;
+
+   assign err =  ~rst & (|hasErr | regErr);
 
    always@(*) begin
       doBranch = 1'h0;
+      hasErr[0] = 1'h0;
       case(brType)
          NOBR: doBranch = 0;
          EQZ: doBranch = zero;
@@ -108,6 +109,7 @@ module proc (/*AUTOARG*/
    // Write data Mux
    always @(*) begin
       hasErr[2] = 0;
+      writeData = 16'h0;
       case(regWrtSrc)
          3'h0: writeData = memOut;
          3'h1: writeData = aluOut;
@@ -166,7 +168,8 @@ module proc (/*AUTOARG*/
 
    // ALU B input mux
    always@(*) begin
-      hasErr[3] = 1'h0;
+      hasErr[4] = 1'h0;
+      b = 16'h0;
       case(aluSrc)
          3'h0: b = {{4'd11{instr[4]}}, instr[4:0]};
          3'h1: b = {{4'd11{1'h0}}, instr[4:0]};
@@ -174,7 +177,7 @@ module proc (/*AUTOARG*/
          3'h3: b = {{4'd8{1'h0}}, instr[7:0]};
          3'h4: b = reg2Data;
          3'h5: b = 16'h0;
-         default: hasErr[3] = 1'h1;
+         default: hasErr[4] = 1'h1;
       endcase
    end
 

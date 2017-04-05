@@ -1,0 +1,49 @@
+ 
+****************************************
+Report : reference
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Tue Mar 14 12:00:11 2017
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1             gscl45nm       2.346500       7     16.425499  
+AND2X2             gscl45nm       2.815800      36    101.368798  
+AOI21X1            gscl45nm       2.815800      18     50.684399  
+AOI22X1            gscl45nm       3.285100      32    105.123199  
+BUFX2              gscl45nm       2.346500      73    171.294494  
+BUFX4              gscl45nm       2.815800       1      2.815800  
+INVX1              gscl45nm       1.407900     170    239.342996  
+INVX2              gscl45nm       1.877200      10     18.772000  
+INVX4              gscl45nm       3.285100      12     39.421200  
+INVX8              gscl45nm       3.285100       2      6.570200  
+MUX2X1             gscl45nm       3.754400      32    120.140800  
+NAND3X1            gscl45nm       2.346500      13     30.504499  
+NOR3X1             gscl45nm       2.815800       3      8.447400  
+OAI21X1            gscl45nm       2.815800      29     81.658199  
+OR2X2              gscl45nm       2.815800      13     36.605399  
+XNOR2X1            gscl45nm       4.693000       1      4.693000  
+XOR2X1             gscl45nm       4.693000       1      4.693000  
+alu                            2590.066659       1   2590.066659  h
+cla16Bit_2                      448.181493       1    448.181493  h
+controlBlock                    362.768893       1    362.768893  h
+incr2                           409.698896       1    409.698896  h
+memory2c_0                    15282.754222       1  15282.754222  h, n
+memory2c_1                    15845.914182       1  15845.914182  h, n
+register_8                      291.435295       1    291.435295  h, n
+rf                             3481.736643       1   3481.736643  h, n
+-----------------------------------------------------------------------------
+Total 25 references                                 39751.117167
+1

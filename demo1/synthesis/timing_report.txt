@@ -1,0 +1,2635 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 20
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Tue Mar 14 12:00:12 2017
+****************************************
+
+ # A fanout number of 1000 was used for high fanout net computations.
+
+Operating Conditions: typical   Library: gscl45nm
+Wire Load Model Mode: top
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg2/flop[15]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U2895/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U929/Y (BUFX2)                                      0.03       1.64 f
+  mem/U338/Y (INVX1)                                      0.00       1.64 r
+  mem/U424/Y (AND2X2)                                     0.03       1.67 r
+  mem/U620/Y (OR2X2)                                      0.04       1.71 r
+  mem/U581/Y (OR2X2)                                      0.04       1.74 r
+  mem/U580/Y (OR2X2)                                      0.04       1.78 r
+  mem/U618/Y (OR2X2)                                      0.04       1.82 r
+  mem/U1160/Y (INVX1)                                     0.01       1.83 f
+  mem/U2873/Y (AOI21X1)                                   0.02       1.85 r
+  mem/U854/Y (BUFX2)                                      0.03       1.89 r
+  mem/U681/Y (AND2X2)                                     0.03       1.92 r
+  mem/U438/Y (OR2X2)                                      0.04       1.95 r
+  mem/U2862/Y (NAND3X1)                                   0.01       1.96 f
+  mem/U653/Y (BUFX2)                                      0.03       2.00 f
+  mem/U444/Y (AND2X1)                                     0.03       2.03 f
+  mem/data_out<15> (memory2c_0)                           0.00       2.03 f
+  U334/Y (AND2X1)                                         0.03       2.06 f
+  U359/Y (INVX1)                                          0.00       2.06 r
+  U338/Y (AND2X2)                                         0.03       2.09 r
+  U283/Y (INVX2)                                          0.03       2.12 f
+  register/writedata<15> (rf)                             0.00       2.12 f
+  register/U41/Y (INVX1)                                  0.00       2.12 r
+  register/U42/Y (INVX1)                                  0.01       2.13 f
+  register/reg2/wData<15> (register_6)                    0.00       2.13 f
+  register/reg2/U19/Y (MUX2X1)                            0.04       2.17 r
+  register/reg2/U10/Y (INVX1)                             0.02       2.19 f
+  register/reg2/flop[15]/d (dff_96)                       0.00       2.19 f
+  register/reg2/flop[15]/U3/Y (INVX1)                     0.00       2.19 r
+  register/reg2/flop[15]/U4/Y (NOR2X1)                    0.01       2.20 f
+  register/reg2/flop[15]/state_reg/D (DFFPOSX1)           0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg2/flop[15]/state_reg/CLK (DFFPOSX1)         0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg4/flop[15]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U2895/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U929/Y (BUFX2)                                      0.03       1.64 f
+  mem/U338/Y (INVX1)                                      0.00       1.64 r
+  mem/U424/Y (AND2X2)                                     0.03       1.67 r
+  mem/U620/Y (OR2X2)                                      0.04       1.71 r
+  mem/U581/Y (OR2X2)                                      0.04       1.74 r
+  mem/U580/Y (OR2X2)                                      0.04       1.78 r
+  mem/U618/Y (OR2X2)                                      0.04       1.82 r
+  mem/U1160/Y (INVX1)                                     0.01       1.83 f
+  mem/U2873/Y (AOI21X1)                                   0.02       1.85 r
+  mem/U854/Y (BUFX2)                                      0.03       1.89 r
+  mem/U681/Y (AND2X2)                                     0.03       1.92 r
+  mem/U438/Y (OR2X2)                                      0.04       1.95 r
+  mem/U2862/Y (NAND3X1)                                   0.01       1.96 f
+  mem/U653/Y (BUFX2)                                      0.03       2.00 f
+  mem/U444/Y (AND2X1)                                     0.03       2.03 f
+  mem/data_out<15> (memory2c_0)                           0.00       2.03 f
+  U334/Y (AND2X1)                                         0.03       2.06 f
+  U359/Y (INVX1)                                          0.00       2.06 r
+  U338/Y (AND2X2)                                         0.03       2.09 r
+  U283/Y (INVX2)                                          0.03       2.12 f
+  register/writedata<15> (rf)                             0.00       2.12 f
+  register/U41/Y (INVX1)                                  0.00       2.12 r
+  register/U38/Y (INVX1)                                  0.01       2.13 f
+  register/reg4/wData<15> (register_4)                    0.00       2.13 f
+  register/reg4/U17/Y (MUX2X1)                            0.04       2.17 r
+  register/reg4/U8/Y (INVX1)                              0.02       2.19 f
+  register/reg4/flop[15]/d (dff_64)                       0.00       2.19 f
+  register/reg4/flop[15]/U3/Y (INVX1)                     0.00       2.19 r
+  register/reg4/flop[15]/U4/Y (NOR2X1)                    0.01       2.20 f
+  register/reg4/flop[15]/state_reg/D (DFFPOSX1)           0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg4/flop[15]/state_reg/CLK (DFFPOSX1)         0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg1/flop[15]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U2895/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U929/Y (BUFX2)                                      0.03       1.64 f
+  mem/U338/Y (INVX1)                                      0.00       1.64 r
+  mem/U424/Y (AND2X2)                                     0.03       1.67 r
+  mem/U620/Y (OR2X2)                                      0.04       1.71 r
+  mem/U581/Y (OR2X2)                                      0.04       1.74 r
+  mem/U580/Y (OR2X2)                                      0.04       1.78 r
+  mem/U618/Y (OR2X2)                                      0.04       1.82 r
+  mem/U1160/Y (INVX1)                                     0.01       1.83 f
+  mem/U2873/Y (AOI21X1)                                   0.02       1.85 r
+  mem/U854/Y (BUFX2)                                      0.03       1.89 r
+  mem/U681/Y (AND2X2)                                     0.03       1.92 r
+  mem/U438/Y (OR2X2)                                      0.04       1.95 r
+  mem/U2862/Y (NAND3X1)                                   0.01       1.96 f
+  mem/U653/Y (BUFX2)                                      0.03       2.00 f
+  mem/U444/Y (AND2X1)                                     0.03       2.03 f
+  mem/data_out<15> (memory2c_0)                           0.00       2.03 f
+  U334/Y (AND2X1)                                         0.03       2.06 f
+  U359/Y (INVX1)                                          0.00       2.06 r
+  U338/Y (AND2X2)                                         0.03       2.09 r
+  U283/Y (INVX2)                                          0.03       2.12 f
+  register/writedata<15> (rf)                             0.00       2.12 f
+  register/reg1/wData<15> (register_7)                    0.00       2.12 f
+  register/reg1/U10/Y (AND2X2)                            0.03       2.15 f
+  register/reg1/U23/Y (INVX1)                             0.00       2.14 r
+  register/reg1/U17/Y (AND2X2)                            0.03       2.18 r
+  register/reg1/U18/Y (INVX1)                             0.01       2.19 f
+  register/reg1/flop[15]/d (dff_112)                      0.00       2.19 f
+  register/reg1/flop[15]/U3/Y (INVX1)                     0.00       2.19 r
+  register/reg1/flop[15]/U4/Y (NOR2X1)                    0.01       2.20 f
+  register/reg1/flop[15]/state_reg/D (DFFPOSX1)           0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg1/flop[15]/state_reg/CLK (DFFPOSX1)         0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg3/flop[4]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U14/Y (INVX1)                          0.03       1.05 f
+  alu/shift/shift2/U44/Y (AND2X2)                         0.03       1.09 f
+  alu/shift/shift2/U45/Y (INVX1)                          0.00       1.08 r
+  alu/shift/shift2/U27/Y (AND2X2)                         0.03       1.12 r
+  alu/shift/shift2/U52/Y (OR2X2)                          0.04       1.15 r
+  alu/shift/shift2/U53/Y (INVX1)                          0.01       1.17 f
+  alu/shift/shift2/U141/Y (AOI21X1)                       0.02       1.18 r
+  alu/shift/shift2/out<13> (shift2Bit)                    0.00       1.18 r
+  alu/shift/shift4/dataIn<13> (shift4Bit)                 0.00       1.18 r
+  alu/shift/shift4/U29/Y (BUFX2)                          0.04       1.22 r
+  alu/shift/shift4/U69/Y (INVX1)                          0.02       1.23 f
+  alu/shift/shift4/U105/Y (MUX2X1)                        0.04       1.28 r
+  alu/shift/shift4/U118/Y (INVX1)                         0.02       1.30 f
+  alu/shift/shift4/U127/Y (AOI22X1)                       0.04       1.34 r
+  alu/shift/shift4/out<9> (shift4Bit)                     0.00       1.34 r
+  alu/shift/shift8/dataIn<9> (shift8Bit)                  0.00       1.34 r
+  alu/shift/shift8/U26/Y (BUFX2)                          0.04       1.38 r
+  alu/shift/shift8/U52/Y (AND2X2)                         0.03       1.41 r
+  alu/shift/shift8/U9/Y (MUX2X1)                          0.02       1.43 f
+  alu/shift/shift8/U92/Y (INVX1)                          0.00       1.43 r
+  alu/shift/shift8/out<1> (shift8Bit)                     0.00       1.43 r
+  alu/shift/Out<1> (shifter)                              0.00       1.43 r
+  alu/U2/Y (AND2X1)                                       0.03       1.46 r
+  alu/U99/Y (INVX1)                                       0.02       1.47 f
+  alu/U175/Y (AND2X2)                                     0.04       1.51 f
+  alu/U77/Y (INVX4)                                       0.02       1.53 r
+  alu/Out<1> (alu)                                        0.00       1.53 r
+  mem/addr<1> (memory2c_0)                                0.00       1.53 r
+  mem/U1930/Y (AND2X2)                                    0.04       1.56 r
+  mem/U1643/Y (XNOR2X1)                                   0.06       1.62 r
+  mem/U3467/Y (BUFX4)                                     0.03       1.65 r
+  mem/U3464/Y (NAND3X1)                                   0.01       1.66 f
+  mem/U1137/Y (BUFX2)                                     0.04       1.70 f
+  mem/U80/Y (INVX1)                                       0.00       1.70 r
+  mem/U81/Y (INVX1)                                       0.02       1.72 f
+  mem/U3210/Y (OAI21X1)                                   0.04       1.76 r
+  mem/U599/Y (OR2X2)                                      0.04       1.80 r
+  mem/U600/Y (OR2X2)                                      0.04       1.84 r
+  mem/U601/Y (INVX1)                                      0.02       1.86 f
+  mem/U3196/Y (AOI22X1)                                   0.04       1.90 r
+  mem/U642/Y (BUFX2)                                      0.03       1.93 r
+  mem/U3179/Y (AND2X2)                                    0.03       1.97 r
+  mem/U3178/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U658/Y (BUFX2)                                      0.03       2.01 f
+  mem/U458/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<4> (memory2c_0)                            0.00       2.04 f
+  U600/Y (INVX1)                                          0.00       2.04 r
+  U645/Y (AOI22X1)                                        0.02       2.06 f
+  register/writedata<4> (rf)                              0.00       2.06 f
+  register/U250/Y (BUFX2)                                 0.04       2.10 f
+  register/U310/Y (INVX1)                                 0.00       2.10 r
+  register/U313/Y (INVX1)                                 0.02       2.13 f
+  register/reg3/wData<4> (register_5)                     0.00       2.13 f
+  register/reg3/U30/Y (MUX2X1)                            0.04       2.17 r
+  register/reg3/U15/Y (INVX1)                             0.02       2.19 f
+  register/reg3/flop[4]/d (dff_91)                        0.00       2.19 f
+  register/reg3/flop[4]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg3/flop[4]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg3/flop[4]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg3/flop[4]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg6/flop[4]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U14/Y (INVX1)                          0.03       1.05 f
+  alu/shift/shift2/U44/Y (AND2X2)                         0.03       1.09 f
+  alu/shift/shift2/U45/Y (INVX1)                          0.00       1.08 r
+  alu/shift/shift2/U27/Y (AND2X2)                         0.03       1.12 r
+  alu/shift/shift2/U52/Y (OR2X2)                          0.04       1.15 r
+  alu/shift/shift2/U53/Y (INVX1)                          0.01       1.17 f
+  alu/shift/shift2/U141/Y (AOI21X1)                       0.02       1.18 r
+  alu/shift/shift2/out<13> (shift2Bit)                    0.00       1.18 r
+  alu/shift/shift4/dataIn<13> (shift4Bit)                 0.00       1.18 r
+  alu/shift/shift4/U29/Y (BUFX2)                          0.04       1.22 r
+  alu/shift/shift4/U69/Y (INVX1)                          0.02       1.23 f
+  alu/shift/shift4/U105/Y (MUX2X1)                        0.04       1.28 r
+  alu/shift/shift4/U118/Y (INVX1)                         0.02       1.30 f
+  alu/shift/shift4/U127/Y (AOI22X1)                       0.04       1.34 r
+  alu/shift/shift4/out<9> (shift4Bit)                     0.00       1.34 r
+  alu/shift/shift8/dataIn<9> (shift8Bit)                  0.00       1.34 r
+  alu/shift/shift8/U26/Y (BUFX2)                          0.04       1.38 r
+  alu/shift/shift8/U52/Y (AND2X2)                         0.03       1.41 r
+  alu/shift/shift8/U9/Y (MUX2X1)                          0.02       1.43 f
+  alu/shift/shift8/U92/Y (INVX1)                          0.00       1.43 r
+  alu/shift/shift8/out<1> (shift8Bit)                     0.00       1.43 r
+  alu/shift/Out<1> (shifter)                              0.00       1.43 r
+  alu/U2/Y (AND2X1)                                       0.03       1.46 r
+  alu/U99/Y (INVX1)                                       0.02       1.47 f
+  alu/U175/Y (AND2X2)                                     0.04       1.51 f
+  alu/U77/Y (INVX4)                                       0.02       1.53 r
+  alu/Out<1> (alu)                                        0.00       1.53 r
+  mem/addr<1> (memory2c_0)                                0.00       1.53 r
+  mem/U1930/Y (AND2X2)                                    0.04       1.56 r
+  mem/U1643/Y (XNOR2X1)                                   0.06       1.62 r
+  mem/U3467/Y (BUFX4)                                     0.03       1.65 r
+  mem/U3464/Y (NAND3X1)                                   0.01       1.66 f
+  mem/U1137/Y (BUFX2)                                     0.04       1.70 f
+  mem/U80/Y (INVX1)                                       0.00       1.70 r
+  mem/U81/Y (INVX1)                                       0.02       1.72 f
+  mem/U3210/Y (OAI21X1)                                   0.04       1.76 r
+  mem/U599/Y (OR2X2)                                      0.04       1.80 r
+  mem/U600/Y (OR2X2)                                      0.04       1.84 r
+  mem/U601/Y (INVX1)                                      0.02       1.86 f
+  mem/U3196/Y (AOI22X1)                                   0.04       1.90 r
+  mem/U642/Y (BUFX2)                                      0.03       1.93 r
+  mem/U3179/Y (AND2X2)                                    0.03       1.97 r
+  mem/U3178/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U658/Y (BUFX2)                                      0.03       2.01 f
+  mem/U458/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<4> (memory2c_0)                            0.00       2.04 f
+  U600/Y (INVX1)                                          0.00       2.04 r
+  U645/Y (AOI22X1)                                        0.02       2.06 f
+  register/writedata<4> (rf)                              0.00       2.06 f
+  register/U250/Y (BUFX2)                                 0.04       2.10 f
+  register/U310/Y (INVX1)                                 0.00       2.10 r
+  register/U313/Y (INVX1)                                 0.02       2.13 f
+  register/reg6/wData<4> (register_2)                     0.00       2.13 f
+  register/reg6/U30/Y (MUX2X1)                            0.04       2.17 r
+  register/reg6/U15/Y (INVX1)                             0.02       2.19 f
+  register/reg6/flop[4]/d (dff_43)                        0.00       2.19 f
+  register/reg6/flop[4]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg6/flop[4]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg6/flop[4]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg6/flop[4]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg7/flop[4]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U14/Y (INVX1)                          0.03       1.05 f
+  alu/shift/shift2/U44/Y (AND2X2)                         0.03       1.09 f
+  alu/shift/shift2/U45/Y (INVX1)                          0.00       1.08 r
+  alu/shift/shift2/U27/Y (AND2X2)                         0.03       1.12 r
+  alu/shift/shift2/U52/Y (OR2X2)                          0.04       1.15 r
+  alu/shift/shift2/U53/Y (INVX1)                          0.01       1.17 f
+  alu/shift/shift2/U141/Y (AOI21X1)                       0.02       1.18 r
+  alu/shift/shift2/out<13> (shift2Bit)                    0.00       1.18 r
+  alu/shift/shift4/dataIn<13> (shift4Bit)                 0.00       1.18 r
+  alu/shift/shift4/U29/Y (BUFX2)                          0.04       1.22 r
+  alu/shift/shift4/U69/Y (INVX1)                          0.02       1.23 f
+  alu/shift/shift4/U105/Y (MUX2X1)                        0.04       1.28 r
+  alu/shift/shift4/U118/Y (INVX1)                         0.02       1.30 f
+  alu/shift/shift4/U127/Y (AOI22X1)                       0.04       1.34 r
+  alu/shift/shift4/out<9> (shift4Bit)                     0.00       1.34 r
+  alu/shift/shift8/dataIn<9> (shift8Bit)                  0.00       1.34 r
+  alu/shift/shift8/U26/Y (BUFX2)                          0.04       1.38 r
+  alu/shift/shift8/U52/Y (AND2X2)                         0.03       1.41 r
+  alu/shift/shift8/U9/Y (MUX2X1)                          0.02       1.43 f
+  alu/shift/shift8/U92/Y (INVX1)                          0.00       1.43 r
+  alu/shift/shift8/out<1> (shift8Bit)                     0.00       1.43 r
+  alu/shift/Out<1> (shifter)                              0.00       1.43 r
+  alu/U2/Y (AND2X1)                                       0.03       1.46 r
+  alu/U99/Y (INVX1)                                       0.02       1.47 f
+  alu/U175/Y (AND2X2)                                     0.04       1.51 f
+  alu/U77/Y (INVX4)                                       0.02       1.53 r
+  alu/Out<1> (alu)                                        0.00       1.53 r
+  mem/addr<1> (memory2c_0)                                0.00       1.53 r
+  mem/U1930/Y (AND2X2)                                    0.04       1.56 r
+  mem/U1643/Y (XNOR2X1)                                   0.06       1.62 r
+  mem/U3467/Y (BUFX4)                                     0.03       1.65 r
+  mem/U3464/Y (NAND3X1)                                   0.01       1.66 f
+  mem/U1137/Y (BUFX2)                                     0.04       1.70 f
+  mem/U80/Y (INVX1)                                       0.00       1.70 r
+  mem/U81/Y (INVX1)                                       0.02       1.72 f
+  mem/U3210/Y (OAI21X1)                                   0.04       1.76 r
+  mem/U599/Y (OR2X2)                                      0.04       1.80 r
+  mem/U600/Y (OR2X2)                                      0.04       1.84 r
+  mem/U601/Y (INVX1)                                      0.02       1.86 f
+  mem/U3196/Y (AOI22X1)                                   0.04       1.90 r
+  mem/U642/Y (BUFX2)                                      0.03       1.93 r
+  mem/U3179/Y (AND2X2)                                    0.03       1.97 r
+  mem/U3178/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U658/Y (BUFX2)                                      0.03       2.01 f
+  mem/U458/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<4> (memory2c_0)                            0.00       2.04 f
+  U600/Y (INVX1)                                          0.00       2.04 r
+  U645/Y (AOI22X1)                                        0.02       2.06 f
+  register/writedata<4> (rf)                              0.00       2.06 f
+  register/U250/Y (BUFX2)                                 0.04       2.10 f
+  register/U310/Y (INVX1)                                 0.00       2.10 r
+  register/U313/Y (INVX1)                                 0.02       2.13 f
+  register/reg7/wData<4> (register_1)                     0.00       2.13 f
+  register/reg7/U30/Y (MUX2X1)                            0.04       2.17 r
+  register/reg7/U15/Y (INVX1)                             0.02       2.19 f
+  register/reg7/flop[4]/d (dff_27)                        0.00       2.19 f
+  register/reg7/flop[4]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg7/flop[4]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg7/flop[4]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg7/flop[4]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg2/flop[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U453/Y (INVX1)                                      0.02       1.58 f
+  mem/U1643/Y (XNOR2X1)                                   0.03       1.61 f
+  mem/U1614/Y (INVX1)                                     0.02       1.63 r
+  mem/U3466/Y (NAND3X1)                                   0.01       1.65 f
+  mem/U931/Y (BUFX2)                                      0.03       1.68 f
+  mem/U1453/Y (INVX1)                                     0.00       1.68 r
+  mem/U143/Y (INVX1)                                      0.02       1.70 f
+  mem/U1140/Y (AND2X2)                                    0.05       1.75 f
+  mem/U3348/Y (AOI21X1)                                   0.02       1.77 r
+  mem/U608/Y (OR2X2)                                      0.04       1.81 r
+  mem/U890/Y (OR2X2)                                      0.04       1.85 r
+  mem/U891/Y (INVX1)                                      0.02       1.87 f
+  mem/U3333/Y (AOI22X1)                                   0.04       1.90 r
+  mem/U644/Y (BUFX2)                                      0.04       1.94 r
+  mem/U3315/Y (AND2X2)                                    0.03       1.97 r
+  mem/U3314/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U660/Y (BUFX2)                                      0.03       2.01 f
+  mem/U443/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<6> (memory2c_0)                            0.00       2.04 f
+  U599/Y (INVX1)                                          0.00       2.05 r
+  U653/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<6> (rf)                              0.00       2.07 f
+  register/U252/Y (BUFX2)                                 0.06       2.13 f
+  register/reg2/wData<6> (register_6)                     0.00       2.13 f
+  register/reg2/U28/Y (MUX2X1)                            0.04       2.17 r
+  register/reg2/U14/Y (INVX1)                             0.02       2.19 f
+  register/reg2/flop[6]/d (dff_105)                       0.00       2.19 f
+  register/reg2/flop[6]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg2/flop[6]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg2/flop[6]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg2/flop[6]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg3/flop[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U453/Y (INVX1)                                      0.02       1.58 f
+  mem/U1643/Y (XNOR2X1)                                   0.03       1.61 f
+  mem/U1614/Y (INVX1)                                     0.02       1.63 r
+  mem/U3466/Y (NAND3X1)                                   0.01       1.65 f
+  mem/U931/Y (BUFX2)                                      0.03       1.68 f
+  mem/U1453/Y (INVX1)                                     0.00       1.68 r
+  mem/U143/Y (INVX1)                                      0.02       1.70 f
+  mem/U1140/Y (AND2X2)                                    0.05       1.75 f
+  mem/U3348/Y (AOI21X1)                                   0.02       1.77 r
+  mem/U608/Y (OR2X2)                                      0.04       1.81 r
+  mem/U890/Y (OR2X2)                                      0.04       1.85 r
+  mem/U891/Y (INVX1)                                      0.02       1.87 f
+  mem/U3333/Y (AOI22X1)                                   0.04       1.90 r
+  mem/U644/Y (BUFX2)                                      0.04       1.94 r
+  mem/U3315/Y (AND2X2)                                    0.03       1.97 r
+  mem/U3314/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U660/Y (BUFX2)                                      0.03       2.01 f
+  mem/U443/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<6> (memory2c_0)                            0.00       2.04 f
+  U599/Y (INVX1)                                          0.00       2.05 r
+  U653/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<6> (rf)                              0.00       2.07 f
+  register/U252/Y (BUFX2)                                 0.06       2.13 f
+  register/reg3/wData<6> (register_5)                     0.00       2.13 f
+  register/reg3/U28/Y (MUX2X1)                            0.04       2.17 r
+  register/reg3/U13/Y (INVX1)                             0.02       2.19 f
+  register/reg3/flop[6]/d (dff_89)                        0.00       2.19 f
+  register/reg3/flop[6]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg3/flop[6]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg3/flop[6]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg3/flop[6]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg4/flop[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U453/Y (INVX1)                                      0.02       1.58 f
+  mem/U1643/Y (XNOR2X1)                                   0.03       1.61 f
+  mem/U1614/Y (INVX1)                                     0.02       1.63 r
+  mem/U3466/Y (NAND3X1)                                   0.01       1.65 f
+  mem/U931/Y (BUFX2)                                      0.03       1.68 f
+  mem/U1453/Y (INVX1)                                     0.00       1.68 r
+  mem/U143/Y (INVX1)                                      0.02       1.70 f
+  mem/U1140/Y (AND2X2)                                    0.05       1.75 f
+  mem/U3348/Y (AOI21X1)                                   0.02       1.77 r
+  mem/U608/Y (OR2X2)                                      0.04       1.81 r
+  mem/U890/Y (OR2X2)                                      0.04       1.85 r
+  mem/U891/Y (INVX1)                                      0.02       1.87 f
+  mem/U3333/Y (AOI22X1)                                   0.04       1.90 r
+  mem/U644/Y (BUFX2)                                      0.04       1.94 r
+  mem/U3315/Y (AND2X2)                                    0.03       1.97 r
+  mem/U3314/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U660/Y (BUFX2)                                      0.03       2.01 f
+  mem/U443/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<6> (memory2c_0)                            0.00       2.04 f
+  U599/Y (INVX1)                                          0.00       2.05 r
+  U653/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<6> (rf)                              0.00       2.07 f
+  register/U252/Y (BUFX2)                                 0.06       2.13 f
+  register/reg4/wData<6> (register_4)                     0.00       2.13 f
+  register/reg4/U26/Y (MUX2X1)                            0.04       2.17 r
+  register/reg4/U12/Y (INVX1)                             0.02       2.19 f
+  register/reg4/flop[6]/d (dff_73)                        0.00       2.19 f
+  register/reg4/flop[6]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg4/flop[6]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg4/flop[6]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg4/flop[6]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg5/flop[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U453/Y (INVX1)                                      0.02       1.58 f
+  mem/U1643/Y (XNOR2X1)                                   0.03       1.61 f
+  mem/U1614/Y (INVX1)                                     0.02       1.63 r
+  mem/U3466/Y (NAND3X1)                                   0.01       1.65 f
+  mem/U931/Y (BUFX2)                                      0.03       1.68 f
+  mem/U1453/Y (INVX1)                                     0.00       1.68 r
+  mem/U143/Y (INVX1)                                      0.02       1.70 f
+  mem/U1140/Y (AND2X2)                                    0.05       1.75 f
+  mem/U3348/Y (AOI21X1)                                   0.02       1.77 r
+  mem/U608/Y (OR2X2)                                      0.04       1.81 r
+  mem/U890/Y (OR2X2)                                      0.04       1.85 r
+  mem/U891/Y (INVX1)                                      0.02       1.87 f
+  mem/U3333/Y (AOI22X1)                                   0.04       1.90 r
+  mem/U644/Y (BUFX2)                                      0.04       1.94 r
+  mem/U3315/Y (AND2X2)                                    0.03       1.97 r
+  mem/U3314/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U660/Y (BUFX2)                                      0.03       2.01 f
+  mem/U443/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<6> (memory2c_0)                            0.00       2.04 f
+  U599/Y (INVX1)                                          0.00       2.05 r
+  U653/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<6> (rf)                              0.00       2.07 f
+  register/U252/Y (BUFX2)                                 0.06       2.13 f
+  register/reg5/wData<6> (register_3)                     0.00       2.13 f
+  register/reg5/U28/Y (MUX2X1)                            0.04       2.17 r
+  register/reg5/U13/Y (INVX1)                             0.02       2.19 f
+  register/reg5/flop[6]/d (dff_57)                        0.00       2.19 f
+  register/reg5/flop[6]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg5/flop[6]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg5/flop[6]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg5/flop[6]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg7/flop[6]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U453/Y (INVX1)                                      0.02       1.58 f
+  mem/U1643/Y (XNOR2X1)                                   0.03       1.61 f
+  mem/U1614/Y (INVX1)                                     0.02       1.63 r
+  mem/U3466/Y (NAND3X1)                                   0.01       1.65 f
+  mem/U931/Y (BUFX2)                                      0.03       1.68 f
+  mem/U1453/Y (INVX1)                                     0.00       1.68 r
+  mem/U143/Y (INVX1)                                      0.02       1.70 f
+  mem/U1140/Y (AND2X2)                                    0.05       1.75 f
+  mem/U3348/Y (AOI21X1)                                   0.02       1.77 r
+  mem/U608/Y (OR2X2)                                      0.04       1.81 r
+  mem/U890/Y (OR2X2)                                      0.04       1.85 r
+  mem/U891/Y (INVX1)                                      0.02       1.87 f
+  mem/U3333/Y (AOI22X1)                                   0.04       1.90 r
+  mem/U644/Y (BUFX2)                                      0.04       1.94 r
+  mem/U3315/Y (AND2X2)                                    0.03       1.97 r
+  mem/U3314/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U660/Y (BUFX2)                                      0.03       2.01 f
+  mem/U443/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<6> (memory2c_0)                            0.00       2.04 f
+  U599/Y (INVX1)                                          0.00       2.05 r
+  U653/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<6> (rf)                              0.00       2.07 f
+  register/U252/Y (BUFX2)                                 0.06       2.13 f
+  register/reg7/wData<6> (register_1)                     0.00       2.13 f
+  register/reg7/U28/Y (MUX2X1)                            0.04       2.17 r
+  register/reg7/U13/Y (INVX1)                             0.02       2.19 f
+  register/reg7/flop[6]/d (dff_25)                        0.00       2.19 f
+  register/reg7/flop[6]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg7/flop[6]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg7/flop[6]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg7/flop[6]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg4/flop[7]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4510/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U856/Y (BUFX2)                                      0.03       1.64 f
+  mem/U1102/Y (OR2X2)                                     0.04       1.68 f
+  mem/U449/Y (XNOR2X1)                                    0.04       1.71 r
+  mem/U12/Y (INVX1)                                       0.02       1.74 f
+  mem/U1555/Y (INVX1)                                     0.01       1.74 r
+  mem/U325/Y (INVX1)                                      0.01       1.76 f
+  mem/U391/Y (AND2X2)                                     0.04       1.79 f
+  mem/U3420/Y (OAI21X1)                                   0.02       1.81 r
+  mem/U292/Y (OR2X1)                                      0.04       1.85 r
+  mem/U892/Y (INVX1)                                      0.02       1.87 f
+  mem/U3406/Y (AOI22X1)                                   0.04       1.91 r
+  mem/U676/Y (BUFX2)                                      0.04       1.94 r
+  mem/U3384/Y (AND2X2)                                    0.03       1.98 r
+  mem/U3383/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U661/Y (BUFX2)                                      0.03       2.02 f
+  mem/U437/Y (AND2X1)                                     0.03       2.05 f
+  mem/data_out<7> (memory2c_0)                            0.00       2.05 f
+  U595/Y (INVX1)                                          0.00       2.05 r
+  U657/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<7> (rf)                              0.00       2.07 f
+  register/U253/Y (BUFX2)                                 0.04       2.11 f
+  register/U344/Y (INVX1)                                 0.00       2.12 r
+  register/U59/Y (INVX1)                                  0.01       2.13 f
+  register/reg4/wData<7> (register_4)                     0.00       2.13 f
+  register/reg4/U25/Y (MUX2X1)                            0.04       2.17 r
+  register/reg4/U9/Y (INVX1)                              0.02       2.19 f
+  register/reg4/flop[7]/d (dff_72)                        0.00       2.19 f
+  register/reg4/flop[7]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg4/flop[7]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg4/flop[7]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg4/flop[7]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg6/flop[7]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4510/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U856/Y (BUFX2)                                      0.03       1.64 f
+  mem/U1102/Y (OR2X2)                                     0.04       1.68 f
+  mem/U449/Y (XNOR2X1)                                    0.04       1.71 r
+  mem/U12/Y (INVX1)                                       0.02       1.74 f
+  mem/U1555/Y (INVX1)                                     0.01       1.74 r
+  mem/U325/Y (INVX1)                                      0.01       1.76 f
+  mem/U391/Y (AND2X2)                                     0.04       1.79 f
+  mem/U3420/Y (OAI21X1)                                   0.02       1.81 r
+  mem/U292/Y (OR2X1)                                      0.04       1.85 r
+  mem/U892/Y (INVX1)                                      0.02       1.87 f
+  mem/U3406/Y (AOI22X1)                                   0.04       1.91 r
+  mem/U676/Y (BUFX2)                                      0.04       1.94 r
+  mem/U3384/Y (AND2X2)                                    0.03       1.98 r
+  mem/U3383/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U661/Y (BUFX2)                                      0.03       2.02 f
+  mem/U437/Y (AND2X1)                                     0.03       2.05 f
+  mem/data_out<7> (memory2c_0)                            0.00       2.05 f
+  U595/Y (INVX1)                                          0.00       2.05 r
+  U657/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<7> (rf)                              0.00       2.07 f
+  register/U253/Y (BUFX2)                                 0.04       2.11 f
+  register/U345/Y (INVX1)                                 0.00       2.12 r
+  register/U60/Y (INVX1)                                  0.01       2.13 f
+  register/reg6/wData<7> (register_2)                     0.00       2.13 f
+  register/reg6/U27/Y (MUX2X1)                            0.04       2.17 r
+  register/reg6/U11/Y (INVX1)                             0.02       2.19 f
+  register/reg6/flop[7]/d (dff_40)                        0.00       2.19 f
+  register/reg6/flop[7]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg6/flop[7]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg6/flop[7]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg6/flop[7]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.29
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg2/flop[0]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4510/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U856/Y (BUFX2)                                      0.03       1.64 f
+  mem/U1102/Y (OR2X2)                                     0.04       1.68 f
+  mem/U449/Y (XNOR2X1)                                    0.04       1.71 r
+  mem/U12/Y (INVX1)                                       0.02       1.74 f
+  mem/U1555/Y (INVX1)                                     0.01       1.74 r
+  mem/U602/Y (OR2X2)                                      0.05       1.79 r
+  mem/U329/Y (INVX4)                                      0.03       1.82 f
+  mem/U2927/Y (OAI21X1)                                   0.02       1.84 r
+  mem/U2924/Y (NOR3X1)                                    0.03       1.87 f
+  mem/U2923/Y (AOI22X1)                                   0.03       1.90 r
+  mem/U638/Y (BUFX2)                                      0.04       1.94 r
+  mem/U2905/Y (AND2X2)                                    0.03       1.97 r
+  mem/U2904/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U654/Y (BUFX2)                                      0.03       2.01 f
+  mem/U428/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<0> (memory2c_0)                            0.00       2.04 f
+  U597/Y (INVX1)                                          0.00       2.04 r
+  U630/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<0> (rf)                              0.00       2.07 f
+  register/U265/Y (BUFX2)                                 0.04       2.11 f
+  register/U309/Y (INVX1)                                 0.01       2.12 r
+  register/U351/Y (INVX1)                                 0.01       2.13 f
+  register/reg2/wData<0> (register_6)                     0.00       2.13 f
+  register/reg2/U34/Y (MUX2X1)                            0.04       2.17 r
+  register/reg2/U17/Y (INVX1)                             0.02       2.19 f
+  register/reg2/flop[0]/d (dff_111)                       0.00       2.19 f
+  register/reg2/flop[0]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg2/flop[0]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg2/flop[0]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg2/flop[0]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.28
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg3/flop[0]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4510/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U856/Y (BUFX2)                                      0.03       1.64 f
+  mem/U1102/Y (OR2X2)                                     0.04       1.68 f
+  mem/U449/Y (XNOR2X1)                                    0.04       1.71 r
+  mem/U12/Y (INVX1)                                       0.02       1.74 f
+  mem/U1555/Y (INVX1)                                     0.01       1.74 r
+  mem/U602/Y (OR2X2)                                      0.05       1.79 r
+  mem/U329/Y (INVX4)                                      0.03       1.82 f
+  mem/U2927/Y (OAI21X1)                                   0.02       1.84 r
+  mem/U2924/Y (NOR3X1)                                    0.03       1.87 f
+  mem/U2923/Y (AOI22X1)                                   0.03       1.90 r
+  mem/U638/Y (BUFX2)                                      0.04       1.94 r
+  mem/U2905/Y (AND2X2)                                    0.03       1.97 r
+  mem/U2904/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U654/Y (BUFX2)                                      0.03       2.01 f
+  mem/U428/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<0> (memory2c_0)                            0.00       2.04 f
+  U597/Y (INVX1)                                          0.00       2.04 r
+  U630/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<0> (rf)                              0.00       2.07 f
+  register/U265/Y (BUFX2)                                 0.04       2.11 f
+  register/U52/Y (INVX1)                                  0.01       2.12 r
+  register/U51/Y (INVX1)                                  0.01       2.13 f
+  register/reg3/wData<0> (register_5)                     0.00       2.13 f
+  register/reg3/U34/Y (MUX2X1)                            0.04       2.17 r
+  register/reg3/U17/Y (INVX1)                             0.02       2.19 f
+  register/reg3/flop[0]/d (dff_95)                        0.00       2.19 f
+  register/reg3/flop[0]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg3/flop[0]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg3/flop[0]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg3/flop[0]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.28
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg4/flop[0]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4510/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U856/Y (BUFX2)                                      0.03       1.64 f
+  mem/U1102/Y (OR2X2)                                     0.04       1.68 f
+  mem/U449/Y (XNOR2X1)                                    0.04       1.71 r
+  mem/U12/Y (INVX1)                                       0.02       1.74 f
+  mem/U1555/Y (INVX1)                                     0.01       1.74 r
+  mem/U602/Y (OR2X2)                                      0.05       1.79 r
+  mem/U329/Y (INVX4)                                      0.03       1.82 f
+  mem/U2927/Y (OAI21X1)                                   0.02       1.84 r
+  mem/U2924/Y (NOR3X1)                                    0.03       1.87 f
+  mem/U2923/Y (AOI22X1)                                   0.03       1.90 r
+  mem/U638/Y (BUFX2)                                      0.04       1.94 r
+  mem/U2905/Y (AND2X2)                                    0.03       1.97 r
+  mem/U2904/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U654/Y (BUFX2)                                      0.03       2.01 f
+  mem/U428/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<0> (memory2c_0)                            0.00       2.04 f
+  U597/Y (INVX1)                                          0.00       2.04 r
+  U630/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<0> (rf)                              0.00       2.07 f
+  register/U265/Y (BUFX2)                                 0.04       2.11 f
+  register/U52/Y (INVX1)                                  0.01       2.12 r
+  register/U300/Y (INVX1)                                 0.01       2.13 f
+  register/reg4/wData<0> (register_4)                     0.00       2.13 f
+  register/reg4/U32/Y (MUX2X1)                            0.04       2.17 r
+  register/reg4/U16/Y (INVX1)                             0.02       2.19 f
+  register/reg4/flop[0]/d (dff_79)                        0.00       2.19 f
+  register/reg4/flop[0]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg4/flop[0]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg4/flop[0]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg4/flop[0]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.28
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg5/flop[0]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4510/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U856/Y (BUFX2)                                      0.03       1.64 f
+  mem/U1102/Y (OR2X2)                                     0.04       1.68 f
+  mem/U449/Y (XNOR2X1)                                    0.04       1.71 r
+  mem/U12/Y (INVX1)                                       0.02       1.74 f
+  mem/U1555/Y (INVX1)                                     0.01       1.74 r
+  mem/U602/Y (OR2X2)                                      0.05       1.79 r
+  mem/U329/Y (INVX4)                                      0.03       1.82 f
+  mem/U2927/Y (OAI21X1)                                   0.02       1.84 r
+  mem/U2924/Y (NOR3X1)                                    0.03       1.87 f
+  mem/U2923/Y (AOI22X1)                                   0.03       1.90 r
+  mem/U638/Y (BUFX2)                                      0.04       1.94 r
+  mem/U2905/Y (AND2X2)                                    0.03       1.97 r
+  mem/U2904/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U654/Y (BUFX2)                                      0.03       2.01 f
+  mem/U428/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<0> (memory2c_0)                            0.00       2.04 f
+  U597/Y (INVX1)                                          0.00       2.04 r
+  U630/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<0> (rf)                              0.00       2.07 f
+  register/U265/Y (BUFX2)                                 0.04       2.11 f
+  register/U329/Y (INVX1)                                 0.01       2.12 r
+  register/U350/Y (INVX1)                                 0.01       2.13 f
+  register/reg5/wData<0> (register_3)                     0.00       2.13 f
+  register/reg5/U34/Y (MUX2X1)                            0.04       2.17 r
+  register/reg5/U17/Y (INVX1)                             0.02       2.19 f
+  register/reg5/flop[0]/d (dff_63)                        0.00       2.19 f
+  register/reg5/flop[0]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg5/flop[0]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg5/flop[0]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg5/flop[0]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.28
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg6/flop[0]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4510/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U856/Y (BUFX2)                                      0.03       1.64 f
+  mem/U1102/Y (OR2X2)                                     0.04       1.68 f
+  mem/U449/Y (XNOR2X1)                                    0.04       1.71 r
+  mem/U12/Y (INVX1)                                       0.02       1.74 f
+  mem/U1555/Y (INVX1)                                     0.01       1.74 r
+  mem/U602/Y (OR2X2)                                      0.05       1.79 r
+  mem/U329/Y (INVX4)                                      0.03       1.82 f
+  mem/U2927/Y (OAI21X1)                                   0.02       1.84 r
+  mem/U2924/Y (NOR3X1)                                    0.03       1.87 f
+  mem/U2923/Y (AOI22X1)                                   0.03       1.90 r
+  mem/U638/Y (BUFX2)                                      0.04       1.94 r
+  mem/U2905/Y (AND2X2)                                    0.03       1.97 r
+  mem/U2904/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U654/Y (BUFX2)                                      0.03       2.01 f
+  mem/U428/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<0> (memory2c_0)                            0.00       2.04 f
+  U597/Y (INVX1)                                          0.00       2.04 r
+  U630/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<0> (rf)                              0.00       2.07 f
+  register/U265/Y (BUFX2)                                 0.04       2.11 f
+  register/U309/Y (INVX1)                                 0.01       2.12 r
+  register/U301/Y (INVX1)                                 0.01       2.13 f
+  register/reg6/wData<0> (register_2)                     0.00       2.13 f
+  register/reg6/U34/Y (MUX2X1)                            0.04       2.17 r
+  register/reg6/U17/Y (INVX1)                             0.02       2.19 f
+  register/reg6/flop[0]/d (dff_47)                        0.00       2.19 f
+  register/reg6/flop[0]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg6/flop[0]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg6/flop[0]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg6/flop[0]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.28
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg8/flop[0]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4510/Y (NAND3X1)                                   0.02       1.60 f
+  mem/U856/Y (BUFX2)                                      0.03       1.64 f
+  mem/U1102/Y (OR2X2)                                     0.04       1.68 f
+  mem/U449/Y (XNOR2X1)                                    0.04       1.71 r
+  mem/U12/Y (INVX1)                                       0.02       1.74 f
+  mem/U1555/Y (INVX1)                                     0.01       1.74 r
+  mem/U602/Y (OR2X2)                                      0.05       1.79 r
+  mem/U329/Y (INVX4)                                      0.03       1.82 f
+  mem/U2927/Y (OAI21X1)                                   0.02       1.84 r
+  mem/U2924/Y (NOR3X1)                                    0.03       1.87 f
+  mem/U2923/Y (AOI22X1)                                   0.03       1.90 r
+  mem/U638/Y (BUFX2)                                      0.04       1.94 r
+  mem/U2905/Y (AND2X2)                                    0.03       1.97 r
+  mem/U2904/Y (NAND3X1)                                   0.01       1.98 f
+  mem/U654/Y (BUFX2)                                      0.03       2.01 f
+  mem/U428/Y (AND2X1)                                     0.03       2.04 f
+  mem/data_out<0> (memory2c_0)                            0.00       2.04 f
+  U597/Y (INVX1)                                          0.00       2.04 r
+  U630/Y (AOI22X1)                                        0.02       2.07 f
+  register/writedata<0> (rf)                              0.00       2.07 f
+  register/U265/Y (BUFX2)                                 0.04       2.11 f
+  register/U329/Y (INVX1)                                 0.01       2.12 r
+  register/U297/Y (INVX1)                                 0.01       2.13 f
+  register/reg8/wData<0> (register_0)                     0.00       2.13 f
+  register/reg8/U34/Y (MUX2X1)                            0.04       2.17 r
+  register/reg8/U13/Y (INVX1)                             0.02       2.19 f
+  register/reg8/flop[0]/d (dff_15)                        0.00       2.19 f
+  register/reg8/flop[0]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg8/flop[0]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg8/flop[0]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg8/flop[0]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.28
+
+
+  Startpoint: pcReg/flop[1]/state_reg
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: register/reg1/flop[1]/state_reg
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  pcReg/flop[1]/state_reg/CLK (DFFPOSX1)                  0.00 #     0.00 r
+  pcReg/flop[1]/state_reg/Q (DFFPOSX1)                    0.12       0.12 f
+  pcReg/flop[1]/q (dff_129)                               0.00       0.12 f
+  pcReg/rData<1> (register_8)                             0.00       0.12 f
+  iMem/addr<1> (memory2c_1)                               0.00       0.12 f
+  iMem/U376/Y (AND2X2)                                    0.05       0.17 f
+  iMem/U270/Y (XNOR2X1)                                   0.04       0.21 r
+  iMem/U155/Y (INVX1)                                     0.03       0.24 f
+  iMem/U1428/Y (AND2X2)                                   0.03       0.28 f
+  iMem/U4026/Y (INVX1)                                    0.00       0.27 r
+  iMem/U610/Y (AND2X2)                                    0.04       0.31 r
+  iMem/U397/Y (OR2X2)                                     0.04       0.35 r
+  iMem/U1222/Y (INVX1)                                    0.02       0.37 f
+  iMem/U3897/Y (NOR3X1)                                   0.03       0.39 r
+  iMem/U3892/Y (AOI22X1)                                  0.03       0.42 f
+  iMem/U435/Y (BUFX2)                                     0.04       0.46 f
+  iMem/U3891/Y (AND2X2)                                   0.04       0.49 f
+  iMem/U3890/Y (NAND3X1)                                  0.03       0.52 r
+  iMem/U479/Y (BUFX2)                                     0.03       0.55 r
+  iMem/U1506/Y (AND2X2)                                   0.04       0.59 r
+  iMem/data_out<6> (memory2c_1)                           0.00       0.59 r
+  register/read2regsel<1> (rf)                            0.00       0.59 r
+  register/U338/Y (INVX1)                                 0.02       0.61 f
+  register/U325/Y (INVX1)                                 0.01       0.62 r
+  register/U450/Y (NOR2X1)                                0.01       0.63 f
+  register/U173/Y (OR2X2)                                 0.04       0.67 f
+  register/U174/Y (INVX1)                                 0.00       0.66 r
+  register/U186/Y (AND2X2)                                0.03       0.69 r
+  register/U187/Y (INVX1)                                 0.02       0.71 f
+  register/U449/Y (OAI21X1)                               0.04       0.75 r
+  register/U366/Y (OR2X2)                                 0.05       0.80 r
+  register/read2data<0> (rf)                              0.00       0.80 r
+  U387/Y (OR2X2)                                          0.04       0.84 r
+  U388/Y (INVX1)                                          0.02       0.85 f
+  U603/Y (AOI21X1)                                        0.02       0.87 r
+  alu/B<0> (alu)                                          0.00       0.87 r
+  alu/U75/Y (INVX1)                                       0.03       0.89 f
+  alu/U74/Y (XOR2X1)                                      0.03       0.93 r
+  alu/U78/Y (INVX1)                                       0.03       0.95 f
+  alu/shift/Cnt<0> (shifter)                              0.00       0.95 f
+  alu/shift/shift1/en (shift1Bit)                         0.00       0.95 f
+  alu/shift/shift1/U66/Y (INVX1)                          0.01       0.96 r
+  alu/shift/shift1/U64/Y (INVX1)                          0.02       0.98 f
+  alu/shift/shift1/U109/Y (OAI21X1)                       0.05       1.02 r
+  alu/shift/shift1/out<15> (shift1Bit)                    0.00       1.02 r
+  alu/shift/shift2/dataIn<15> (shift2Bit)                 0.00       1.02 r
+  alu/shift/shift2/U61/Y (AND2X2)                         0.03       1.06 r
+  alu/shift/shift2/U62/Y (INVX1)                          0.02       1.07 f
+  alu/shift/shift2/U111/Y (NAND3X1)                       0.03       1.10 r
+  alu/shift/shift2/U48/Y (BUFX2)                          0.03       1.14 r
+  alu/shift/shift2/U54/Y (OR2X2)                          0.04       1.17 r
+  alu/shift/shift2/U55/Y (INVX1)                          0.01       1.19 f
+  alu/shift/shift2/U142/Y (AOI21X1)                       0.02       1.21 r
+  alu/shift/shift2/out<14> (shift2Bit)                    0.00       1.21 r
+  alu/shift/shift4/dataIn<14> (shift4Bit)                 0.00       1.21 r
+  alu/shift/shift4/U30/Y (BUFX2)                          0.04       1.24 r
+  alu/shift/shift4/U72/Y (INVX1)                          0.02       1.26 f
+  alu/shift/shift4/U7/Y (MUX2X1)                          0.04       1.30 r
+  alu/shift/shift4/U3/Y (OR2X2)                           0.04       1.33 r
+  alu/shift/shift4/U26/Y (INVX1)                          0.02       1.35 f
+  alu/shift/shift4/U128/Y (AOI21X1)                       0.02       1.37 r
+  alu/shift/shift4/out<10> (shift4Bit)                    0.00       1.37 r
+  alu/shift/shift8/dataIn<10> (shift8Bit)                 0.00       1.37 r
+  alu/shift/shift8/U27/Y (BUFX2)                          0.04       1.40 r
+  alu/shift/shift8/U89/Y (AND2X2)                         0.03       1.44 r
+  alu/shift/shift8/U94/Y (MUX2X1)                         0.02       1.46 f
+  alu/shift/shift8/U91/Y (INVX1)                          0.00       1.46 r
+  alu/shift/shift8/out<2> (shift8Bit)                     0.00       1.46 r
+  alu/shift/Out<2> (shifter)                              0.00       1.46 r
+  alu/U309/Y (AOI22X1)                                    0.01       1.47 f
+  alu/U104/Y (BUFX2)                                      0.04       1.51 f
+  alu/U154/Y (AND2X2)                                     0.03       1.54 f
+  alu/U155/Y (INVX1)                                      0.01       1.55 r
+  alu/Out<2> (alu)                                        0.00       1.55 r
+  mem/addr<2> (memory2c_0)                                0.00       1.55 r
+  mem/U481/Y (BUFX4)                                      0.03       1.59 r
+  mem/U4512/Y (NAND3X1)                                   0.01       1.60 f
+  mem/U1089/Y (BUFX2)                                     0.04       1.63 f
+  mem/U1613/Y (XNOR2X1)                                   0.04       1.68 r
+  mem/U2012/Y (INVX1)                                     0.03       1.70 f
+  mem/U423/Y (INVX2)                                      0.03       1.73 r
+  mem/U336/Y (INVX8)                                      0.03       1.76 f
+  mem/U1541/Y (AND2X2)                                    0.05       1.81 f
+  mem/U3023/Y (AOI21X1)                                   0.02       1.83 r
+  mem/U3020/Y (NOR3X1)                                    0.04       1.87 f
+  mem/U3007/Y (AOI22X1)                                   0.04       1.91 r
+  mem/U880/Y (BUFX2)                                      0.04       1.95 r
+  mem/U2973/Y (NAND3X1)                                   0.02       1.97 f
+  mem/U655/Y (BUFX2)                                      0.03       2.00 f
+  mem/U356/Y (AND2X1)                                     0.03       2.03 f
+  mem/data_out<1> (memory2c_0)                            0.00       2.03 f
+  U602/Y (INVX1)                                          0.00       2.03 r
+  U286/Y (AND2X2)                                         0.03       2.06 r
+  U362/Y (INVX1)                                          0.01       2.07 f
+  U596/Y (AND2X2)                                         0.03       2.11 f
+  register/writedata<1> (rf)                              0.00       2.11 f
+  register/U2/Y (INVX1)                                   0.00       2.10 r
+  register/U3/Y (INVX1)                                   0.01       2.11 f
+  register/reg1/wData<1> (register_7)                     0.00       2.11 f
+  register/reg1/U19/Y (AND2X2)                            0.03       2.15 f
+  register/reg1/U20/Y (INVX1)                             0.00       2.14 r
+  register/reg1/U11/Y (AND2X2)                            0.03       2.17 r
+  register/reg1/U12/Y (INVX1)                             0.01       2.19 f
+  register/reg1/flop[1]/d (dff_126)                       0.00       2.19 f
+  register/reg1/flop[1]/U3/Y (INVX1)                      0.00       2.19 r
+  register/reg1/flop[1]/U4/Y (NOR2X1)                     0.01       2.20 f
+  register/reg1/flop[1]/state_reg/D (DFFPOSX1)            0.00       2.20 f
+  data arrival time                                                  2.20
+
+  clock clk (rise edge)                                   1.00       1.00
+  clock network delay (ideal)                             0.00       1.00
+  register/reg1/flop[1]/state_reg/CLK (DFFPOSX1)          0.00       1.00 r
+  library setup time                                     -0.09       0.91
+  data required time                                                 0.91
+  --------------------------------------------------------------------------
+  data required time                                                 0.91
+  data arrival time                                                 -2.20
+  --------------------------------------------------------------------------
+  slack (VIOLATED)                                                  -1.28
+
+
+1
