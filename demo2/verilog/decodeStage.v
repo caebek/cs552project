@@ -1,16 +1,21 @@
-module decodeStage(instr, nextPc, err, regWrtData, regWrtEn, regWrtAddr, halt, 
+module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regWrtEn, regWrtAddr, halt, 
 	sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB, return, cin, memToReg,
-	writeReg, aluSrc, regWrtDataSrc, brType, aluOp, reg1Data, reg2Data, clk, rst);
-	inout [15:0] nextPc, instr;
+	writeReg, aluSrc, regWrtSrc, brType, aluOp, reg1Data, reg2Data, clk, rst);
+	
+
 	// signals from writeback stage 
 	input [15:0] regWrtData;
 	input regWrtEn, clk, rst;
 	input [2:0] regWrtAddr;
 
+
+	input [15:0] nextPcIn, instrIn;
+	output [15:0] nextPcOut, instrOut;
+
 	output err, halt, sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB,
 		return, cin, memToReg;
 
-	output [2:0] aluSrc, regWrtDataSrc, brType, writeReg;
+	output [2:0] aluSrc, regWrtSrc, brType, writeReg;
 	output [3:0] aluOp;
 
 	output [15:0] reg1Data, reg2Data;
@@ -23,12 +28,14 @@ module decodeStage(instr, nextPc, err, regWrtData, regWrtEn, regWrtAddr, halt,
 
 	assign err = |hasErr | regErr | ctrlErr;
 
+	assign nextPcOut = nextPcIn;
+	assign instrOut = instrIn;
 
-	controlBlock ctrlBlk(.opCode(instr[15:11]), .func(instr[1:0]), 
+	controlBlock ctrlBlk(.opCode(instrIn[15:11]), .func(instrIn[1:0]), 
 		.halt(halt), .sign(sign), .pcOffSel(pcOffSel), 
 		.regWrt(regWrt), .memWrt(memWrt), .memToReg(memToReg), .memEn(memEn), 
 		.jump(jump), .invA(invA), .invB(invB), .aluSrc(aluSrc), .err(ctrlErr), 
-		.regDst(regDst), .regWrtSrc(regWrtDataSrc), .aluOp(aluOp), .cin(cin), 
+		.regDst(regDst), .regWrtSrc(regWrtSrc), .aluOp(aluOp), .cin(cin), 
 		.return(return), .brType(brType));
 
 
@@ -38,16 +45,16 @@ module decodeStage(instr, nextPc, err, regWrtData, regWrtEn, regWrtAddr, halt,
 	always@(*) begin
 		hasErr[0] = 0;
 		case(regDst)
-			2'h0: writeReg = instr[7:5];
-			2'h1: writeReg = instr[10:8];
-			2'h2: writeReg = instr[4:2];
+			2'h0: writeReg = instrIn[7:5];
+			2'h1: writeReg = instrIn[10:8];
+			2'h2: writeReg = instrIn[4:2];
 			2'h3: writeReg = 3'h7;
 			default: hasErr[0] = 1'h1;
 		endcase
 	end
 
-	assign read1Sel = instr[10:8];
-	assign read2Sel = instr[7:5];
+	assign read1Sel = instrIn[10:8];
+	assign read2Sel = instrIn[7:5];
 
 	rf register(.read1data(reg1Data), .read2data(reg2Data), .err(regErr), 
 		.clk(clk), .rst(rst), .read1regsel(read1Sel), .read2regsel(read2Sel), 

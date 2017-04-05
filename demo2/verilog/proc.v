@@ -64,9 +64,17 @@ module proc (/*AUTOARG*/
 
 	// assign newPc = (jump | doBranch) ? jumpPc : pcIncr;
 
-	fetchStage fetchMod(.clk(clk), .rst(rst), .halt(halt), .doBranch(doBranch), 
-		.branchPc(branchPc), .nextPc(nextPc), .instr(instr));
+	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(doBranch), 
+		.branchPc(branchPc), .nextPc(fNextPc), .instr(fInstr));
 	
+	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
+		.err(eErr), .regWrtData(regWrtData), .regWrtEn(regWrtEn), .regWrtAddr(regWrtAddr), 
+		.halt(dHalt), .sign(sign), .pcOffSel(pcOffSel), .regWrt(dRegWrt), .memWrt(dMemWrt), 
+		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
+		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
+		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(reg1Data), 
+		.reg2Data(reg2Data), .clk(clk), .rst(rst));
+
 
 	// This need to move to execute stage
 	// always@(*) begin
