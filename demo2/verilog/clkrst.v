@@ -31,7 +31,7 @@ module clkrst (clk, rst, err);
       clk = ~clk;
       if (clk & err) begin
         $display("Error signal asserted");
-        $stop;
+        $finish;
       end
     end
 

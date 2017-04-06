@@ -30,7 +30,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 	reg [2:0] intWriteReg;
 
 
-	wire regErr, ctrlErr;
+	wire regErr, intCtrlErr;
 	wire [1:0] regDst;
 	wire [2:0] read1Sel, read2Sel;
 
@@ -43,7 +43,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 
 
-	assign intErr = |hasErr | regErr | ctrlErr;
+	assign intErr = |hasErr | regErr | intCtrlErr;
 	// assign nextPcOut = nextPcIn;
 	// assign instrOut = instrIn;
 

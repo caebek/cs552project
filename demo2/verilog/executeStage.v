@@ -89,8 +89,8 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 		hasErr[1] = 1'h0;
 		case(instr[12:11])
 			2'h0: intSetVal = (zero) ? 16'h1: 16'h0;
-			2'h1: intSetVal = (aluOut[15] ^ ofl) ? 16'h1: 16'h0;
-			2'h2: intSetVal = (zero | (aluOut[15] ^ ofl)) ? 16'h1: 16'h0;
+			2'h1: intSetVal = (neg ^ ofl) ? 16'h1: 16'h0;
+			2'h2: intSetVal = (zero | (neg ^ ofl)) ? 16'h1: 16'h0;
 			2'h3: intSetVal = (ofl) ? 16'h1: 16'h0;
 			default: hasErr[1] = 1'h1;
 		endcase

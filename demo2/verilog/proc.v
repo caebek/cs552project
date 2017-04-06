@@ -27,11 +27,11 @@ module proc (/*AUTOARG*/
 	wire [3:0] aluOp;
 	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, regWrtData, dReg1Data, 
 			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData;
-	
-	assign err =  ~rst & (dErr | eErr | mErr);
-
 	reg [1:0] hasErr;
 	reg [15:0] regAData, regBData;
+	
+	assign err =  ~rst & (dErr | eErr | mErr | |hasErr);
+
 	// Outputs of each stage are already flopped
 	
 
@@ -80,10 +80,6 @@ module proc (/*AUTOARG*/
 	assign memFwdA = eRegWrt & (eWriteReg == regA);
 	assign memFwdB = eRegWrt & (eWriteReg == regB);
 
-	// assign regAData = (memFwdA) ? aluOut : dReg1Data;
-	// assign regBData = (memFwdB) ? aluOut : dReg2Data;
-
-	// eRegWrt & eWriteReg != regA
 
 	assign wbFwdA = regWrtEn & (writeReg == regA) & ~memFwdA;//(~eRegWrt | (eRegWrt & (eWriteReg != regA)));
 	assign wbFwdB = regWrtEn & (writeReg == regB) & ~memFwdB;//(~eRegWrt | (eRegWrt & (eWriteReg != regB)));
