@@ -46,6 +46,7 @@ module memoryStage(clk, rst, err, aluOut, setVal, memWrt, memEn, halt, reg2Data,
 	dff memOF[15:0](.d(intMemOut), .q(memOut), .clk(clk), .rst(rst));
 	dff regWrtDF[15:0](.d(intRegWriteData), .q(regWriteData), .clk(clk), .rst(rst));
 
+
 	dff regWrtF(.d(regWrt), .q(regWrtOut), .clk(clk), .rst(rst));
 	dff errF(.d(intErr), .q(err), .clk(clk), .rst(rst));
 
