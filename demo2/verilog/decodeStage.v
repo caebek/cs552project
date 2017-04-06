@@ -4,21 +4,27 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 	
 
 	// signals from writeback stage
-	input regWrtEn, clk, rst;
+	input regWrtEn;
 	input [2:0] regWrtAddr;
-	input [15:0] regWrtData, nextPcIn, instrIn;
+	input [15:0] regWrtData;
+
+
+
+	input clk, rst;
 
 	// Pass through sigs
+	input [15:0] nextPcIn, instrIn;
 
 
-
+	// outputs originating from this module
 	output err, halt, sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB,
 		return, cin, memToReg;
 	output [2:0] aluSrc, regWrtSrc, brType, writeReg;
 	output [3:0] aluOp;
-	output [15:0] reg1Data, reg2Data, nextPcOut, instrOut;
+	output [15:0] reg1Data, reg2Data;
 
 	// Pass through outputs
+	output [15:0] nextPcOut, instrOut;
 
 	reg hasErr;
 	reg [2:0] intWriteReg;
@@ -66,7 +72,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 	assign read1Sel = instrIn[10:8];
 	assign read2Sel = instrIn[7:5];
 
-	rf register(.read1data(intReg1Data), .read2data(intReg2Data), .err(regErr), 
+	rf_bypass register(.read1data(intReg1Data), .read2data(intReg2Data), .err(regErr), 
 		.clk(clk), .rst(rst), .read1regsel(read1Sel), .read2regsel(read2Sel), 
 		.writeregsel(regWrtAddr), .writedata(regWrtData), .write(regWrtEn));
 
@@ -78,7 +84,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 	dff reg2F[15:0](.d(intReg2Data), .q(reg2Data), .clk(clk), .rst(rst));
 
 
-	dff haltF(.d(intHalt & ~(nextPcIn == 16'h2)), .q(halt), .clk(clk), .rst(rst));
+	dff haltF(.d(intHalt & ~(nextPcIn == 16'h0)), .q(halt), .clk(clk), .rst(rst));
 	dff errF(.d(intErr), .q(err), .clk(clk), .rst(rst));
 	dff signF(.d(intSign), .q(sign), .clk(clk), .rst(rst));
 	dff pcOffF(.d(intPcOffSel), .q(pcOffSel), .clk(clk), .rst(rst));

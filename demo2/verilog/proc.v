@@ -24,7 +24,7 @@ module proc (/*AUTOARG*/
 
 	wire dErr, eErr, mErr, regWrtEn, dHalt, eHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, mRegWrt, dMemWrt, eMemWrt, 
 			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch;
-	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType;
+	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg;
 	wire [3:0] aluOp;
 	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, regWrtData, dReg1Data, 
 			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData;
@@ -39,7 +39,7 @@ module proc (/*AUTOARG*/
 
 
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
-		.err(dErr), .regWrtData(regWrtData), .regWrtEn(regWrtEn), .regWrtAddr(regWrtAddr), 
+		.err(dErr), .regWrtData(regWriteData), .regWrtEn(regWrtEn), .regWrtAddr(writeReg), 
 		.halt(dHalt), .sign(sign), .pcOffSel(pcOffSel), .regWrt(dRegWrt), .memWrt(dMemWrt), 
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
@@ -62,8 +62,9 @@ module proc (/*AUTOARG*/
 
 	memoryStage memory(.clk(clk), .rst(rst), .err(mErr), .aluOut(aluOut), .setVal(setVal), 
 					.memWrt(eMemWrt), .memEn(eMemEn), .halt(halt), .reg2Data(eReg2Data), .reg1Data(eReg1Data), 
-					.nextPc(eNextPc), .instr(eInstr), .regWrt(eRegWrt), .regWrtOut(mRegWrt), 
-					.regWrtSrc(eRegWrtSrc), .memOut(memOut), .regWriteData(regWriteData));
+					.nextPc(eNextPc), .instr(eInstr), .regWrt(eRegWrt), .regWrtOut(regWrtEn), 
+					.regWrtSrc(eRegWrtSrc), .memOut(memOut), .regWriteData(regWriteData),
+					.writeReg(eWriteReg), .writeRegOut(writeReg));
 
 
 

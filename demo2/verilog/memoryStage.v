@@ -1,11 +1,12 @@
 module memoryStage(clk, rst, err, aluOut, setVal, memWrt, memEn, halt, reg2Data, reg1Data, nextPc, instr, 
-					regWrt, regWrtOut, regWrtSrc, memOut, regWriteData);
+					regWrt, regWrtOut, regWrtSrc, memOut, regWriteData, writeReg, writeRegOut);
 
 	input clk, rst, halt, memEn, memWrt, regWrt;
-	input [2:0] regWrtSrc;
+	input [2:0] regWrtSrc, writeReg;
 	input [15:0] aluOut, reg1Data, reg2Data, nextPc, instr, setVal;
 
 	output err, regWrtOut;
+	output [2:0] writeRegOut;
 	output [15:0] memOut, regWriteData;
 
 
@@ -47,6 +48,8 @@ module memoryStage(clk, rst, err, aluOut, setVal, memWrt, memEn, halt, reg2Data,
 
 	dff regWrtF(.d(regWrt), .q(regWrtOut), .clk(clk), .rst(rst));
 	dff errF(.d(intErr), .q(err), .clk(clk), .rst(rst));
+
+	dff wrtRegF [2:0] (.d(writeReg), .q(writeRegOut), .clk(clk), .rst(rst));
 
 
 endmodule
