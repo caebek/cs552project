@@ -23,7 +23,7 @@ module proc (/*AUTOARG*/
 
 	wire dErr, eErr, mErr, regWrtEn, dHalt, eHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, mRegWrt, dMemWrt, eMemWrt, 
 			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, stall;
-	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, sRegA, sRegB;
+	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, sRegA, sRegB, haltOut;
 	wire [3:0] aluOp;
 	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, regWrtData, dReg1Data, 
 			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData;
@@ -60,7 +60,7 @@ module proc (/*AUTOARG*/
 		 .haltOut(halt));
 
 
-
+	// dff hf(.d(halt), .q(haltOut), .clk(clk), .rst(rst));
 	memoryStage memory(.clk(clk), .rst(rst), .err(mErr), .aluOut(aluOut), .setVal(setVal), 
 					.memWrt(eMemWrt), .memEn(eMemEn), .halt(halt), .reg2Data(eReg2Data), .reg1Data(eReg1Data), 
 					.nextPc(eNextPc), .instr(eInstr), .regWrt(eRegWrt), .regWrtOut(regWrtEn), 

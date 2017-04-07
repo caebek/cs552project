@@ -29,7 +29,7 @@ module memoryStage(clk, rst, err, aluOut, setVal, memWrt, memEn, halt, reg2Data,
 		intErr = 0;
 		intRegWriteData = 16'h0;
 		case(regWrtSrc)
-			3'h0: intRegWriteData = memOut;
+			3'h0: intRegWriteData = intMemOut;
 			3'h1: intRegWriteData = aluOut;
 			3'h2: intRegWriteData = nextPc;
 			3'h3: intRegWriteData = setVal; // probably update this name
