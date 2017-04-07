@@ -113,7 +113,7 @@ module proc (/*AUTOARG*/
 	assign sRegA = fInstr[10:8];
 	assign sRegB = fInstr[7:5];
 
-	assign stall = (dMemEn & ~dMemWrt) & ((regA == sRegB) | (regB == sRegA) | decode.opCode == 5'h0);
+	assign stall = (dMemEn & ~dMemWrt) & ((regA == sRegB) | (regB == sRegA) | decode.ctrlBlk.opCode == 5'h0);
 	
 
 
