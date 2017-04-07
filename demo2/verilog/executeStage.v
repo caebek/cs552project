@@ -2,10 +2,10 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 					memEn, jump, invA, invB, return, cin, memToReg, writeReg, aluSrc,regWrtSrc,
 					brType, aluOp, reg1Data, reg2Data, reg1DataOut, reg2DataOut, clk, rst, jumpPc,
 					setVal, doBranch, aluOut, regWrtOut, memWrtOut, memEnOut, regWrtSrcOut, writeRegOut,
-					haltOut);
+					haltOut, flushPipe);
 	
 	input halt, sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB,
-		return, cin, memToReg, clk, rst;
+		return, cin, memToReg, clk, rst, flushPipe;
 	input [2:0] aluSrc, regWrtSrc, brType, writeReg;
 	input [3:0] aluOp;
 	input [15:0] reg1Data, reg2Data, nextPc, instr;
@@ -14,7 +14,7 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	output [2:0] regWrtSrcOut, writeRegOut;
 	output [15:0] jumpPc, aluOut, nextPcOut, instrOut, reg1DataOut, reg2DataOut, setVal;
 
-	wire zero, neg, ofl;
+	wire zero, neg, ofl, ffRst;
 	wire [15:0] base, offset, a, intJumpPc, intAluOut;
 
 	reg intDoBranch;
@@ -40,24 +40,26 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	// assign regWrtSrcOut = regWrtSrc; 
 	// assign haltOut = halt;
 
-	dff haltF(.d(halt), .q(haltOut), .clk(clk), .rst(rst));
-	dff memEnF(.d(memEn), .q(memEnOut), .clk(clk), .rst(rst));
-	dff memWRtF(.d(memWrt), .q(memWrtOut), .clk(clk), .rst(rst));
-	dff regWrtF(.d(regWrt), .q(regWrtOut), .clk(clk), .rst(rst));
-	dff errF(.d(|hasErr), .q(err), .clk(clk), .rst(rst));
-	dff doBrF(.d(intDoBranch), .q(doBranch), .clk(clk), .rst(rst));
+	assign ffRst = rst | flushPipe;
+
+	dff haltF(.d(halt), .q(haltOut), .clk(clk), .rst(ffRst));
+	dff memEnF(.d(memEn), .q(memEnOut), .clk(clk), .rst(ffRst));
+	dff memWRtF(.d(memWrt), .q(memWrtOut), .clk(clk), .rst(ffRst));
+	dff regWrtF(.d(regWrt), .q(regWrtOut), .clk(clk), .rst(ffRst));
+	dff errF(.d(|hasErr), .q(err), .clk(clk), .rst(ffRst));
+	dff doBrF(.d(intDoBranch), .q(doBranch), .clk(clk), .rst(ffRst));
 
 
-	dff regWrtSrcF[2:0] (.d(regWrtSrc), .q(regWrtSrcOut), .clk(clk), .rst(rst));
-	dff wrtRegF[2:0] (.d(writeReg), .q(writeRegOut), .clk(clk), .rst(rst));
+	dff regWrtSrcF[2:0] (.d(regWrtSrc), .q(regWrtSrcOut), .clk(clk), .rst(ffRst));
+	dff wrtRegF[2:0] (.d(writeReg), .q(writeRegOut), .clk(clk), .rst(ffRst));
 
-	dff reg1F[15:0](.d(reg1Data), .q(reg1DataOut), .clk(clk), .rst(rst));
-	dff reg2F[15:0](.d(reg2Data), .q(reg2DataOut), .clk(clk), .rst(rst));
+	dff reg1F[15:0](.d(reg1Data), .q(reg1DataOut), .clk(clk), .rst(ffRst));
+	dff reg2F[15:0](.d(reg2Data), .q(reg2DataOut), .clk(clk), .rst(ffRst));
 	dff instrF[15:0](.d(instr), .q(instrOut), .clk(clk), .rst(rst));
-	dff nextPcF[15:0](.d(nextPc), .q(nextPcOut), .clk(clk), .rst(rst));
-	dff jmpPcF[15:0](.d(intJumpPc), .q(jumpPc), .clk(clk), .rst(rst));
-	dff aluOutF[15:0](.d(intAluOut), .q(aluOut), .clk(clk), .rst(rst));
-	dff setValF[15:0](.d(intSetVal), .q(setVal), .clk(clk), .rst(rst));
+	dff nextPcF[15:0](.d(nextPc), .q(nextPcOut), .clk(clk), .rst(ffRst));
+	dff jmpPcF[15:0](.d(intJumpPc), .q(jumpPc), .clk(clk), .rst(ffRst));
+	dff aluOutF[15:0](.d(intAluOut), .q(aluOut), .clk(clk), .rst(ffRst));
+	dff setValF[15:0](.d(intSetVal), .q(setVal), .clk(clk), .rst(ffRst));
 
 
 	// Jump/Branch PC calculation

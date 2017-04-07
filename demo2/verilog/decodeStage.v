@@ -1,6 +1,6 @@
 module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regWrtEn, regWrtAddr, halt, 
 	sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB, return, cin, memToReg,
-	writeReg, aluSrc, regWrtSrc, brType, aluOp, reg1Data, reg2Data, clk, rst, stall);
+	writeReg, aluSrc, regWrtSrc, brType, aluOp, reg1Data, reg2Data, clk, rst, stall, doBranch);
 	
 
 	// signals from writeback stage
@@ -10,7 +10,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 
 
-	input clk, rst, stall;
+	input clk, rst, stall, doBranch;
 
 	// Pass through sigs
 	input [15:0] nextPcIn, instrIn;
@@ -36,7 +36,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 	// Internal wires that input into the flip flops
 	wire intErr, intHalt, intSign, intPcOffSel, intRegWrt, intMemWrt, intMemEn, intJump, intInvA, intInvB,
-		intReturn, intCin, intMemToReg;
+		intReturn, intCin, intMemToReg, ffRst;
 	wire [2:0] intAluSrc, intRegWrtSrc, intBrType;
 	wire [3:0] intAluOp;
 	wire [15:0] intReg1Data, intReg2Data;
@@ -78,35 +78,35 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 
 
-	dff fPC[15:0](.d(nextPcIn), .q(nextPcOut), .clk(clk), .rst(rst));
+	dff fPC[15:0](.d(nextPcIn), .q(nextPcOut), .clk(clk), .rst(ffRst));
 	dff fInst[15:0](.d(instrIn), .q(instrOut), .clk(clk), .rst(rst));
-	dff reg1F[15:0](.d(intReg1Data), .q(reg1Data), .clk(clk), .rst(rst));
-	dff reg2F[15:0](.d(intReg2Data), .q(reg2Data), .clk(clk), .rst(rst));
+	dff reg1F[15:0](.d(intReg1Data), .q(reg1Data), .clk(clk), .rst(ffRst));
+	dff reg2F[15:0](.d(intReg2Data), .q(reg2Data), .clk(clk), .rst(ffRst));
 
 
-	dff haltF(.d(intHalt & ~(nextPcIn == 16'h0)), .q(halt), .clk(clk), .rst(rst));
-	dff errF(.d(intErr), .q(err), .clk(clk), .rst(rst));
-	dff signF(.d(intSign), .q(sign), .clk(clk), .rst(rst));
-	dff pcOffF(.d(intPcOffSel), .q(pcOffSel), .clk(clk), .rst(rst));
-	dff regWrtF(.d(intRegWrt), .q(regWrt), .clk(clk), .rst(rst));
-	dff memWrtF(.d(intMemWrt), .q(memWrt), .clk(clk), .rst(rst));
-	dff memEnF(.d(intMemEn), .q(memEn), .clk(clk), .rst(rst));
-	dff jmpF(.d(intJump), .q(jump), .clk(clk), .rst(rst));
-	dff invAF(.d(intInvA), .q(invA), .clk(clk), .rst(rst));
-	dff invBF(.d(intInvB), .q(invB), .clk(clk), .rst(rst));
-	dff retF(.d(intReturn), .q(return), .clk(clk), .rst(rst));
-	dff cinF(.d(intCin), .q(cin), .clk(clk), .rst(rst));
-	dff mem2RF(.d(intMemToReg), .q(memToReg), .clk(clk), .rst(rst));
+	dff haltF(.d(intHalt & ~(nextPcIn == 16'h0)), .q(halt), .clk(clk), .rst(ffRst));
+	dff errF(.d(intErr), .q(err), .clk(clk), .rst(ffRst));
+	dff signF(.d(intSign), .q(sign), .clk(clk), .rst(ffRst));
+	dff pcOffF(.d(intPcOffSel), .q(pcOffSel), .clk(clk), .rst(ffRst));
+	dff regWrtF(.d(intRegWrt), .q(regWrt), .clk(clk), .rst(ffRst));
+	dff memWrtF(.d(intMemWrt), .q(memWrt), .clk(clk), .rst(ffRst));
+	dff memEnF(.d(intMemEn), .q(memEn), .clk(clk), .rst(ffRst));
+	dff jmpF(.d(intJump), .q(jump), .clk(clk), .rst(ffRst));
+	dff invAF(.d(intInvA), .q(invA), .clk(clk), .rst(ffRst));
+	dff invBF(.d(intInvB), .q(invB), .clk(clk), .rst(ffRst));
+	dff retF(.d(intReturn), .q(return), .clk(clk), .rst(ffRst));
+	dff cinF(.d(intCin), .q(cin), .clk(clk), .rst(ffRst));
+	dff mem2RF(.d(intMemToReg), .q(memToReg), .clk(clk), .rst(ffRst));
 
 
-	dff aluSrcF[2:0] (.d(intAluSrc), .q(aluSrc), .clk(clk), .rst(rst));
-	dff regWrtSrcF[2:0] (.d(intRegWrtSrc), .q(regWrtSrc), .clk(clk), .rst(rst));
-	dff brTyF[2:0] (.d(intBrType), .q(brType), .clk(clk), .rst(rst));
-	dff wrtRegF[2:0] (.d(intWriteReg), .q(writeReg), .clk(clk), .rst(rst));
+	dff aluSrcF[2:0] (.d(intAluSrc), .q(aluSrc), .clk(clk), .rst(ffRst));
+	dff regWrtSrcF[2:0] (.d(intRegWrtSrc), .q(regWrtSrc), .clk(clk), .rst(ffRst));
+	dff brTyF[2:0] (.d(intBrType), .q(brType), .clk(clk), .rst(ffRst));
+	dff wrtRegF[2:0] (.d(intWriteReg), .q(writeReg), .clk(clk), .rst(ffRst));
 
 
-	dff aluOpF[3:0] (.d(intAluOp), .q(aluOp), .clk(clk), .rst(rst));
+	dff aluOpF[3:0] (.d(intAluOp), .q(aluOp), .clk(clk), .rst(ffRst));
 
-
+	assign ffRst = rst | doBranch;
 
 endmodule

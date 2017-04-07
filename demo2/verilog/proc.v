@@ -45,7 +45,7 @@ module proc (/*AUTOARG*/
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
 		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(dReg1Data), 
-		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(stall));
+		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(stall), .doBranch(doBranch));
 
 	// Flop outputs
 
@@ -57,7 +57,7 @@ module proc (/*AUTOARG*/
 		.reg2Data(regBData), .reg1DataOut(eReg1Data), .reg2DataOut(eReg2Data), .clk(clk), .rst(rst),
 		.jumpPc(jumpPc), .setVal(setVal), .doBranch(doBranch), .aluOut(aluOut), .regWrtOut(eRegWrt),
 		 .memWrtOut(eMemWrt), .memEnOut(eMemEn), .regWrtSrcOut(eRegWrtSrc), .writeRegOut(eWriteReg),
-		 .haltOut(halt));
+		 .haltOut(halt), .flushPipe(doBranch));
 
 
 	// dff hf(.d(halt), .q(haltOut), .clk(clk), .rst(rst));
