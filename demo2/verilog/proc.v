@@ -22,8 +22,8 @@ module proc (/*AUTOARG*/
 	// cases that you think are illegal in your statemachines
 
 	wire dErr, eErr, mErr, regWrtEn, dHalt, eHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, mRegWrt, dMemWrt, eMemWrt, 
-			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB;
-	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB;
+			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, stall;
+	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, sRegA, sRegB;
 	wire [3:0] aluOp;
 	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, regWrtData, dReg1Data, 
 			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData;
@@ -36,7 +36,7 @@ module proc (/*AUTOARG*/
 	
 
 	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(doBranch), 
-		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr));
+		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(stall));
 
 
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
@@ -45,7 +45,7 @@ module proc (/*AUTOARG*/
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
 		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(dReg1Data), 
-		.reg2Data(dReg2Data), .clk(clk), .rst(rst));
+		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(stall));
 
 	// Flop outputs
 
@@ -108,8 +108,13 @@ module proc (/*AUTOARG*/
 	// Pg 313/314 for stalling 
 	// pg 306 308 311 for forwarding 
 
+	//Stalling Logic
 
+	assign sRegA = fInstr[10:8];
+	assign sRegB = fInstr[7:5];
 
+	assign stall = (dMemEn & ~dMemWrt) & ((regA == sRegB) | (regB == sRegA) | decode.opCode == 5'h0);
+	
 
 
 

@@ -1,7 +1,8 @@
 module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg, memEn, jump, invA, invB, aluSrc, err,
-    regDst, regWrtSrc, aluOp, return, cin, brType);
+    regDst, regWrtSrc, aluOp, return, cin, brType, stall);
     input [4:0] opCode;
     input [1:0] func;
+    input stall;
 
     output reg halt, sign, regWrt, pcOffSel, memWrt, memToReg, memEn, jump, 
     			invA, invB, err, return, cin;
@@ -9,6 +10,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     output reg [3:0] aluOp;
     output reg [2:0] aluSrc, regWrtSrc, brType;
 
+    wire [4:0] tempOp;
 
 
     // I1
@@ -73,14 +75,14 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
 
 
 
-
+   assign tempOp = stall ? NOP : opCode;
     // determine which format the instruction is
    	// is it even worth though? 
    	// better to just have huge case statement for each opcode/function
    	// and assign control sigs for there
     // fmtDecode fmt(.opCode(opCode), .fmt(format));
 
-    always@(opCode, func) begin
+    always@(tempOp, func) begin
     	halt = 0;
     	sign = 1'h0;
     	pcOffSel = 1'h0;
@@ -88,8 +90,8 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     	memWrt = 0;
     	memToReg = 0; // needed? only for pipeline?
     	memEn = 0;
-    	jump = 0
-;    	return  = 0;
+    	jump = 0;
+        return  = 0;
     	invA = 0;
     	invB = 0;
     	regDst = 0;
@@ -101,8 +103,8 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
         aluSrc = 3'h4;
         brType = NOBR;
 
-    	casex({opCode,func})
 
+    	casex({tempOp,func})
 
 /************************ r instr ****************************/
             {BTR, DC}: begin

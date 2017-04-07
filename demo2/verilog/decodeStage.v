@@ -1,6 +1,6 @@
 module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regWrtEn, regWrtAddr, halt, 
 	sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB, return, cin, memToReg,
-	writeReg, aluSrc, regWrtSrc, brType, aluOp, reg1Data, reg2Data, clk, rst);
+	writeReg, aluSrc, regWrtSrc, brType, aluOp, reg1Data, reg2Data, clk, rst, stall);
 	
 
 	// signals from writeback stage
@@ -10,7 +10,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 
 
-	input clk, rst;
+	input clk, rst, stall;
 
 	// Pass through sigs
 	input [15:0] nextPcIn, instrIn;
@@ -52,7 +52,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 		.regWrt(intRegWrt), .memWrt(intMemWrt), .memToReg(intMemToReg), .memEn(intMemEn), 
 		.jump(intJump), .invA(intInvA), .invB(intInvB), .aluSrc(intAluSrc), .err(intCtrlErr), 
 		.regDst(regDst), .regWrtSrc(intRegWrtSrc), .aluOp(intAluOp), .cin(intCin), 
-		.return(intReturn), .brType(intBrType));
+		.return(intReturn), .brType(intBrType), .stall(stall));
 
 
 	// determine which reg to write to here but we need to pass
