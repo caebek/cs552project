@@ -22,11 +22,12 @@ module proc (/*AUTOARG*/
 	// cases that you think are illegal in your statemachines
 
 	wire dErr, eErr, mErr, regWrtEn, dHalt, eHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, mRegWrt, dMemWrt, eMemWrt, 
-			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, stall;
-	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, sRegA, sRegB, haltOut;
+			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, stall, intDoBranch, intJump;
+	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, sRegA, sRegB;
 	wire [3:0] aluOp;
+	wire [4:0] dOp;
 	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, regWrtData, dReg1Data, 
-			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData;
+			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData, intJumpPc, intRegWriteData;
 	reg [1:0] hasErr;
 	reg [15:0] regAData, regBData;
 	
@@ -35,8 +36,8 @@ module proc (/*AUTOARG*/
 	// Outputs of each stage are already flopped
 	
 
-	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(execute.intDoBranch | execute.jump), 
-		.branchPc(execute.intJumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(stall));
+	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(intDoBranch | intJump), 
+		.branchPc(intJumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(stall));
 
 
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
@@ -45,7 +46,7 @@ module proc (/*AUTOARG*/
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
 		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(dReg1Data), 
-		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(stall), .doBranch(execute.intDoBranch | execute.jump));
+		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(stall), .doBranch(intDoBranch | intJump));
 
 	// Flop outputs
 
@@ -57,7 +58,7 @@ module proc (/*AUTOARG*/
 		.reg2Data(regBData), .reg1DataOut(eReg1Data), .reg2DataOut(eReg2Data), .clk(clk), .rst(rst),
 		.jumpPc(jumpPc), .setVal(setVal), .doBranch(doBranch), .aluOut(aluOut), .regWrtOut(eRegWrt),
 		 .memWrtOut(eMemWrt), .memEnOut(eMemEn), .regWrtSrcOut(eRegWrtSrc), .writeRegOut(eWriteReg),
-		 .haltOut(halt));
+		 .haltOut(halt), .intDoBranch(intDoBranch), .jumpOut(intJump), .intJumpPc(intJumpPc));
 
 
 	// dff hf(.d(halt), .q(haltOut), .clk(clk), .rst(rst));
@@ -65,7 +66,7 @@ module proc (/*AUTOARG*/
 					.memWrt(eMemWrt), .memEn(eMemEn), .halt(halt), .reg2Data(eReg2Data), .reg1Data(eReg1Data), 
 					.nextPc(eNextPc), .instr(eInstr), .regWrt(eRegWrt), .regWrtOut(regWrtEn), 
 					.regWrtSrc(eRegWrtSrc), .memOut(memOut), .regWriteData(regWriteData),
-					.writeReg(eWriteReg), .writeRegOut(writeReg));
+					.writeReg(eWriteReg), .writeRegOut(writeReg), .intRegWriteData(intRegWriteData));
 
 
 	// Forward logic
@@ -90,7 +91,7 @@ module proc (/*AUTOARG*/
 		case({memFwdA, wbFwdA})
 			2'b00: regAData = dReg1Data;
 			2'b01: regAData = regWriteData;
-			2'b10: regAData = memory.intRegWriteData;
+			2'b10: regAData = intRegWriteData;
 			default: hasErr[0] = 1'h1;
 		endcase
 	end
@@ -100,7 +101,7 @@ module proc (/*AUTOARG*/
 		case({memFwdB, wbFwdB})
 			2'b00: regBData = dReg2Data;
 			2'b01: regBData = regWriteData;
-			2'b10: regBData = memory.intRegWriteData;
+			2'b10: regBData = intRegWriteData;
 			default: hasErr[1] = 1'h1;
 		endcase
 	end
@@ -113,9 +114,12 @@ module proc (/*AUTOARG*/
 	assign sRegA = fInstr[10:8];
 	assign sRegB = fInstr[7:5];
 
+
+	assign dOp = fInstr[15:11];
+
 	// stall if we are reading memory and the reg we will write that value to is used in the next instruction, or the next instruction is a halt and the next instrction
 	// isnt a ld or st or stu. 
-	assign stall = (dMemEn & ~dMemWrt) & ((regA == sRegB) | (regB == sRegA) | decode.ctrlBlk.opCode == 5'h0) & decode.ctrlBlk.opCode != 5'b10001 & decode.ctrlBlk.opCode != 5'b10000 & decode.ctrlBlk.opCode != 5'b10011;
+	assign stall = (dMemEn & ~dMemWrt) & ((regA == sRegB) | (regB == sRegA) | dOp == 5'h0) & dOp != 5'b10001 & dOp != 5'b10000 & dOp != 5'b10011;
 	
 
 
