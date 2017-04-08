@@ -78,6 +78,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 
 	assign tempInstr = stall ? 16'h0800 : instrIn;
+	
 	dff fPC[15:0](.d(nextPcIn), .q(nextPcOut), .clk(clk), .rst(ffRst));
 	dff fInst[15:0](.d(tempInstr), .q(instrOut), .clk(clk), .rst(rst));
 	dff reg1F[15:0](.d(intReg1Data), .q(reg1Data), .clk(clk), .rst(ffRst));
