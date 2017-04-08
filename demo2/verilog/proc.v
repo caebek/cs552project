@@ -35,8 +35,8 @@ module proc (/*AUTOARG*/
 	// Outputs of each stage are already flopped
 	
 
-	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(doBranch), 
-		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(stall));
+	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt), .doBranch(execute.intDoBranch | execute.jump), 
+		.branchPc(execute.intJumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(stall));
 
 
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
@@ -45,7 +45,7 @@ module proc (/*AUTOARG*/
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
 		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(dReg1Data), 
-		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(stall), .doBranch(doBranch));
+		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(stall), .doBranch(execute.intDoBranch | execute.jump));
 
 	// Flop outputs
 
@@ -57,7 +57,7 @@ module proc (/*AUTOARG*/
 		.reg2Data(regBData), .reg1DataOut(eReg1Data), .reg2DataOut(eReg2Data), .clk(clk), .rst(rst),
 		.jumpPc(jumpPc), .setVal(setVal), .doBranch(doBranch), .aluOut(aluOut), .regWrtOut(eRegWrt),
 		 .memWrtOut(eMemWrt), .memEnOut(eMemEn), .regWrtSrcOut(eRegWrtSrc), .writeRegOut(eWriteReg),
-		 .haltOut(halt), .flushPipe(doBranch));
+		 .haltOut(halt));
 
 
 	// dff hf(.d(halt), .q(haltOut), .clk(clk), .rst(rst));
@@ -113,7 +113,9 @@ module proc (/*AUTOARG*/
 	assign sRegA = fInstr[10:8];
 	assign sRegB = fInstr[7:5];
 
-	assign stall = (dMemEn & ~dMemWrt) & ((regA == sRegB) | (regB == sRegA) | decode.ctrlBlk.opCode == 5'h0);
+	// stall if we are reading memory and the reg we will write that value to is used in the next instruction, or the next instruction is a halt and the next instrction
+	// isnt a ld or st or stu. 
+	assign stall = (dMemEn & ~dMemWrt) & ((regA == sRegB) | (regB == sRegA) | decode.ctrlBlk.opCode == 5'h0) & decode.ctrlBlk.opCode != 5'b10001 & decode.ctrlBlk.opCode != 5'b10000 & decode.ctrlBlk.opCode != 5'b10011;
 	
 
 

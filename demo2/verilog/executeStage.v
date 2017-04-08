@@ -40,7 +40,7 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	// assign regWrtSrcOut = regWrtSrc; 
 	// assign haltOut = halt;
 
-	assign ffRst = rst | flushPipe;
+	assign ffRst = rst;
 
 	dff haltF(.d(halt), .q(haltOut), .clk(clk), .rst(ffRst));
 	dff memEnF(.d(memEn), .q(memEnOut), .clk(clk), .rst(ffRst));
