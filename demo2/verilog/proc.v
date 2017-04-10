@@ -21,15 +21,15 @@ module proc (/*AUTOARG*/
 	// As desribed in the homeworks, use the err signal to trap corner
 	// cases that you think are illegal in your statemachines
 
-	wire dErr, eErr, mErr, regWrtEn, dHalt, eHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, mRegWrt, dMemWrt, eMemWrt, 
-			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, stall, intDoBranch, intJump;
+	wire dErr, eErr, mErr, regWrtEn, dHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, dMemWrt, eMemWrt, 
+			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, stall, jumpOut;
 	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, regRt, regRs, mRegWrtSrc;
 	wire [3:0] aluOp;
 	wire [4:0] dOp;
 	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, dReg1Data, 
-			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData, intJumpPc, fwdData, writeData;
+			eReg1Data, dReg2Data, eReg2Data, jumpPc, setVal, aluOut, memOut, regWriteData, fwdData, writeData;
 	reg [1:0] hasErr;
-	reg [15:0] regAData, regBData;// writeData;
+	reg [15:0] regAData, regBData;
 	
 	assign err =  ~rst & (dErr | eErr | mErr | |hasErr);
 

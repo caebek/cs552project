@@ -1,0 +1,986 @@
+
+                           Design Compiler Graphical 
+                                 DC Ultra (TM)
+                                  DFTMAX (TM)
+                              Power Compiler (TM)
+                                 DesignWare (R)
+                                 DC Expert (TM)
+                               Design Vision (TM)
+                               HDL Compiler (TM)
+                               VHDL Compiler (TM)
+                                  DFT Compiler
+                               Design Compiler(R)
+
+              Version L-2016.03-SP4-1 for linux64 - Sep 10, 2016 
+
+                    Copyright (c) 1988 - 2016 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+            or distribution of this software is strictly prohibited.
+Initializing...
+echo "********** CS552 Reading files begin ********************"
+********** CS552 Reading files begin ********************
+set my_verilog_files [list alu.v carry4Bit.v cla16Bit.v cla4Bit.v controlBlock.v dff.v faGP.v incr2.v memory2c.syn.v proc.v register.v rf_bypass.v rf.v shift1Bit.v shift2Bit.v shift4Bit.v shift8bit.v shifter.v fetchStage.v decodeStage.v executeStage.v memoryStage.v  ]
+alu.v carry4Bit.v cla16Bit.v cla4Bit.v controlBlock.v dff.v faGP.v incr2.v memory2c.syn.v proc.v register.v rf_bypass.v rf.v shift1Bit.v shift2Bit.v shift4Bit.v shift8bit.v shifter.v fetchStage.v decodeStage.v executeStage.v memoryStage.v
+set my_toplevel proc
+proc
+define_design_lib WORK -path ./WORK
+1
+analyze -f verilog $my_verilog_files
+Running PRESTO HDLC
+Compiling source file ./alu.v
+Compiling source file ./carry4Bit.v
+Compiling source file ./cla16Bit.v
+Compiling source file ./cla4Bit.v
+Compiling source file ./controlBlock.v
+Compiling source file ./dff.v
+Warning:  ./dff.v:15: delays for continuous assignment are ignored. (VER-173)
+Compiling source file ./faGP.v
+Compiling source file ./incr2.v
+Compiling source file ./memory2c.syn.v
+Compiling source file ./proc.v
+Warning:  ./memory2c.syn.v:71: The statements in initial blocks are ignored. (VER-281)
+Warning:  ./proc.v:34: Recommend parentheses when a reduction-or follows bitwise-or. (VER-225)
+Compiling source file ./register.v
+Compiling source file ./rf_bypass.v
+Compiling source file ./rf.v
+Compiling source file ./shift1Bit.v
+Compiling source file ./shift2Bit.v
+Compiling source file ./shift4Bit.v
+Compiling source file ./shift8bit.v
+Compiling source file ./shifter.v
+Compiling source file ./fetchStage.v
+Compiling source file ./decodeStage.v
+Compiling source file ./executeStage.v
+Compiling source file ./memoryStage.v
+Presto compilation completed successfully.
+Loading db file '/u/k/a/karu/courses/cs552/cad/Synopsys_Libraries/libs/gscl45nm.db'
+1
+elaborate $my_toplevel -architecture verilog
+Loading db file '/s/synopsys-2016_09_23/@sys/L-2016.03-SP4-1/libraries/syn/gtech.db'
+Loading db file '/s/synopsys-2016_09_23/@sys/L-2016.03-SP4-1/libraries/syn/standard.sldb'
+  Loading link library 'gscl45nm'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+
+Statistics for case statements in always block at line 93 in file
+	'./proc.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            96            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 113 in file
+	'./proc.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           116            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Elaborated 1 design.
+Current design is now 'proc'.
+Information: Building the design 'fetchStage'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'decodeStage'. (HDL-193)
+Warning:  ./decodeStage.v:63: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 61 in file
+	'./decodeStage.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            63            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'executeStage'. (HDL-193)
+Warning:  ./executeStage.v:95: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 78 in file
+	'./executeStage.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            81            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 93 in file
+	'./executeStage.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            95            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 106 in file
+	'./executeStage.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           109            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'memoryStage'. (HDL-193)
+
+Statistics for case statements in always block at line 28 in file
+	'./memoryStage.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            31            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'register'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'memory2c'. (HDL-193)
+
+Inferred memory devices in process
+	in routine memory2c line 71 in file
+		'./memory2c.syn.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|       mem_reg       | Flip-flop |  512  |  Y  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|   memory2c/60    |   64   |    8    |      6       |
+|   memory2c/60    |   64   |    8    |      6       |
+======================================================
+Presto compilation completed successfully.
+Information: Building the design 'incr2'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'dff'. (HDL-193)
+
+Inferred memory devices in process
+	in routine dff line 17 in file
+		'./dff.v'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      state_reg      | Flip-flop |   1   |  N  | N  | N  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully.
+Information: Building the design 'controlBlock'. (HDL-193)
+
+Statistics for case statements in always block at line 85 in file
+	'./controlBlock.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|           107            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'rf_bypass'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'cla16Bit'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'alu'. (HDL-193)
+Warning:  ./alu.v:49: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 48 in file
+	'./alu.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            49            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'rf'. (HDL-193)
+Warning:  ./rf.v:30: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 28 in file
+	'./rf.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            30            |    auto/auto     |
+===============================================
+Statistics for MUX_OPs
+======================================================
+| block name/line  | Inputs | Outputs | # sel inputs |
+======================================================
+|      rf/53       |   8    |   16    |      3       |
+|      rf/54       |   8    |   16    |      3       |
+======================================================
+Presto compilation completed successfully.
+Information: Building the design 'cla4Bit'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'shifter'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'faGP'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'carry4Bit'. (HDL-193)
+Presto compilation completed successfully.
+Information: Building the design 'shift1Bit'. (HDL-193)
+Warning:  ./shift1Bit.v:36: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 35 in file
+	'./shift1Bit.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            36            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'shift2Bit'. (HDL-193)
+Warning:  ./shift2Bit.v:37: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 36 in file
+	'./shift2Bit.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            37            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'shift4Bit'. (HDL-193)
+Warning:  ./shift4Bit.v:42: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 41 in file
+	'./shift4Bit.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            42            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+Information: Building the design 'shift8Bit'. (HDL-193)
+Warning:  ./shift8bit.v:45: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 44 in file
+	'./shift8bit.v'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            45            |    auto/auto     |
+===============================================
+Presto compilation completed successfully.
+1
+echo "********** CS552 Reading files end ********************"
+********** CS552 Reading files end ********************
+current_design proc
+Current design is 'proc'.
+{proc}
+#/* The name of the clock pin. If no clock-pin     */
+#/* exists, pick anything                          */
+set my_clock_pin clk
+clk
+#/* Target frequency in MHz for optimization       */
+set my_clk_freq_MHz 1000
+1000
+#/* Delay of input signals (Clock-to-Q, Package etc.)  */
+set my_input_delay_ns 0.1
+0.1
+#/* Reserved time for output signals (Holdtime etc.)   */
+set my_output_delay_ns 0.1
+0.1
+#/**************************************************/
+#/* No modifications needed below                  */
+#/**************************************************/
+set verilogout_show_unconnected_pins "true"
+true
+# analyze -f verilog $my_verilog_files
+# elaborate $my_toplevel -architecture verilog
+# current_design $my_toplevel
+report_hierarchy 
+ 
+****************************************
+Report : hierarchy
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Mon Apr 10 15:34:51 2017
+****************************************
+
+Information: This design contains unmapped logic. (RPT-7)
+
+proc
+    GTECH_AND2                                       gtech
+    GTECH_BUF                                        gtech
+    GTECH_NOT                                        gtech
+    GTECH_OR2                                        gtech
+    decodeStage
+        GTECH_AND2                                   gtech
+        GTECH_BUF                                    gtech
+        GTECH_NOT                                    gtech
+        GTECH_OR2                                    gtech
+        controlBlock
+            GTECH_AND2                               gtech
+            GTECH_BUF                                gtech
+            GTECH_NOT                                gtech
+            GTECH_OR2                                gtech
+        dff
+            GTECH_BUF                                gtech
+            GTECH_NOT                                gtech
+        rf_bypass
+            GTECH_AND2                               gtech
+            GTECH_BUF                                gtech
+            GTECH_NOT                                gtech
+            rf
+                GTECH_AND2                           gtech
+                GTECH_BUF                            gtech
+                GTECH_NOT                            gtech
+                GTECH_OR2                            gtech
+                register
+                    GTECH_BUF                        gtech
+                    GTECH_NOT                        gtech
+                    dff
+                        ...
+    executeStage
+        GTECH_AND2                                   gtech
+        GTECH_BUF                                    gtech
+        GTECH_NOT                                    gtech
+        GTECH_OR2                                    gtech
+        GTECH_XOR2                                   gtech
+        alu
+            GTECH_AND2                               gtech
+            GTECH_BUF                                gtech
+            GTECH_NOT                                gtech
+            GTECH_OR2                                gtech
+            GTECH_XOR2                               gtech
+            cla16Bit
+                cla4Bit
+                    carry4Bit
+                        GTECH_AND2                   gtech
+                        GTECH_OR2                    gtech
+                    faGP
+                        GTECH_AND2                   gtech
+                        GTECH_OR2                    gtech
+                        GTECH_XOR2                   gtech
+            shifter
+                shift1Bit
+                    GTECH_AND2                       gtech
+                    GTECH_BUF                        gtech
+                    GTECH_NOT                        gtech
+                    GTECH_OR2                        gtech
+                shift2Bit
+                    GTECH_AND2                       gtech
+                    GTECH_BUF                        gtech
+                    GTECH_NOT                        gtech
+                    GTECH_OR2                        gtech
+                shift4Bit
+                    GTECH_AND2                       gtech
+                    GTECH_BUF                        gtech
+                    GTECH_NOT                        gtech
+                    GTECH_OR2                        gtech
+                shift8Bit
+                    GTECH_AND2                       gtech
+                    GTECH_BUF                        gtech
+                    GTECH_NOT                        gtech
+                    GTECH_OR2                        gtech
+        cla16Bit
+            ...
+        dff
+            ...
+    fetchStage
+        GTECH_BUF                                    gtech
+        GTECH_NOT                                    gtech
+        GTECH_OR2                                    gtech
+        dff
+            ...
+        incr2
+            cla16Bit
+                ...
+        memory2c
+            GTECH_AND2                               gtech
+            GTECH_BUF                                gtech
+            GTECH_NOT                                gtech
+            GTECH_OR2                                gtech
+        register
+            ...
+    memoryStage
+        GTECH_AND2                                   gtech
+        GTECH_BUF                                    gtech
+        GTECH_NOT                                    gtech
+        GTECH_OR2                                    gtech
+        dff
+            ...
+        memory2c
+            ...
+1
+link
+
+  Linking design 'proc'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  gscl45nm (library)          /u/k/a/karu/courses/cs552/cad/Synopsys_Libraries/libs/gscl45nm.db
+
+1
+uniquify
+Information: Uniquified 9 instances of design 'register'. (OPT-1056)
+Information: Uniquified 2 instances of design 'memory2c'. (OPT-1056)
+Information: Uniquified 434 instances of design 'dff'. (OPT-1056)
+Information: Uniquified 3 instances of design 'cla16Bit'. (OPT-1056)
+Information: Uniquified 12 instances of design 'cla4Bit'. (OPT-1056)
+Information: Uniquified 48 instances of design 'faGP'. (OPT-1056)
+Information: Uniquified 12 instances of design 'carry4Bit'. (OPT-1056)
+1
+set my_period [expr 1000 / $my_clk_freq_MHz]
+1
+set find_clock [ find port [list $my_clock_pin] ]
+{clk}
+if {  $find_clock != [list] } {
+   set clk_name $my_clock_pin
+   create_clock -period $my_period $clk_name
+} else {
+   set clk_name vclk
+   create_clock -period $my_period -name $clk_name
+} 
+1
+set_driving_cell  -lib_cell INVX1  [all_inputs]
+Warning: Design rule attributes from the driving cell will be
+	set on the port. (UID-401)
+Warning: Design rule attributes from the driving cell will be
+	set on the port. (UID-401)
+1
+set_input_delay $my_input_delay_ns -clock $clk_name [remove_from_collection [all_inputs] $my_clock_pin]
+1
+set_output_delay $my_output_delay_ns -clock $clk_name [all_outputs]
+1
+compile 
+Warning: Setting attribute 'fix_multiple_port_nets' on design 'proc'. (UIO-59)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | L-2016.03-DWBB_201603.4 |     *     |
+| Licensed DW Building Blocks        |                         |           |
+============================================================================
+
+
+Information: There are 1123 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'dff_146'
+  Processing 'memory2c_0'
+  Processing 'memoryStage'
+  Processing 'carry4Bit_0'
+  Processing 'faGP_0'
+  Processing 'cla4Bit_0'
+  Processing 'cla16Bit_0'
+  Processing 'shift8Bit'
+  Processing 'shift4Bit'
+  Processing 'shift2Bit'
+  Processing 'shift1Bit'
+  Processing 'shifter'
+  Processing 'alu'
+  Processing 'cla4Bit_11'
+  Processing 'cla16Bit_2'
+  Processing 'executeStage'
+  Processing 'register_0'
+  Processing 'rf'
+  Processing 'rf_bypass'
+  Processing 'controlBlock'
+  Processing 'decodeStage'
+  Processing 'incr2'
+  Processing 'register_8'
+  Processing 'fetchStage'
+  Processing 'proc'
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+
+  Beginning Implementation Selection
+  ----------------------------------
+  Processing 'memory2c_0_DW01_inc_0'
+  Processing 'memory2c_1_DW01_inc_0'
+
+  Beginning Mapping Optimizations  (Medium effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+  Mapping Optimization (Phase 2)
+  Mapping Optimization (Phase 3)
+  Mapping Optimization (Phase 4)
+  Mapping Optimization (Phase 5)
+  Mapping Optimization (Phase 6)
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:09   36507.8      0.59      17.4      25.6                          
+    0:00:09   36507.8      0.59      17.4      25.6                          
+    0:00:09   37091.6      0.55      16.2      25.6                          
+    0:00:11   38997.4      0.22       3.5      19.7                          
+    0:00:11   38997.4      0.22       3.5      19.7                          
+    0:00:11   38997.4      0.22       3.5      19.7                          
+    0:00:11   38997.4      0.22       3.5      19.7                          
+    0:00:11   38997.4      0.22       3.5      19.7                          
+    0:00:12   37147.4      0.26      30.2      18.7                          
+    0:00:13   37164.8      0.27       3.8      18.7                          
+    0:00:13   37164.3      0.26      11.2      18.6                          
+    0:00:13   37183.6      0.25       3.7      18.6                          
+    0:00:13   37186.9      0.23      10.8      18.6                          
+    0:00:13   37187.3      0.24       3.2      18.6                          
+    0:00:14   37199.1      0.23      10.4      18.6                          
+    0:00:14   37209.4      0.24       2.9      18.6                          
+    0:00:14   37212.7      0.23      10.3      18.6                          
+    0:00:14   37218.3      0.23       2.8      18.6                          
+    0:00:14   37218.3      0.23       2.8      18.6                          
+    0:00:14   37218.8      0.23       2.8      18.6                          
+    0:00:14   37220.2      0.23       2.8      18.6                          
+    0:00:14   37219.7      0.23       2.8      18.6                          
+    0:00:14   37220.2      0.23       2.7      18.6                          
+    0:00:14   37223.0      0.23       2.8      18.6                          
+    0:00:14   37226.8      0.23       2.8      18.6                          
+    0:00:14   37232.4      0.23       2.7      18.6                          
+    0:00:14   37243.6      0.23       2.7      18.6                          
+    0:00:14   37243.6      0.23       2.7      18.6                          
+    0:00:14   37243.6      0.23       2.7      18.6                          
+    0:00:17   37685.3      0.33       4.5      15.4                          
+    0:00:21   38020.3      0.42       7.8      12.5                          
+    0:00:26   38175.2      0.42       7.9      12.2                          
+    0:00:30   38303.3      0.47       8.1      12.0                          
+    0:00:32   38356.8      0.47       8.1      11.9                          
+    0:00:32   38384.5      0.47       8.1      11.9                          
+    0:00:33   38408.9      0.47       8.1      11.8                          
+    0:00:33   38433.3      0.47       8.1      11.8                          
+    0:00:33   38457.7      0.47       8.1      11.7                          
+    0:00:33   38457.7      0.47       8.1      11.7                          
+    0:00:33   38484.9      0.27       4.4      11.7 execute/doBrF/state_reg/D
+    0:00:33   38486.4      0.26       4.2      11.7 execute/doBrF/state_reg/D
+    0:00:33   38502.8      0.25       4.1      11.8 execute/doBrF/state_reg/D
+    0:00:33   38509.8      0.24       4.0      11.8 execute/doBrF/state_reg/D
+    0:00:33   38515.9      0.23       3.8      11.7 execute/doBrF/state_reg/D
+    0:00:33   38533.8      0.22       3.6      11.8 execute/doBrF/state_reg/D
+    0:00:33   38540.8      0.22       3.6      11.8 execute/doBrF/state_reg/D
+    0:00:33   38545.0      0.21       3.5      11.8                          
+
+
+
+  Beginning Delay Optimization Phase
+  ----------------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:33   38545.0      0.21       3.5      11.8                          
+    0:00:33   38550.6      0.21       3.4      11.8 execute/doBrF/state_reg/D
+    0:00:33   38555.3      0.21       3.4      11.8 execute/doBrF/state_reg/D
+    0:00:34   38556.7      0.21       3.4      11.8 execute/doBrF/state_reg/D
+    0:00:34   38563.3      0.21       3.4      11.8 execute/doBrF/state_reg/D
+    0:00:34   38569.9      0.20       3.4      11.8 execute/doBrF/state_reg/D
+    0:00:34   38588.7      0.20       3.3      11.8 execute/doBrF/state_reg/D
+    0:00:34   38599.5      0.20       3.2      11.8 execute/doBrF/state_reg/D
+    0:00:34   38620.1      0.19       3.2      11.8 execute/doBrF/state_reg/D
+    0:00:34   38629.5      0.19       3.2      11.8 execute/doBrF/state_reg/D
+    0:00:34   38623.4      0.18       3.1      11.8 execute/doBrF/state_reg/D
+    0:00:34   38623.9      0.18       3.0      11.8 execute/doBrF/state_reg/D
+    0:00:34   38630.0      0.18       3.0      11.8 execute/doBrF/state_reg/D
+    0:00:34   38644.5      0.18       3.0      11.8 execute/doBrF/state_reg/D
+    0:00:34   38653.4      0.18       3.0      11.8 execute/doBrF/state_reg/D
+    0:00:34   38658.6      0.18       3.0      11.8 execute/doBrF/state_reg/D
+    0:00:34   38667.5      0.17       3.0      11.8 execute/doBrF/state_reg/D
+    0:00:34   38677.4      0.17       3.0      11.8 execute/doBrF/state_reg/D
+    0:00:34   38687.2      0.17       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:34   38689.6      0.17       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:34   38693.8      0.17       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:34   38699.4      0.17       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:34   38698.5      0.17       3.0      11.8 execute/doBrF/state_reg/D
+    0:00:34   38701.3      0.17       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:34   38706.9      0.17       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38709.3      0.17       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38714.9      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38717.2      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38718.7      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38725.7      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38727.1      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38730.4      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38725.7      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38732.7      0.16       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38733.2      0.16       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38736.0      0.16       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38736.0      0.16       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38743.1      0.16       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38744.9      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38746.8      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38751.0      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38761.4      0.16       2.9      11.8 execute/doBrF/state_reg/D
+    0:00:35   38762.8      0.16       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38767.0      0.15       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38777.8      0.15       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38777.3      0.15       2.8      11.8 execute/doBrF/state_reg/D
+    0:00:35   38779.7      0.15       2.7      11.8 execute/doBrF/state_reg/D
+    0:00:35   38782.5      0.15       2.7      11.8 execute/doBrF/state_reg/D
+    0:00:36   38782.0      0.15       2.7      11.8 execute/doBrF/state_reg/D
+    0:00:36   38782.5      0.15       2.7      11.8 execute/doBrF/state_reg/D
+    0:00:36   38784.8      0.15       2.6      11.8 execute/doBrF/state_reg/D
+    0:00:36   38788.1      0.15       2.6      11.8 execute/doBrF/state_reg/D
+    0:00:36   38798.9      0.15       2.6      11.8 execute/doBrF/state_reg/D
+    0:00:36   38806.4      0.15       2.6      11.9 execute/doBrF/state_reg/D
+    0:00:36   38808.3      0.15       2.6      11.9 execute/doBrF/state_reg/D
+    0:00:36   38819.6      0.15       2.6      11.9 execute/doBrF/state_reg/D
+    0:00:36   38826.6      0.14       2.7      11.9 execute/doBrF/state_reg/D
+    0:00:36   38827.5      0.14       2.7      11.9 execute/doBrF/state_reg/D
+    0:00:36   38839.7      0.14       2.5      11.9 execute/doBrF/state_reg/D
+    0:00:36   38841.1      0.14       2.5      11.9 execute/doBrF/state_reg/D
+    0:00:36   38843.5      0.14       2.5      11.9 execute/doBrF/state_reg/D
+    0:00:36   38847.2      0.14       2.5      11.9 execute/doBrF/state_reg/D
+    0:00:36   38855.2      0.14       2.5      11.9 execute/doBrF/state_reg/D
+    0:00:36   38858.0      0.14       2.5      11.9 execute/doBrF/state_reg/D
+    0:00:36   38864.1      0.14       2.5      11.9 execute/doBrF/state_reg/D
+    0:00:36   38874.0      0.14       2.5      11.9 execute/doBrF/state_reg/D
+    0:00:37   38864.1      0.14       2.4      11.9 execute/doBrF/state_reg/D
+    0:00:37   38863.7      0.13       2.4      11.9 execute/doBrF/state_reg/D
+    0:00:37   38850.1      0.13       2.3      11.9 execute/doBrF/state_reg/D
+    0:00:37   38855.7      0.12       2.3      11.9 execute/doBrF/state_reg/D
+    0:00:37   38873.5      0.12       2.3      11.9                          
+    0:00:37   38873.5      0.12       2.3      11.9                          
+
+
+  Beginning Design Rule Fixing  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:00:37   38873.5      0.12       2.3      11.9                          
+    0:00:38   38897.9      0.12       2.3      11.6 decode/ctrlBlk/n90       
+    0:00:38   38919.5      0.12       2.3      11.5 execute/offset<9>        
+    0:00:38   38973.0      0.12       2.3      11.4 decode/ctrlBlk/n44       
+    0:00:38   38979.6      0.12       2.3      11.4 execute/adder/add2/carry/net32913
+    0:00:38   39042.5      0.12       2.3      11.3 decode/ctrlBlk/n50       
+    0:00:38   39092.7      0.12       2.3      11.3 fetch/incrPC/adder/add2/carry/net33266
+    0:00:38   39158.4      0.12       2.2      11.2 memory/mem/C2242/net13464
+    0:00:38   39204.4      0.12       2.2      11.2 fetch/iMem/n423          
+    0:00:38   39352.2      0.12       2.2      11.1 execute/alua/adder/add3/fas[1]/P
+    0:00:38   39390.2      0.12       2.2      11.1 fetch/incrPC/adder/add2/fas[0]/P
+    0:00:38   39448.9      0.12       2.2      11.0 decode/ctrlBlk/memWrt    
+    0:00:38   39465.3      0.12       2.2      11.0 fetch/iMem/C2243/net11839
+    0:00:38   39517.9      0.12       2.2      10.9 fetch/iMem/C2243/net11831
+    0:00:38   39550.7      0.12       2.2      10.9 execute/alua/net32729    
+    0:00:38   39588.3      0.12       2.2      10.8 memory/net32225          
+    0:00:38   39611.3      0.12       2.2      10.8 memory/mem/C2243/net11538
+    0:00:38   39776.0      0.12       2.2      10.7 memory/mem/C2242/net12932
+    0:00:39   39885.3      0.12       2.2      10.6 decode/ctrlBlk/n72       
+    0:00:39   39906.9      0.12       2.2      10.6 memory/mem/C2243/net11536
+    0:00:39   40071.6      0.12       2.2      10.5 memory/mem/C2242/net12930
+    0:00:39   40232.1      0.12       2.2      10.4 memory/mem/C2243/net11760
+    0:00:39   40371.5      0.12       2.2      10.4 memory/mem/C2243/net11534
+    0:00:39   40510.9      0.12       2.2      10.4 memory/mem/C2242/net13253
+    0:00:39   40556.0      0.12       2.2      10.3 memory/net32203          
+    0:00:39   40574.3      0.12       2.2      10.3 fetch/iMem/C2243/net11531
+    0:00:39   40634.8      0.12       2.2      10.3 fetch/iMem/C2243/net11532
+    0:00:39   40689.2      0.12       2.2      10.3 execute/alua/net32828    
+    0:00:39   40713.7      0.12       2.2      10.3 decode/ctrlBlk/n40       
+    0:00:39   40735.7      0.12       2.2      10.3 execute/alua/shift/shift8/net35169
+    0:00:39   40822.5      0.12       2.1      10.3 decode/register/registerFile/read2data<10>
+    0:00:39   41142.6      0.12       2.1      10.2 fetch/iMem/n93           
+    0:00:39   41221.4      0.12       2.1      10.2 fetch/iMem/n169          
+    0:00:40   41302.6      0.12       2.1      10.2 fetch/iMem/n242          
+    0:00:40   41442.0      0.12       2.1      10.2 fetch/iMem/n313          
+    0:00:40   41581.4      0.12       2.1      10.2 fetch/iMem/n379          
+    0:00:40   41720.8      0.12       2.1      10.1 fetch/iMem/n450          
+    0:00:40   41860.2      0.12       2.1      10.1 fetch/iMem/n516          
+    0:00:40   41999.5      0.12       2.1      10.1 fetch/iMem/n582          
+    0:00:40   42138.9      0.12       2.1      10.1 fetch/iMem/n654          
+    0:00:40   42278.3      0.12       2.1      10.1 fetch/iMem/n720          
+    0:00:40   42417.7      0.12       2.1      10.1 fetch/iMem/n789          
+    0:00:40   42557.1      0.12       2.1      10.1 fetch/iMem/n858          
+    0:00:40   42696.4      0.12       2.1      10.0 fetch/iMem/n926          
+    0:00:40   42835.8      0.12       2.1      10.0 fetch/iMem/n996          
+    0:00:40   42975.2      0.12       2.1      10.0 fetch/iMem/n1062         
+    0:00:40   43114.6      0.12       2.1      10.0 fetch/iMem/n1130         
+    0:00:40   43254.0      0.12       2.1      10.0 fetch/iMem/n1200         
+    0:00:40   43393.4      0.12       2.1      10.0 fetch/iMem/n1268         
+    0:00:40   43532.7      0.12       2.1       9.9 fetch/iMem/n1335         
+    0:00:42   43615.3      0.12       2.1       9.9 execute/alua/net32821    
+    0:00:42   43620.0      0.12       2.1       9.9 execute/alua/net32799    
+    0:00:42   43647.2      0.12       2.1       9.9 execute/alua/shift/shift4/net38953
+    0:00:42   43760.3      0.12       2.1       9.9 decode/register/n38      
+    0:00:43   43884.2      0.12       2.1       9.8 fetch/incrPC/adder/add3/carry/net33241
+    0:00:44   43900.7      0.12       2.1       9.8 execute/alua/adder/add1/fas[3]/net35246
+    0:00:44   43934.9      0.12       2.1       9.8 decode/ctrlBlk/memEn     
+    0:00:44   43953.2      0.12       2.1       9.8 execute/alua/net42246    
+    0:00:44   44007.7      0.12       2.1       9.7 decode/register/registerFile/net44374
+    0:00:44   44067.7      0.12       2.1       9.7 decode/ctrlBlk/invB      
+    0:00:44   44094.5      0.12       2.1       9.7 memory/mem/n1233         
+    0:00:44   44094.0      0.12       2.1       9.7 execute/net41533         
+    0:00:44   44096.4      0.12       2.1       9.7 fetch/incrPC/adder/add2/carry/net41917
+    0:00:45   44101.1      0.12       2.1       9.7 execute/alua/net32747    
+    0:00:46   44105.3      0.12       2.1       9.7 net40638                 
+    0:00:46   44111.4      0.12       2.1       9.7 net33406                 
+    0:00:46   44111.4      0.12       2.1       9.7 net33493                 
+    0:00:46   44125.9      0.12       2.1       9.7 net41269                 
+    0:00:46   44125.9      0.12       2.0       9.7 net33383                 
+    0:00:46   44128.7      0.12       2.0       9.6 fetch/_0_net_            
+    0:00:46   44145.6      0.11       2.0       9.6 execute/alua/net32652    
+    0:00:46   44148.5      0.11       2.0       9.6 execute/adder/add4/carry/net32871
+    0:00:46   44148.5      0.11       2.0       9.6 execute/alua/net32730    
+    0:00:46   44148.5      0.11       2.0       9.6 fetch/iMem/C2243/net12119
+    0:00:46   44148.5      0.11       2.1       9.6 fetch/incrPC/adder/add1/carry/net33282
+    0:00:46   44145.2      0.11       2.1       9.6 memory/net32179          
+    0:00:46   44145.6      0.11       2.1       9.6 fetch/iMem/C2243/net12147
+    0:00:46   44148.5      0.11       2.1       9.6 execute/alua/shift/shift2/net41210
+    0:00:48   44148.9      0.11       2.1       9.6 execute/adder/add1/carry/net32945
+    0:00:50   44151.3      0.11       2.1       9.5 execute/alua/shift/shift8/net32434
+    0:00:51   44149.4      0.11       2.1       9.5 net41261                 
+    0:00:52   44147.1      0.11       2.1       9.5 net33457                 
+    0:00:52   44149.4      0.11       2.1       9.5 execute/doBrF/state_reg/D
+    0:00:52   44149.9      0.11       2.1       9.5 execute/doBrF/state_reg/D
+    0:00:52   44152.7      0.11       2.1       9.5 execute/doBrF/state_reg/D
+    0:00:52   44149.4      0.11       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44151.3      0.11       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44151.3      0.11       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44150.3      0.11       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44152.7      0.11       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44151.7      0.10       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44155.0      0.10       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44157.4      0.10       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44160.7      0.10       2.0       9.6 execute/doBrF/state_reg/D
+    0:00:52   44174.7      0.10       1.8       9.6 execute/doBrF/state_reg/D
+    0:00:52   44182.7      0.10       1.8       9.6 execute/doBrF/state_reg/D
+    0:00:52   44189.3      0.10       1.7       9.6 execute/doBrF/state_reg/D
+    0:00:52   44191.6      0.10       1.7       9.6 execute/doBrF/state_reg/D
+    0:00:52   44202.9      0.10       1.7       9.6 execute/doBrF/state_reg/D
+    0:00:52   44199.1      0.10       1.7       9.6 execute/doBrF/state_reg/D
+    0:00:52   44195.9      0.10       1.7       9.6 execute/doBrF/state_reg/D
+    0:00:53   44202.0      0.09       1.6       9.6 execute/doBrF/state_reg/D
+    0:00:53   44208.1      0.09       1.6       9.6 execute/doBrF/state_reg/D
+    0:00:53   44202.4      0.09       1.6       9.6 execute/doBrF/state_reg/D
+    0:00:53   44209.9      0.09       1.6       9.6 execute/doBrF/state_reg/D
+    0:00:53   44217.4      0.09       1.6       9.6 execute/doBrF/state_reg/D
+    0:00:53   44218.4      0.09       1.6       9.6 execute/doBrF/state_reg/D
+    0:00:53   44225.4      0.09       1.6       9.6 execute/alua/shift/shift1/U3/net32621
+    0:00:53   44230.6      0.09       1.6       9.6 execute/neg              
+    0:00:53   44233.9      0.09       1.6       9.5 memory/net32205          
+    0:00:53   44237.6      0.09       1.6       9.5 memory/fwdData<7>        
+    0:00:53   44230.1      0.09       1.6       9.5 fetch/iMem/C2243/net11977
+    0:00:53   44225.4      0.09       1.6       9.5 execute/reg2Data<3>      
+    0:00:53   44225.9      0.09       1.6       9.5 fetch/iMem/C2243/net11991
+    0:00:53   44237.6      0.09       1.6       9.5 execute/alua/net32712    
+    0:00:53   44249.8      0.09       1.6       9.5 execute/alua/shift/shift2/U3/net32536
+    0:00:53   44269.1      0.09       1.6       9.5 execute/alua/net32653    
+    0:00:54   44271.4      0.09       1.6       9.5 execute/alua/shift/shift8/shiftOut<15>
+    0:00:55   44282.7      0.09       1.6       9.5 execute/alua/adder/add1/carry/net32372
+    0:00:56   44287.4      0.09       1.6       9.5 execute/alua/net32715    
+    0:00:57   44287.4      0.09       1.6       9.5 execute/net33116         
+    0:00:57   44288.8      0.09       1.6       9.5 execute/alua/shift/shift2/net49840
+    0:00:57   44283.1      0.09       1.6       9.5 execute/alua/net32751    
+    0:00:57   44282.2      0.09       1.6       9.5 decode/ctrlBlk/net41721  
+    0:00:59   44283.6      0.09       1.6       9.5 fwdData<3>               
+    0:00:59   44283.6      0.09       1.6       9.4 net33446                 
+    0:00:59   44283.6      0.09       1.6       9.4 execute/alua/net32657    
+    0:01:00   44292.1      0.09       1.6       9.4 fetch/pcReg/flop[13]/state_reg/D
+    0:01:01   44290.7      0.09       1.6       9.4 execute/doBrF/state_reg/D
+    0:01:01   44290.7      0.09       1.6       9.4 execute/doBrF/state_reg/D
+    0:01:01   44298.6      0.09       1.6       9.4 execute/doBrF/state_reg/D
+    0:01:01   44305.2      0.09       1.6       9.4 execute/doBrF/state_reg/D
+    0:01:02   44307.6      0.10       1.6       9.4 execute/alua/B<3>        
+    0:01:02   44351.2      0.19       3.2       9.4 memory/net32171          
+    0:01:03   44395.8      0.26       3.9       9.3 execute/reg2Data<1>      
+    0:01:03   44495.7      0.30       4.7       9.3 execute/alua/shift/shift8/U3/net32417
+    0:01:03   44545.0      0.33       5.7       9.2 execute/alua/adder/add2/carry/net32336
+    0:01:03   44628.6      0.38       6.4       9.2 execute/alua/net32730    
+    0:01:03   44696.6      0.45       8.7       9.1 fetch/iMem/C2243/net11891
+    0:01:03   44731.3      0.46       8.9       9.1 execute/alua/shift/shift2/net32595
+    0:01:03   44822.8      0.58      10.4       9.0 fetch/iMem/C2243/net12147
+    0:01:04   44852.4      0.60      10.4       9.0 execute/alua/adder/add2/carry/net32328
+    0:01:05   44868.4      0.60      10.5       9.0 execute/alua/net32777    
+    0:01:05   44922.3      0.69      11.8       8.9 execute/alua/net32709    
+    0:01:06   44940.2      0.69      11.8       8.9 execute/adder/add4/carry/net39061
+    0:01:06   44958.5      0.69      12.5       8.9 fetch/incrPC/adder/add1/fas[3]/P
+    0:01:06   45035.9      0.77      13.1       8.9 fetch/iMem/net51915      
+    0:01:07   45116.6      0.77      13.8       8.8 memory/net54469          
+    0:01:07   45160.7      0.78      14.0       8.8 decode/intWriteReg<2>    
+    0:01:07   45195.0      0.78      14.4       8.7 fetch/net33325           
+    0:01:07   45197.3      0.78      14.4       8.7 fetch/incrPC/adder/add2/fas[1]/P
+    0:01:09   45256.5      0.82      15.8       8.7 net33374                 
+    0:01:09   45302.5      0.85      16.6       8.6 n38                      
+    0:01:09   45319.8      0.85      16.9       8.6 net33400                 
+    0:01:09   45340.5      0.85      17.4       8.6 decode/ctrlBlk/n98       
+    0:01:09   45345.2      0.84      17.3       8.6 execute/doBrF/state_reg/D
+    0:01:09   45339.1      0.78      16.9       8.6 execute/doBrF/state_reg/D
+    0:01:09   45325.9      0.75      16.2       8.6 execute/doBrF/state_reg/D
+    0:01:09   45314.7      0.70      16.0       8.6 execute/doBrF/state_reg/D
+    0:01:09   45308.1      0.67      15.4       8.6 execute/doBrF/state_reg/D
+    0:01:09   45310.0      0.63      15.0       8.6 execute/doBrF/state_reg/D
+    0:01:09   45315.1      0.63      14.9       8.6 execute/doBrF/state_reg/D
+    0:01:09   45316.5      0.62      14.7       8.6 execute/doBrF/state_reg/D
+    0:01:09   45315.1      0.62      14.7       8.6 execute/doBrF/state_reg/D
+    0:01:09   45310.4      0.60      14.6       8.6 execute/doBrF/state_reg/D
+    0:01:09   45310.4      0.60      14.5       8.6 execute/doBrF/state_reg/D
+    0:01:09   45308.6      0.59      14.4       8.6 execute/doBrF/state_reg/D
+    0:01:10   45307.6      0.59      14.4       8.6 execute/doBrF/state_reg/D
+    0:01:10   45300.1      0.57      14.0       8.6 execute/doBrF/state_reg/D
+    0:01:10   45300.6      0.57      14.2       8.6 execute/doBrF/state_reg/D
+    0:01:10   45296.4      0.57      14.2       8.6 execute/doBrF/state_reg/D
+    0:01:10   45304.3      0.54      13.9       8.6 execute/doBrF/state_reg/D
+    0:01:10   45279.5      0.54      13.7       8.6 execute/doBrF/state_reg/D
+    0:01:10   45287.9      0.53      13.7       8.6 execute/doBrF/state_reg/D
+    0:01:10   45282.3      0.53      13.6       8.6 execute/doBrF/state_reg/D
+    0:01:10   45277.1      0.52      13.5       8.6 execute/doBrF/state_reg/D
+    0:01:10   45271.5      0.51      13.5       8.6 execute/doBrF/state_reg/D
+    0:01:10   45268.7      0.51      13.4       8.6 execute/doBrF/state_reg/D
+    0:01:10   45272.0      0.51      13.4       8.6 execute/doBrF/state_reg/D
+    0:01:10   45273.8      0.51      13.4       8.6 execute/doBrF/state_reg/D
+    0:01:10   45271.0      0.51      13.4       8.6 execute/doBrF/state_reg/D
+    0:01:10   45273.4      0.50      13.4       8.6 execute/doBrF/state_reg/D
+    0:01:10   45271.0      0.50      13.3       8.6 execute/doBrF/state_reg/D
+    0:01:10   45269.1      0.49      13.3       8.6 execute/doBrF/state_reg/D
+    0:01:10   45272.4      0.49      13.1       8.6 execute/doBrF/state_reg/D
+    0:01:10   45272.4      0.49      13.1       8.6 execute/doBrF/state_reg/D
+    0:01:11   45270.6      0.49      13.2       8.6 execute/doBrF/state_reg/D
+    0:01:11   45269.1      0.49      13.1       8.6 execute/doBrF/state_reg/D
+    0:01:11   45265.4      0.49      12.8       8.5 execute/jmpPcF[13]/state_reg/D
+    0:01:11   45269.1      0.49      12.8       8.5 execute/doBrF/state_reg/D
+    0:01:11   45266.8      0.48      12.7       8.5 execute/doBrF/state_reg/D
+    0:01:11   45265.4      0.48      12.7       8.5 execute/doBrF/state_reg/D
+    0:01:11   45262.1      0.48      12.7       8.5 execute/doBrF/state_reg/D
+    0:01:11   45263.0      0.48      12.7       8.5 execute/doBrF/state_reg/D
+    0:01:11   45266.8      0.48      12.7       8.5 decode/register/registerFile/C114/net19315
+    0:01:14   45273.8      0.48      12.7       8.5 memory/net32154          
+    0:01:14   45278.5      0.49      12.8       8.5 execute/alua/shift/shift4/net58088
+    0:01:15   45283.7      0.51      12.7       8.5 fetch/pcReg/n20          
+    0:01:16   45285.1      0.51      12.7       8.5 net33381                 
+    0:01:16   45289.3      0.51      12.7       8.5 n37                      
+    0:01:16   45296.8      0.51      12.8       8.5 execute/doBrF/state_reg/D
+    0:01:17   45296.8      0.49      12.7       8.5 execute/doBrF/state_reg/D
+    0:01:17   45300.6      0.49      12.7       8.5 execute/doBrF/state_reg/D
+    0:01:17   45299.7      0.49      12.7       8.5 execute/doBrF/state_reg/D
+    0:01:17   45290.7      0.49      12.7       8.5 execute/doBrF/state_reg/D
+    0:01:17   45296.8      0.48      12.6       8.5 execute/doBrF/state_reg/D
+    0:01:17   45291.7      0.48      12.6       8.5 execute/doBrF/state_reg/D
+    0:01:17   45287.0      0.48      12.6       8.5 execute/doBrF/state_reg/D
+    0:01:17   45289.8      0.48      12.5       8.5 execute/doBrF/state_reg/D
+    0:01:17   45286.5      0.48      12.6       8.5 execute/doBrF/state_reg/D
+    0:01:17   45279.0      0.48      12.6       8.5 execute/doBrF/state_reg/D
+    0:01:17   45275.7      0.47      12.5       8.5 execute/doBrF/state_reg/D
+    0:01:17   45272.9      0.47      12.5       8.5 execute/doBrF/state_reg/D
+    0:01:17   45274.3      0.47      12.5       8.5 execute/doBrF/state_reg/D
+    0:01:17   45274.3      0.47      12.5       8.5 execute/doBrF/state_reg/D
+    0:01:17   45277.1      0.47      12.4       8.5 execute/doBrF/state_reg/D
+    0:01:17   45276.7      0.47      12.4       8.5 execute/doBrF/state_reg/D
+    0:01:17   45272.0      0.47      12.4       8.5 execute/doBrF/state_reg/D
+    0:01:17   45271.0      0.47      12.3       8.5 execute/doBrF/state_reg/D
+    0:01:17   45271.5      0.46      12.3       8.5 execute/doBrF/state_reg/D
+    0:01:17   45264.0      0.46      12.3       8.5 execute/doBrF/state_reg/D
+    0:01:17   45264.9      0.46      12.3       8.5 execute/doBrF/state_reg/D
+    0:01:17   45267.7      0.46      12.2       8.5 execute/doBrF/state_reg/D
+    0:01:17   45266.3      0.46      12.2       8.5 execute/doBrF/state_reg/D
+    0:01:18   45264.0      0.46      12.2       8.5 execute/doBrF/state_reg/D
+    0:01:18   45265.4      0.45      12.2       8.5 execute/doBrF/state_reg/D
+    0:01:18   45269.1      0.45      12.2       8.5 execute/doBrF/state_reg/D
+    0:01:18   45269.1      0.45      12.2       8.5 execute/doBrF/state_reg/D
+    0:01:18   45270.6      0.45      12.2       8.5                          
+    0:01:18   45265.4      0.45      11.9       8.5                          
+    0:01:18   45262.1      0.45      11.7       8.5                          
+    0:01:18   45261.6      0.45      11.7       8.5                          
+    0:01:18   45263.0      0.45      11.7       8.5                          
+
+
+  Beginning Area-Recovery Phase  (cleanup)
+  -----------------------------
+
+                                  TOTAL                                      
+   ELAPSED            WORST NEG   SETUP    DESIGN                            
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT         
+  --------- --------- --------- --------- --------- -------------------------
+    0:01:18   45263.0      0.45      11.7       8.5                          
+    0:01:18   45263.0      0.45      11.7       8.5                          
+    0:01:19   42788.4      0.45      10.9       8.5                          
+    0:01:19   42024.4      0.45      10.6       8.5                          
+    0:01:19   41618.0      0.45      10.6       8.5                          
+    0:01:20   41533.5      0.45      10.6       8.5                          
+    0:01:20   41465.5      0.45      10.6       8.5                          
+    0:01:20   41413.8      0.46      10.6       8.5                          
+    0:01:20   41413.8      0.46      10.6       8.5                          
+    0:01:20   41413.8      0.46      10.6       8.5                          
+    0:01:20   41312.5      0.46      18.2       8.5                          
+    0:01:20   41306.8      0.46      18.2       8.5                          
+    0:01:20   41306.8      0.46      18.2       8.5                          
+    0:01:20   41306.8      0.46      18.2       8.5                          
+    0:01:20   41306.8      0.46      18.2       8.5                          
+    0:01:20   41306.8      0.46      18.2       8.5                          
+    0:01:20   41306.8      0.46      18.2       8.5                          
+    0:01:20   41308.3      0.46      18.2       8.5                          
+    0:01:20   41309.7      0.46      18.2       8.5                          
+    0:01:20   41315.3      0.45      18.1       8.5                          
+    0:01:20   41315.8      0.45      18.2       8.5                          
+    0:01:20   41313.4      0.45      18.1       8.5                          
+    0:01:20   41298.9      0.45      18.1       8.5                          
+    0:01:20   41290.0      0.45      18.1       8.5                          
+    0:01:20   41267.4      0.45      18.1       8.5                          
+    0:01:21   41247.2      0.45      18.1       8.5                          
+    0:01:21   41241.1      0.45      18.2       8.5 execute/doBrF/state_reg/D
+    0:01:21   41241.6      0.45      18.2       8.5 execute/doBrF/state_reg/D
+    0:01:21   41241.6      0.45      18.2       8.5 execute/doBrF/state_reg/D
+    0:01:21   41249.6      0.45      18.5       8.5 execute/doBrF/state_reg/D
+    0:01:21   41250.1      0.45      18.5       8.5 execute/doBrF/state_reg/D
+    0:01:21   41260.9      0.45      18.5       8.5 execute/doBrF/state_reg/D
+    0:01:21   41255.2      0.45      18.4       8.5 execute/doBrF/state_reg/D
+    0:01:21   41270.2      0.44      18.4       8.5 execute/doBrF/state_reg/D
+    0:01:21   41276.3      0.44      18.4       8.5 execute/doBrF/state_reg/D
+    0:01:21   41274.0      0.44      18.3       8.5                          
+Loading db file '/u/k/a/karu/courses/cs552/cad/Synopsys_Libraries/libs/gscl45nm.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Warning: Design 'proc' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+     Net 'fetch/fPC[1]/clk': 1458 load(s), 1 driver(s)
+1
+check_design -summary
+ 
+****************************************
+check_design summary:
+Version:     L-2016.03-SP4-1
+Date:        Mon Apr 10 15:36:13 2017
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                     16
+    Unconnected ports (LINT-28)                                    12
+    Constant outputs (LINT-52)                                      4
+
+Cells                                                              59
+    Connected to power or ground (LINT-32)                         55
+    Nets connected to multiple pins on same cell (LINT-33)          4
+
+Nets                                                                1
+    Unloaded nets (LINT-2)                                          1
+--------------------------------------------------------------------------------
+
+Information: Use the 'check_design' command for 
+	 more information about warnings. (LINT-98)
+
+1
+set filename [format "%s%s"  $my_toplevel ".syn.v"]
+proc.syn.v
+write -hierarchy -f verilog $my_toplevel -output synth/$filename
+Writing verilog file '/afs/cs.wisc.edu/u/k/e/keifer/private/552/cs552project/demo2/verilog/synth/proc.syn.v'.
+Warning: Bus naming style currently specified as %s<%d>, verilog syntax requires bus naming style to be "[]".  (VO-13)
+Warning: Verilog 'assign' or 'tran' statements are written out. (VO-4)
+Warning: Verilog writer has added 11 nets to module cla16Bit_1 using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Warning: Verilog writer has added 1 nets to module decodeStage using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Warning: Verilog writer has added 11 nets to module cla16Bit_2 using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+Warning: Verilog writer has added 11 nets to module cla16Bit_0 using SYNOPSYS_UNCONNECTED_ as prefix.  Please use the change_names command to make the correct changes before invoking the verilog writer.  (VO-11)
+1
+set filename [format "%s%s"  $my_toplevel ".ddc"]
+proc.ddc
+write -hierarchy -format ddc -output synth/$filename
+Writing ddc file 'synth/proc.ddc'.
+1
+report_hierarchy > synth/hierarchy.txt
+report_reference > synth/reference_report.txt
+report_area > synth/area_report.txt
+report_cell > synth/cell_report.txt
+report_timing -max_paths 20 > synth/timing_report.txt
+report_power > synth/power_report.txt
+quit
+
+Thank you...
