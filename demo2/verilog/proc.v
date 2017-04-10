@@ -114,6 +114,7 @@ module proc (/*AUTOARG*/
 
 	//Stalling Logic
 
+
 	assign regRs = fInstr[10:8];
 	assign regRt = fInstr[7:5];
 	// assign regRd = fInstr[4:2];
@@ -123,6 +124,7 @@ module proc (/*AUTOARG*/
 
 	// stall if we are reading memory and the reg we will write that value to is used in the next instruction, or the next instruction is a halt and the next instrction
 	// isnt a ld or st or stu. 
+
 	assign stall = (dMemEn & ~dMemWrt) & ((regB == regRt) | (regB == regRs) | dOp == 5'h0);// & dOp != 5'b10001 & dOp != 5'b10000 & dOp != 5'b10011;
 	
 endmodule // proc
