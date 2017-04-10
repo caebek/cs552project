@@ -39,7 +39,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 		intReturn, intCin, intMemToReg, ffRst;
 	wire [2:0] intAluSrc, intRegWrtSrc, intBrType;
 	wire [3:0] intAluOp;
-	wire [15:0] intReg1Data, intReg2Data;
+	wire [15:0] intReg1Data, intReg2Data, tempInstr;
 
 
 
@@ -77,9 +77,10 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 		.writeregsel(regWrtAddr), .writedata(regWrtData), .write(regWrtEn));
 
 
-
+	assign tempInstr = stall ? 16'h0800 : instrIn;
+	
 	dff fPC[15:0](.d(nextPcIn), .q(nextPcOut), .clk(clk), .rst(ffRst));
-	dff fInst[15:0](.d(instrIn), .q(instrOut), .clk(clk), .rst(rst));
+	dff fInst[15:0](.d(tempInstr), .q(instrOut), .clk(clk), .rst(rst));
 	dff reg1F[15:0](.d(intReg1Data), .q(reg1Data), .clk(clk), .rst(ffRst));
 	dff reg2F[15:0](.d(intReg2Data), .q(reg2Data), .clk(clk), .rst(ffRst));
 
