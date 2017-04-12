@@ -85,7 +85,7 @@ module proc (/*AUTOARG*/
 
 	assign wbFwdA = regWrtEn & (writeReg == regA) & ~memFwdA;//~(eRegWrt | (eRegWrt & (eWriteReg != regA)));
 	assign wbFwdB = regWrtEn & (writeReg == regB) & ~memFwdB;//~(eRegWrt | (eRegWrt & (eWriteReg != regB)));
-
+ 
 	// reg1Data mux
 	always@(*) begin
 		hasErr[0] = 1'h0;
