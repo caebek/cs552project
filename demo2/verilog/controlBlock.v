@@ -95,7 +95,7 @@ module controlBlock(opCode, func, halt, sign, pcOffSel, regWrt, memWrt, memToReg
     	invA = 0;
     	invB = 0;
     	regDst = 0;
-    	regWrtSrc = 0;
+    	regWrtSrc = 1;
     	aluOp = 4;
     	err = 0;
         cin = 1'h0;

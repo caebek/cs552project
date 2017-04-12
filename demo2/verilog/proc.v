@@ -21,13 +21,13 @@ module proc (/*AUTOARG*/
 	// As desribed in the homeworks, use the err signal to trap corner
 	// cases that you think are illegal in your statemachines
 
-	wire dErr, eErr, mErr, regWrtEn, dHalt, eHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, mRegWrt, dMemWrt, eMemWrt, 
-			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, stall, intDoBranch, intJump;
-	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, regRt, regRs, haltOut;
+	wire dErr, eErr, mErr, regWrtEn, dHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, dMemWrt, eMemWrt, 
+			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, stall, jumpOut;
+	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, regRt, regRs, mRegWrtSrc;
 	wire [3:0] aluOp;
 	wire [4:0] dOp;
-	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, regWrtData, dReg1Data, 
-			eReg1Data, dReg2Data, eReg2Data, branchPc, jumpPc, setVal, aluOut, memOut, regWriteData, intJumpPc, intRegWriteData;
+	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, dReg1Data, 
+			eReg1Data, dReg2Data, eReg2Data, jumpPc, setVal, aluOut, memOut, regWriteData, fwdData, writeData;
 	reg [1:0] hasErr;
 	reg [15:0] regAData, regBData;
 	
@@ -42,7 +42,7 @@ module proc (/*AUTOARG*/
 
 
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
-		.err(dErr), .regWrtData(regWriteData), .regWrtEn(regWrtEn), .regWrtAddr(writeReg), 
+		.err(dErr), .regWrtData(writeData), .regWrtEn(regWrtEn), .regWrtAddr(writeReg), 
 		.halt(dHalt), .sign(sign), .pcOffSel(pcOffSel), .regWrt(dRegWrt), .memWrt(dMemWrt), 
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
@@ -67,7 +67,7 @@ module proc (/*AUTOARG*/
 					.memWrt(eMemWrt), .memEn(eMemEn), .halt(halt), .reg2Data(eReg2Data), .reg1Data(eReg1Data), 
 					.nextPc(eNextPc), .instr(eInstr), .regWrt(eRegWrt), .regWrtOut(regWrtEn), 
 					.regWrtSrc(eRegWrtSrc), .memOut(memOut), .regWriteData(regWriteData),
-					.writeReg(eWriteReg), .writeRegOut(writeReg), .intRegWriteData(intRegWriteData));
+					.writeReg(eWriteReg), .writeRegOut(writeReg), .fwdData(fwdData), .regWrtSrcOut(mRegWrtSrc));
 
 
 	// Forward logic
@@ -86,14 +86,26 @@ module proc (/*AUTOARG*/
 	assign wbFwdA = regWrtEn & (writeReg == regA) & ~memFwdA;//~(eRegWrt | (eRegWrt & (eWriteReg != regA)));
 	assign wbFwdB = regWrtEn & (writeReg == regB) & ~memFwdB;//~(eRegWrt | (eRegWrt & (eWriteReg != regB)));
  
+
+	assign writeData = (mRegWrtSrc == 3'h0) ? memOut : regWriteData;
+
 	// reg1Data mux
 	always@(*) begin
 		hasErr[0] = 1'h0;
 		regAData = 16'h0;
 		case({memFwdA, wbFwdA})
-			2'b00: regAData = dReg1Data;
-			2'b01: regAData = regWriteData;
-			2'b10: regAData = intRegWriteData;
+			2'b00: begin
+				regAData = dReg1Data;
+				// writeAData = regWriteData;
+			end
+			2'b01: begin
+				regAData = (mRegWrtSrc != 3'h0) ? regWriteData : memOut;
+				// writeAData = regAData;
+			end
+			2'b10: begin
+				regAData = fwdData;
+				// writeAData = regWriteData;
+			end
 			default: hasErr[0] = 1'h1;
 		endcase
 	end
@@ -102,9 +114,18 @@ module proc (/*AUTOARG*/
 		hasErr[1] = 1'h0;
 		regBData = 16'h0;
 		case({memFwdB, wbFwdB})
-			2'b00: regBData = dReg2Data;
-			2'b01: regBData = regWriteData;
-			2'b10: regBData = intRegWriteData;
+			2'b00: begin
+				regBData = dReg2Data;
+				// writeBData = regWriteData;
+			end
+			2'b01: begin
+				regBData = (mRegWrtSrc != 3'h0) ? regWriteData : memOut;
+				// writeBData = regBData;
+			end 
+			2'b10: begin
+				regBData = fwdData;
+				// writeBData = regWriteData;
+			end
 			default: hasErr[1] = 1'h1;
 		endcase
 	end

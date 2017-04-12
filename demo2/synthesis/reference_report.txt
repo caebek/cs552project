@@ -1,0 +1,48 @@
+Information: Updating graph... (UID-83)
+Warning: Design 'proc' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : reference
+Design : proc
+Version: L-2016.03-SP4-1
+Date   : Mon Apr 10 15:36:15 2017
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1             gscl45nm       2.346500       2      4.693000  
+AND2X2             gscl45nm       2.815800      41    115.447798  
+AOI21X1            gscl45nm       2.815800       1      2.815800  
+AOI22X1            gscl45nm       3.285100      28     91.982800  
+BUFX2              gscl45nm       2.346500      18     42.236999  
+BUFX4              gscl45nm       2.815800       1      2.815800  
+INVX1              gscl45nm       1.407900     127    178.803297  
+INVX2              gscl45nm       1.877200      17     31.912400  
+INVX4              gscl45nm       3.285100       5     16.425500  
+MUX2X1             gscl45nm       3.754400      15     56.316000  
+NAND2X1            gscl45nm       1.877200       7     13.140400  
+NAND3X1            gscl45nm       2.346500      20     46.929998  
+NOR2X1             gscl45nm       2.346500       5     11.732500  
+NOR3X1             gscl45nm       2.815800       5     14.079000  
+OAI21X1            gscl45nm       2.815800      22     61.947599  
+OR2X2              gscl45nm       2.815800       8     22.526400  
+XNOR2X1            gscl45nm       4.693000      15     70.394998  
+XOR2X1             gscl45nm       4.693000       8     37.543999  
+decodeStage                    4961.439497       1   4961.439497  h, n
+executeStage                   5344.857601       1   5344.857601  h, n
+fetchStage                    15994.213018       1  15994.213018  h, n
+memoryStage                   14151.741254       1  14151.741254  h, n
+-----------------------------------------------------------------------------
+Total 22 references                                 41273.995656
+1
