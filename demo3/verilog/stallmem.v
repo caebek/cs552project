@@ -83,7 +83,7 @@ module stallmem (DataOut, Done, Stall, CacheHit, err, Addr, DataIn, Rd, Wr, crea
       largest = 0;
 //      rand_pat = 32'b01010010011000101001111000001010;
       seed = 0;
-      $value$plusargs("seed=%d", seed);
+      // $value$plusargs("seed=%d", seed);
       $display("Using seed %d", seed);
       rand_pat = $random(seed);
       $display("rand_pat=%08x %32b", rand_pat, rand_pat);
@@ -98,6 +98,9 @@ module stallmem (DataOut, Done, Stall, CacheHit, err, Addr, DataIn, Rd, Wr, crea
       if (rst) begin
 		 if (!loaded) begin
             $readmemh("loadfile_all.img", mem);
+            // for (i=0; i<=100; i=i+1) begin
+            //    $display("Mem[%d]=%4h", i, mem[i]);
+            // end
             loaded = 1;
          end
       end
@@ -106,6 +109,9 @@ module stallmem (DataOut, Done, Stall, CacheHit, err, Addr, DataIn, Rd, Wr, crea
 	        mem[Addr] = DataIn[15:8];       // The actual write
 	        mem[Addr+1] = DataIn[7:0];    // The actual write
             if ({1'b0, Addr} > largest) largest = Addr;  // avoid negative numbers
+         end
+         if(ready & Rd & ~Wr & ~err) begin
+               $display("Mem[%d]=%4h", Addr, {mem[Addr], mem[Addr+8'h1]});
          end
          if (createdump) begin
             mcd = $fopen("dumpfile");

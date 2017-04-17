@@ -31,9 +31,10 @@ module clkrst (clk, rst, err);
       clk = ~clk;
       if (clk & err) begin
         $display("Error signal asserted");
-        $stop;
+        $finish;
       end
     end
+
     always @(posedge clk) begin
     	cycle_count = cycle_count + 1;
 	if (cycle_count > 100000) begin

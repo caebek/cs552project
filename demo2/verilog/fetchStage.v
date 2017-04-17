@@ -40,8 +40,8 @@ module fetchStage(clk, rst, halt, doBranch, branchPc, nextPc, instr, stall);
     dff fPC[15:0](.d(tempNextPc), .q(nextPc), .clk(clk), .rst(rst));
     dff fInst[15:0](.d(actInstr), .q(tempInstr), .clk(clk), .rst(rst));
 
-    // assign instr = (doBranch) ? 16'h0800 : tempInstr; // prevents us from getting a halt while everything is resetting
-    assign instr = tempInstr;
+    assign instr = (curPc == 16'h0 | doBranch) ? 16'h0800 : tempInstr; // prevents us from getting a halt while everything is resetting
+
    // assign haltEn = preInstr == 16'h0;
 
 endmodule
