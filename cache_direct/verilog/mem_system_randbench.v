@@ -213,8 +213,8 @@ module mem_system_randbench(/*AUTOARG*/);
       end
    endtask
    
+   reg [7:0] index = 0;
    task seq_addr;
-      automatic reg [7:0] index = 0;
       
       begin
          if (!rst && (!Stall)) begin
@@ -236,10 +236,9 @@ module mem_system_randbench(/*AUTOARG*/);
       end         
    endtask // serial_addr
 
+   reg [4:0] tag = 0;
+   reg       n_iter  = 1;
    task two_sets_addr;
-      automatic reg [7:0] index = 0;
-      automatic reg [4:0] tag = 0;
-      automatic reg n_iter  = 1;
       
       begin
          if (!rst && (!Stall)) begin

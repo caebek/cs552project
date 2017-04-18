@@ -20,7 +20,7 @@ module mem_system(/*AUTOARG*/
 	output reg [15:0] DataOut;
 	output Done;
 	output Stall;
-	output reg CacheHit;
+	output CacheHit;
 	output err;
 
 	/* data_mem = 1, inst_mem = 0 *
@@ -52,7 +52,7 @@ module mem_system(/*AUTOARG*/
 	reg hasErr;
 
 
-	reg validIn, comp, cacheWrt, memRd, memWrt, done, stall, needData;
+	reg validIn, comp, cacheWrt, memRd, memWrt, done, stall, needData, intHit;
 	reg [1:0] cacheOrMem;
 	reg [2:0] cacheOff, memOff;
 	// reg [3:0] offset;
@@ -61,8 +61,8 @@ module mem_system(/*AUTOARG*/
 	reg [15:0] cacheIn, memIn, memAddr;
 
 
-	wire hit, dirty, valid,  cacheErr, memStall, memErr;
-	wire [15:0] cacheOut, memOut;
+	wire hit, dirty, valid,  cacheErr, memStall, memErr, useData;
+	wire [15:0] cacheOut, memOut, writeData;
 	wire [4:0] tagOut; 
 
 	assign err = cacheErr | memErr | (|hasErr);
@@ -127,7 +127,8 @@ module mem_system(/*AUTOARG*/
 		memWrt = 1'h0;
 		memIn = 16'h0;
 		memAddr = 16'h0;
-		CacheHit = 1'h0;
+		intHit = 1'h0;
+		// CacheHit = 1'h0;
 		case(curState)
 			WAIT_REQ: begin
 				nextState = {Wr, Rd};
@@ -138,29 +139,44 @@ module mem_system(/*AUTOARG*/
 					// index = Addr[10:3];
 					// Tag_In = Addr[15:11];
 					// cacheOff = Addr[2:0];
-					needData = 1'h0;
+					needData = hit & valid;
 
 					comp = 1'h1;
-					done = hit & valid;
+					// done = hit & valid;
 					// TODO maybe no valid
-					CacheHit = hit & valid;
-					stall	= ~(hit & valid);
+					done = 1'h0;
+					stall = 1'h1;
+					intHit = hit & valid;
+					// stall	= ~(hit & valid);
 					DataOut	 = done ? cacheOut : 16'h0;
-					nextState = (hit & valid) ? WAIT_REQ : 
+					// nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD : 
+					// 				(hit & valid & ~Rd & Wr) ? CHECK_WRT :
+					// 				(hit & valid & ~Rd & ~Wr) ? WAIT_REQ : 
+					// 				(~hit & valid & dirty) ? WB_1 :
+					// 				MEM_RD_1;
+					nextState = (hit & valid) ? WAIT_2 : 
 									(~hit & valid & dirty) ? WB_1 :
 									MEM_RD_1;
 			end
 			CHECK_WRT: begin
 				comp = 1'h1;
-				cacheIn	= DataIn;
+				cacheIn	= writeData;
 				cacheWrt	= 1'h1;
-				needData = 1'h0;
+				// needData = 1'h0;
+				// TODO Maybe not here
+				needData = hit & valid; 
 
 				//TODO maybe no valid
-				CacheHit = hit & valid;
-				done = hit & valid;
-				stall = ~(hit & valid);
-				nextState = (hit & valid) ? WAIT_REQ :
+				intHit = hit & valid;
+				done = 1'h0;
+				stall = 1'h1;
+				// nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD : 
+				// 				(hit & valid & ~Rd & Wr) ? CHECK_WRT :
+				// 				(hit & valid & ~Rd & ~Wr) ? WAIT_REQ : 
+				// 				(~hit & valid & dirty) ? WB_1 :
+				// 				MEM_RD_1;
+
+				nextState = (hit & valid) ? WAIT_2 :
 								(~hit & valid & dirty) ? WB_1 : 
 								MEM_RD_1;
 			end
@@ -343,9 +359,10 @@ module mem_system(/*AUTOARG*/
 			WAIT_2: begin
 				done = 1'h1;
 				stall = 1'h0;
+				// CacheHit = hit & valid;
 				nextState = {Wr,Rd};
-				DataOut = needData ? cacheOut : 16'h0;
-				// needData = 1'h0;
+				DataOut = useData ? cacheOut : 16'h0;
+				needData = 1'h0;
 			end
 			ERR: begin
 				needData = 1'h0;
@@ -358,8 +375,10 @@ module mem_system(/*AUTOARG*/
 
 
 
-
+	dff flop(.d(needData), .q(useData), .clk(clk), .rst(rst));
+	dff hitFlop(.d(intHit), .q(CacheHit), .clk(clk), .rst(rst));
 	dff stateFlop [3:0](.d(nextState), .q(curState), .clk(clk), .rst(rst));
+	dff dataFlop [15:0](.d(DataIn), .q(writeData), .clk(clk), .rst(rst));
 
 
 
