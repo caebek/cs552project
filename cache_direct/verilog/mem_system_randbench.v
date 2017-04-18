@@ -196,25 +196,25 @@ module mem_system_randbench(/*AUTOARG*/);
    end
 
    task check_dropped_request;
-   	  begin	
-	     if (n_replies != n_requests) begin
+        begin  
+        if (n_replies != n_requests) begin
             if (Rd) begin
-		       $display("LOG: ReqNum %4d Cycle %8d ReqCycle %8d Rd Addr 0x%04x RefValue 0x%04x\n",
-			            n_replies, DUT.clkgen.cycle_count, req_cycle, Addr, DataOut_ref);
+             $display("LOG: ReqNum %4d Cycle %8d ReqCycle %8d Rd Addr 0x%04x RefValue 0x%04x\n",
+                     n_replies, DUT.clkgen.cycle_count, req_cycle, Addr, DataOut_ref);
             end
             if (Wr) begin
-		       $display("LOG: ReQNum %4d Cycle %8d ReqCycle %8d Wr Addr 0x%04x Value 0x%04x\n",
-			            n_replies, DUT.clkgen.cycle_count, req_cycle, Addr, DataIn);
+             $display("LOG: ReQNum %4d Cycle %8d ReqCycle %8d Wr Addr 0x%04x Value 0x%04x\n",
+                     n_replies, DUT.clkgen.cycle_count, req_cycle, Addr, DataIn);
             end
-	        $display("ERROR! Request dropped");
+           $display("ERROR! Request dropped");
             test_success = 1'b0;               
-	        n_replies = n_requests;	       
-	     end            
+           n_replies = n_requests;         
+        end            
       end
    endtask
    
    task seq_addr;
-      reg [7:0] index = 0;
+      automatic reg [7:0] index = 0;
       
       begin
          if (!rst && (!Stall)) begin
@@ -237,9 +237,9 @@ module mem_system_randbench(/*AUTOARG*/);
    endtask // serial_addr
 
    task two_sets_addr;
-      reg [7:0] index = 0;
-      reg [4:0] tag = 0;
-      reg n_iter  = 1;
+      automatic reg [7:0] index = 0;
+      automatic reg [4:0] tag = 0;
+      automatic reg n_iter  = 1;
       
       begin
          if (!rst && (!Stall)) begin
@@ -328,7 +328,7 @@ module mem_system_randbench(/*AUTOARG*/);
          end else begin
             $display("Test status: SUCCESS");
          end
-         $stop;
+         $finish;
       end
    endtask // end_simulation
 
