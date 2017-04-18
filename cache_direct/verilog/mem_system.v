@@ -17,7 +17,7 @@ module mem_system(/*AUTOARG*/
 	input        clk;
 	input        rst;
 	
-	output [15:0] DataOut;
+	output reg [15:0] DataOut;
 	output Done;
 	output Stall;
 	output CacheHit;
@@ -46,21 +46,27 @@ module mem_system(/*AUTOARG*/
 
 
 
-	reg [3:0] curState, nextState;
+	reg [3:0] nextState;
+	wire [3:0] curState;
 	reg hasErr;
 
 
-	reg hit, dirty, validOut, validIn, cacheErr, comp, cacheWrt, memRd, memWrt, memStall, memErr;
-	reg {2;0] cacheOff;
-	reg [3:0] stall;
-	reg [4:0] tagOut, tagIn;
+	reg validIn, comp, cacheWrt, memRd, memWrt, done, stall;
+	reg [2:0] cacheOff;
+	reg [3:0] offset;
+	reg [4:0] tagIn;
 	reg [7:0] index;
-	reg [15:0] cacheOut, memOut, cacheIn, memIn, memAddr;
+	reg [15:0] cacheIn, memIn, memAddr;
 
+
+	wire hit, dirty, valid,  cacheErr, memStall, memErr;
+	wire [15:0] cacheOut, memOut;
+	wire [4:0] tagOut; 
 
 	assign err = cacheErr | memErr | (|hasErr);
-
-	
+	assign CacheHit = hit;
+	assign Done = done;
+	assign Stall = stall;
 
 
 
@@ -75,7 +81,7 @@ module mem_system(/*AUTOARG*/
 							.enable               (1'h1),
 							.clk                  (clk),
 							.rst                  (rst),
-							.createdump           (err),
+							.createdump           (createdump),
 							.tag_in               (tagIn),
 							.index                (index),
 							.offset               (cacheOff),
@@ -92,7 +98,7 @@ module mem_system(/*AUTOARG*/
 							// Inputs
 							.clk               (clk),
 							.rst               (rst),
-							.createdump        (err),
+							.createdump        (createdump),
 							.addr              (memAddr),
 							.data_in           (memIn),
 							.wr                (memWrt),
@@ -104,9 +110,9 @@ module mem_system(/*AUTOARG*/
 
 	// your code here
 	always@(*) begin
-		hasErr[0] = 1'h0;
-		Done = 0;
-		Stall = 0;
+		hasErr = 1'h0;
+		done = 0;
+		stall = 0;
 		comp = 1'h0;
 		cacheWrt = 1'h0;
 		memRd = 1'h0;
@@ -123,9 +129,9 @@ module mem_system(/*AUTOARG*/
 					// Tag_In = Addr[15:11];
 					// cacheOff = Addr[2:0];
 					comp = 1'h1;
-					Done = hit & valid;
-					Stall	= ~(hit & valid);
-					DataOut	 = Done ? cacheOut : 16'h0;
+					done = hit & valid;
+					stall	= ~(hit & valid);
+					DataOut	 = done ? cacheOut : 16'h0;
 					nextState = (hit & valid) ? WAIT_REQ : 
 									(~hit & valid & dirty) ? WB_1 :
 									MEM_RD_1;
@@ -134,8 +140,8 @@ module mem_system(/*AUTOARG*/
 				comp = 1'h1;
 				cacheIn	= DataIn;
 				cacheWrt	= 1'h1;
-				Done = hit & valid;
-				Stall = ~(hit & valid);
+				done = hit & valid;
+				stall = ~(hit & valid);
 				nextState = (hit & valid) ? WAIT_REQ :
 								(~hit & valid & dirty) ? WB_1 : 
 								MEM_RD_1;
@@ -147,8 +153,8 @@ module mem_system(/*AUTOARG*/
 				memAddr = {tagOut, index, offset};
 				nextState = WB_2;
 
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 				
 			end
 			WB_2: begin
@@ -158,8 +164,8 @@ module mem_system(/*AUTOARG*/
 				memAddr = {tagOut, index, offset};
 				nextState = WB_3;
 
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 			end
 			WB_3: begin
 				
@@ -169,8 +175,8 @@ module mem_system(/*AUTOARG*/
 				memAddr = {tagOut, index, offset};
 				nextState = WB_4;
 
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 			end
 			WB_4: begin
 				
@@ -180,14 +186,14 @@ module mem_system(/*AUTOARG*/
 				memAddr = {tagOut, index, offset};
 				nextState = MEM_RD_1;
 
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 			end
 			MEM_RD_1: begin
 				memRd = 1'h1;
 
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 
 				nextState = MEM_RD_2;
 
@@ -195,8 +201,8 @@ module mem_system(/*AUTOARG*/
 			MEM_RD_2: begin
 				memRd = 1'h1;
 
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 
 				nextState = MEM_RD_3;
 				
@@ -209,8 +215,8 @@ module mem_system(/*AUTOARG*/
 				memAddr = {tagOut, index, offset};
 
 				cacheIn = memOut;
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 				validIn = 1'h0;
 
 				// memIn = cacheOut;
@@ -224,8 +230,8 @@ module mem_system(/*AUTOARG*/
 				memAddr = {tagOut, index, offset};
 
 				cacheIn = memOut;
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 				validIn = 1'h0;
 
 				// memIn = cacheOut;
@@ -240,8 +246,8 @@ module mem_system(/*AUTOARG*/
 				// memAddr = {tagOut, index, offset};
 
 				cacheIn = memOut;
-				Done = 1'h0;
-				Stall = 1'h1;
+				done = 1'h0;
+				stall = 1'h1;
 				validIn = 1'h0;
 
 				// memIn = cacheOut;
@@ -256,8 +262,8 @@ module mem_system(/*AUTOARG*/
 				// memAddr = {tagOut, index, offset};
 
 				cacheIn = memOut;
-				Done = Rd;
-				Stall = Wrt;
+				done = Rd;
+				stall = Wr;
 				
 				validIn = 1'h1;
 
@@ -272,25 +278,25 @@ module mem_system(/*AUTOARG*/
 				// memAddr = {tagOut, index, offset};
 
 				cacheIn = memOut;
-				Done = 1'h1;
-				Stall = 1'h0;
+				done = 1'h1;
+				stall = 1'h0;
 				
 				nextState = WAIT_REQ;
 				// validIn = 1'h1;
 				
 			end
 			ERR: begin
-				hasErr[0] = 1'h1;
+				hasErr = 1'h1;
 				nextState = WAIT_REQ;
 			end
-			default: hasErr[0] = 1'h1;
+			default: hasErr = 1'h1;
 		endcase
 	end
 
 
 
 
-	dff [3:0]stateFlop(.d(nextState), .q(curState), .clk(clk), .rst(rst));
+	dff stateFlop [3:0](.d(nextState), .q(curState), .clk(clk), .rst(rst));
 
 
 
