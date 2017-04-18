@@ -116,7 +116,7 @@ module mem_system(/*AUTOARG*/
 		cacheOff = Addr[2:0];
 		case(curState)
 			WAIT_REQ: begin
-					nextState = {WRT, RD};
+					nextState = {Wr, Rd};
 			end
 			CHECK_RD: begin
 					// index = Addr[10:3];
@@ -146,39 +146,142 @@ module mem_system(/*AUTOARG*/
 				memIn = cacheOut;
 				memAddr = {tagOut, index, offset};
 				nextState = WB_2;
+
+				Done = 1'h0;
+				Stall = 1'h1;
+				
 			end
 			WB_2: begin
-				
+				memWrt = 1'h1;
+				offset = 3'b010;
+				memIn = cacheOut;
+				memAddr = {tagOut, index, offset};
+				nextState = WB_3;
+
+				Done = 1'h0;
+				Stall = 1'h1;
 			end
 			WB_3: begin
 				
+				memWrt = 1'h1;
+				offset = 3'b100;
+				memIn = cacheOut;
+				memAddr = {tagOut, index, offset};
+				nextState = WB_4;
+
+				Done = 1'h0;
+				Stall = 1'h1;
 			end
 			WB_4: begin
 				
+				memWrt = 1'h1;
+				offset = 3'b110;
+				memIn = cacheOut;
+				memAddr = {tagOut, index, offset};
+				nextState = MEM_RD_1;
+
+				Done = 1'h0;
+				Stall = 1'h1;
 			end
 			MEM_RD_1: begin
-				
+				memRd = 1'h1;
+
+				Done = 1'h0;
+				Stall = 1'h1;
+
+				nextState = MEM_RD_2;
+
 			end
 			MEM_RD_2: begin
+				memRd = 1'h1;
+
+				Done = 1'h0;
+				Stall = 1'h1;
+
+				nextState = MEM_RD_3;
 				
-			end
+			end		
 			MEM_RD_3: begin
-				
+				memRd = 1'h1;
+				cacheWrt = 1'h1;
+
+				offset = 3'b000;
+				memAddr = {tagOut, index, offset};
+
+				cacheIn = memOut;
+				Done = 1'h0;
+				Stall = 1'h1;
+				validIn = 1'h0;
+
+				// memIn = cacheOut;
+				nextState = MEM_RD_4;
 			end
 			MEM_RD_4: begin
+				memRd = 1'h1;
+				cacheWrt = 1'h1;
+
+				offset = 3'b010;
+				memAddr = {tagOut, index, offset};
+
+				cacheIn = memOut;
+				Done = 1'h0;
+				Stall = 1'h1;
+				validIn = 1'h0;
+
+				// memIn = cacheOut;
+				nextState = LOAD_3;
 				
 			end
 			LOAD_3: begin
+				// memRd = 1'h1;
+				cacheWrt = 1'h1;
+
+				offset = 3'b100;
+				// memAddr = {tagOut, index, offset};
+
+				cacheIn = memOut;
+				Done = 1'h0;
+				Stall = 1'h1;
+				validIn = 1'h0;
+
+				// memIn = cacheOut;
+				nextState = LOAD_4;
 				
 			end
 			LOAD_4: begin
+				// memRd = 1'h1;
+				cacheWrt = 1'h1;
+
+				offset = 3'b110;
+				// memAddr = {tagOut, index, offset};
+
+				cacheIn = memOut;
+				Done = Rd;
+				Stall = Wrt;
+				
+				validIn = 1'h1;
+
+				nextState = (Rd) ? WAIT_REQ : (Wr) ? CACHE_WRT : ERR;
+				
 				
 			end
 			CACHE_WRT: begin
+				cacheWrt = 1'h1;
+
+				// offset = 3'b100;
+				// memAddr = {tagOut, index, offset};
+
+				cacheIn = memOut;
+				Done = 1'h1;
+				Stall = 1'h0;
+				
+				nextState = WAIT_REQ;
+				// validIn = 1'h1;
 				
 			end
 			ERR: begin
-				
+				hasErr[0] = 1'h1;
+				nextState = WAIT_REQ;
 			end
 			default: hasErr[0] = 1'h1;
 		endcase
