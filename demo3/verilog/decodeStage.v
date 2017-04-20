@@ -1,10 +1,10 @@
 module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regWrtEn, regWrtAddr, halt, 
 	sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB, return, cin, memToReg,
-	writeReg, aluSrc, regWrtSrc, brType, aluOp, reg1Data, reg2Data, clk, rst, stall, doBranch);
+	writeReg, aluSrc, regWrtSrc, brType, aluOp, reg1Data, reg2Data, clk, rst, stall, doBranch, hazStall);
 	
 
 	// signals from writeback stage
-	input regWrtEn;
+	input regWrtEn, hazStall;
 	input [2:0] regWrtAddr;
 	input [15:0] regWrtData;
 
@@ -77,13 +77,13 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 		.writeregsel(regWrtAddr), .writedata(regWrtData), .write(regWrtEn));
 
 
-	assign tempInstr = stall ? iOut : instrIn;
+	assign tempInstr = /*(hazStall) ? 16'h0800 : */instrIn;
 	// assign instrOut = s iOut;
 
-	assign nPc = stall ? nextPcOut : nextPcIn;
+	assign nPc = nextPcIn;
 	
 	dffEn fPC[15:0](.d(nPc), .q(nextPcOut), .clk(clk), .rst(ffRst), .en(~stall));
-	dffEn fInst[15:0](.d(tempInstr), .q(instrOut), .clk(clk), .rst(rst), .en(~stall));
+	dffEn fInst[15:0](.d(tempInstr), .q(instrOut), .clk(clk), .rst(rst), .en(~stall | hazStall));
 	dffEn reg1F[15:0](.d(intReg1Data), .q(reg1Data), .clk(clk), .rst(ffRst), .en(~stall));
 	dffEn reg2F[15:0](.d(intReg2Data), .q(reg2Data), .clk(clk), .rst(ffRst), .en(~stall));
 
@@ -96,10 +96,12 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 	assign halt = stall ? 1'h0 : tempHalt;
 	assign regWrt = stall ? 1'h0 : tempRegWrt;
-	assign memWrt = stall ? 1'h0 : tempMemWrt;
-	assign memEn = stall ? 1'h0 : tempMemEn;
+	assign memWrt = hazStall ? tempMemWrt : stall ? 1'h0 : tempMemWrt;
+	assign memEn = hazStall ? tempMemEn : stall ? 1'h0 : tempMemEn;
 	assign jump = stall ? 1'h0 : tempJump;
 
+
+	// assign  = hazStall ? 16'h0800 : iOut;
 
 	dffEn haltF(.d(intHalt & ~(nextPcIn == 16'h0)), .q(tempHalt), .clk(clk), .rst(ffRst), .en(~stall));
 	dffEn errF(.d(intErr), .q(err), .clk(clk), .rst(ffRst), .en(~stall));

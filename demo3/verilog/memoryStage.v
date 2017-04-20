@@ -1,7 +1,7 @@
 module memoryStage(clk, rst, err, aluOut, setVal, memWrt, memEn, halt, reg2Data, reg1Data, nextPc, instr, 
-					regWrt, regWrtOut, regWrtSrc, memOut, regWriteData, writeReg, writeRegOut, fwdData, regWrtSrcOut);
+					regWrt, regWrtOut, regWrtSrc, memOut, regWriteData, writeReg, writeRegOut, fwdData, regWrtSrcOut, stall, prevStall);
 	
-	input clk, rst, halt, memEn, memWrt, regWrt;
+	input clk, rst, halt, memEn, memWrt, regWrt, stall, prevStall;
 	input [2:0] regWrtSrc, writeReg;
 	input [15:0] aluOut, reg1Data, reg2Data, nextPc, instr, setVal;
 
@@ -61,15 +61,15 @@ module memoryStage(clk, rst, err, aluOut, setVal, memWrt, memEn, halt, reg2Data,
 	// end
 
 
-	dff memOF[15:0](.d(intMemOut), .q(memOut), .clk(clk), .rst(rst));
-	dff regWrtDF[15:0](.d(fwdData), .q(regWriteData), .clk(clk), .rst(rst));
+	dffEn memOF[15:0](.d(intMemOut), .q(memOut), .clk(clk), .rst(rst), .en(~stall));
+	dffEn regWrtDF[15:0](.d(fwdData), .q(regWriteData), .clk(clk), .rst(rst), .en(~stall));
 
 
 	dff regWrtF(.d(regWrt), .q(regWrtOut), .clk(clk), .rst(rst));
 	dff errF(.d(tempErr), .q(err), .clk(clk), .rst(rst));
 
 	dff wrtRegF [2:0] (.d(writeReg), .q(writeRegOut), .clk(clk), .rst(rst));
-	dff wrtRegSrcF [2:0] (.d(regWrtSrc), .q(regWrtSrcOut), .clk(clk), .rst(rst));
+	dffEn wrtRegSrcF [2:0] (.d(regWrtSrc), .q(regWrtSrcOut), .clk(clk), .rst(rst), .en(~stall));
 
 
 endmodule

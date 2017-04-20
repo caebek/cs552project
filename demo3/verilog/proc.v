@@ -23,12 +23,12 @@ module proc (/*AUTOARG*/
 
 	wire fErr, dErr, eErr, mErr, regWrtEn, dHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, dMemWrt, eMemWrt, 
 			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, 
-			stall, jumpOut, iMemStall, flushPipe, clearPipe;
+			stall, jumpOut, iMemStall, flushPipe, clearPipe, prevMFwdA, prevMFwdB, prevWFwdA, prevWFwdB, hazStall, extraStall;
 	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, regRt, regRs, mRegWrtSrc;
 	wire [3:0] aluOp;
 	wire [4:0] dOp;
-	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, dReg1Data, 
-			eReg1Data, dReg2Data, eReg2Data, jumpPc, setVal, aluOut, memOut, regWriteData, fwdData, writeData;
+	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, dReg1Data, regADataFlop, regBDataFlop,
+			eReg1Data, dReg2Data, eReg2Data, jumpPc, setVal, aluOut, memOut, regWriteData, fwdData, writeData, useA, useB;
 	reg [1:0] hasErr;
 	reg [15:0] regAData, regBData;
 	
@@ -39,7 +39,7 @@ module proc (/*AUTOARG*/
 
 
 	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt & ~pipeStall), .doBranch(doBranch | jumpOut), 
-		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(fStall), .err(fErr), .stallOut(iMemStall),
+		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(fStall | hazStall), .err(fErr), .stallOut(iMemStall),
 		.flushPipe(flushPipe));
 
 
@@ -49,7 +49,7 @@ module proc (/*AUTOARG*/
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
 		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(dReg1Data), 
-		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(pipeStall), .doBranch(flushPipe));
+		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(pipeStall | hazStall), .doBranch(flushPipe), .hazStall(hazStall));
 
 	// Flop outputs
 
@@ -69,10 +69,12 @@ module proc (/*AUTOARG*/
 					.memWrt(eMemWrt), .memEn(eMemEn), .halt(halt), .reg2Data(eReg2Data), .reg1Data(eReg1Data), 
 					.nextPc(eNextPc), .instr(eInstr), .regWrt(eRegWrt), .regWrtOut(regWrtEn), 
 					.regWrtSrc(eRegWrtSrc), .memOut(memOut), .regWriteData(regWriteData),
-					.writeReg(eWriteReg), .writeRegOut(writeReg), .fwdData(fwdData), .regWrtSrcOut(mRegWrtSrc));
+					.writeReg(eWriteReg), .writeRegOut(writeReg), .fwdData(fwdData), .regWrtSrcOut(mRegWrtSrc),
+					.stall(pipeStall), .prevStall(prevStall));
 
 
 	dff clrPipeFF(.d(clearPipe), .q(flushPipe), .clk(clk), .rst(rst));
+	dff stalleFF(.d(pipeStall), .q(prevStall), .clk(clk), .rst(rst));
 
 	// Forward logic
 
@@ -82,16 +84,30 @@ module proc (/*AUTOARG*/
 
 	// assign wbRegA = dInstr[10:8];
 	// assign wbRegB = dInstr[7:5];
+	assign memFwdA = (eRegWrt & (eWriteReg == regA)) | (prevMFwdA & prevStall);
+	assign memFwdB = (eRegWrt & (eWriteReg == regB)) | (prevMFwdB & prevStall);
 
-	assign memFwdA = eRegWrt & (eWriteReg == regA);
-	assign memFwdB = eRegWrt & (eWriteReg == regB);
 
-
-	assign wbFwdA = regWrtEn & (writeReg == regA) & ~memFwdA;//~(eRegWrt | (eRegWrt & (eWriteReg != regA)));
-	assign wbFwdB = regWrtEn & (writeReg == regB) & ~memFwdB;//~(eRegWrt | (eRegWrt & (eWriteReg != regB)));
- 
+	assign wbFwdA = ((regWrtEn & (writeReg == regA)) | (prevWFwdA & prevStall)) & ~memFwdA;//~(eRegWrt | (eRegWrt & (eWriteReg != regA)));
+	assign wbFwdB = ((regWrtEn & (writeReg == regB)) | (prevWFwdB & prevStall)) & ~memFwdB;//~(eRegWrt | (eRegWrt & (eWriteReg != regB)));
 
 	assign writeData = (mRegWrtSrc == 3'h0) ? memOut : regWriteData;
+
+
+
+	dff mFwdA(.d(memFwdA), .q(prevMFwdA), .clk(clk), .rst(rst));
+	dff wFwdA(.d(wbFwdA), .q(prevWFwdA), .clk(clk), .rst(rst));
+	dff mFwdB(.d(memFwdB), .q(prevMFwdB), .clk(clk), .rst(rst));
+	dff wFwdB(.d(wbFwdB), .q(prevWFwdB), .clk(clk), .rst(rst));
+ // 	assign fwdA = memFwdA | wbFwdA;
+ // 	assign fwdB = memFwdB | wbFwdB;
+	// dffEn regAF[15:0](.d(regAData), .q(regADataFlop), .clk(clk), .rst(rst), .en(~stall | fwd));
+	// dffEn regBF[15:0](.d(regBData), .q(regBDataFlop), .clk(clk), .rst(rst), .en(~stall | fwd));
+
+
+	// assign useA =(stall) ? regADataFlop : regAData;
+	// assign useB = (stall) ? regBDataFlop : regBData;
+
 
 	// reg1Data mux
 	always@(*) begin
@@ -149,9 +165,15 @@ module proc (/*AUTOARG*/
 
 
 	assign dOp = fInstr[15:11];
-	assign pipeStall = fStall | iMemStall;
+	assign pipeStall = iMemStall;
 	// stall if we are reading memory and the reg we will write that value to is used in the next instruction, or the next instruction is a halt and the next instrction
 	// isnt a ld or st or stu. 
+
+
+	assign extraStall = (~iMemStall) ? 1'h0 | fStall : hazStall | fStall;
+
+	dff hazStallf(.d(extraStall), .q(hazStall), .clk(clk), .rst(rst));
+
 
 	assign fStall = (dMemEn & ~dMemWrt) & ((regB == regRt) | (regB == regRs) | dOp == 5'h0);// & dOp != 5'b10001 & dOp != 5'b10000 & dOp != 5'b10011;
 	
