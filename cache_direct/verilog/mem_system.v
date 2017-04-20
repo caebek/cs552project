@@ -52,7 +52,7 @@ module mem_system(/*AUTOARG*/
 	reg hasErr;
 
 
-	reg validIn, comp, cacheWrt, memRd, memWrt, done, stall, needData, intHit;
+	reg validIn, comp, cacheWrt, memRd, memWrt, done, stall, needData, intHit, fwdHit;
 	reg [1:0] cacheOrMem;
 	reg [2:0] cacheOff, memOff;
 	// reg [3:0] offset;
@@ -61,7 +61,7 @@ module mem_system(/*AUTOARG*/
 	reg [15:0] cacheIn, memIn, memAddr;
 
 
-	wire hit, dirty, valid,  cacheErr, memStall, memErr, useData;
+	wire hit, dirty, valid,  cacheErr, memStall, memErr, useData, flopHit;
 	wire [15:0] cacheOut, memOut, writeData;
 	wire [4:0] tagOut; 
 
@@ -128,6 +128,7 @@ module mem_system(/*AUTOARG*/
 		memIn = 16'h0;
 		memAddr = 16'h0;
 		intHit = 1'h0;
+		fwdHit = 1'h0;
 		// CacheHit = 1'h0;
 		case(curState)
 			WAIT_REQ: begin
@@ -140,21 +141,26 @@ module mem_system(/*AUTOARG*/
 					// Tag_In = Addr[15:11];
 					// cacheOff = Addr[2:0];
 					needData = hit & valid;
-
+					fwdHit = 1'h1;
 					comp = 1'h1;
-					// done = hit & valid;
 					// TODO maybe no valid
-					done = 1'h0;
-					stall = 1'h1;
+					done = hit & valid;
+					stall	= ~(hit & valid);
+					// done = 1'h0;
+					// stall = 1'h1;
 					intHit = hit & valid;
-					// stall	= ~(hit & valid);
-					DataOut	 = done ? cacheOut : 16'h0;
+					// fwdHit = 1'h1;
+					DataOut = cacheOut & intHit;
+					// DataOut	 = done ? cacheOut : 16'h0;
 					// nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD : 
 					// 				(hit & valid & ~Rd & Wr) ? CHECK_WRT :
 					// 				(hit & valid & ~Rd & ~Wr) ? WAIT_REQ : 
 					// 				(~hit & valid & dirty) ? WB_1 :
 					// 				MEM_RD_1;
-					nextState = (hit & valid) ? WAIT_2 : 
+					nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD : 
+									(hit & valid & ~Rd & Wr) ? CHECK_WRT :
+									(hit & valid & ~Rd & ~Wr) ? WAIT_REQ :
+									(hit & valid & Rd & Wr) ? ERR :  
 									(~hit & valid & dirty) ? WB_1 :
 									MEM_RD_1;
 			end
@@ -375,8 +381,12 @@ module mem_system(/*AUTOARG*/
 
 
 
-	dff flop(.d(needData), .q(useData), .clk(clk), .rst(rst));
-	dff hitFlop(.d(intHit), .q(CacheHit), .clk(clk), .rst(rst));
+	assign CacheHit = (fwdHit) ? intHit : flopHit;
+
+
+
+	dff flop(.d(needData), .q(useData), .clk(clk), .rst(rst | fwdHit));
+	dff hitFlop(.d(intHit), .q(flopHit), .clk(clk), .rst(rst));
 	dff stateFlop [3:0](.d(nextState), .q(curState), .clk(clk), .rst(rst));
 	dff dataFlop [15:0](.d(DataIn), .q(writeData), .clk(clk), .rst(rst));
 
