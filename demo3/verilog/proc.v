@@ -23,12 +23,12 @@ module proc (/*AUTOARG*/
 
 	wire fErr, dErr, eErr, mErr, regWrtEn, dHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, dMemWrt, eMemWrt, 
 			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, 
-			stall, jumpOut, iMemStall, flushPipe, clearPipe, prevMFwdA, prevMFwdB, prevWFwdA, prevWFwdB, hazStall, extraStall;
-	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, regRt, regRs, mRegWrtSrc;
+			stall, jumpOut, iMemStall, flushPipe, clearPipe, prevMFwdA, prevMFwdB, prevWFwdA, prevWFwdB, hazStall, extraStall, prevJump;
+	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, regRt, regRs, mRegWrtSrc, memFwdCheckReg;
 	wire [3:0] aluOp;
 	wire [4:0] dOp;
 	wire [15:0] fInstr, dInstr, eInstr, fNextPc, dNextPc, eNextPc, dReg1Data, regADataFlop, regBDataFlop,
-			eReg1Data, dReg2Data, eReg2Data, jumpPc, setVal, aluOut, memOut, regWriteData, fwdData, writeData, useA, useB;
+			eReg1Data, dReg2Data, eReg2Data, jumpPc, setVal, aluOut, memOut, regWriteData, fwdData, writeData, useA, useB, savedData;
 	reg [1:0] hasErr;
 	reg [15:0] regAData, regBData;
 	
@@ -61,7 +61,7 @@ module proc (/*AUTOARG*/
 		.reg2Data(regBData), .reg1DataOut(eReg1Data), .reg2DataOut(eReg2Data), .clk(clk), .rst(rst),
 		.jumpPc(jumpPc), .setVal(setVal), .doBranch(doBranch), .aluOut(aluOut), .regWrtOut(eRegWrt),
 		.memWrtOut(eMemWrt), .memEnOut(eMemEn), .regWrtSrcOut(eRegWrtSrc), .writeRegOut(eWriteReg),
-		.haltOut(halt), .jumpOut(jumpOut), .flushPipe(flushPipe), .stall(pipeStall));
+		.haltOut(halt), .jumpOut(jumpOut), .flushPipe(flushPipe), .stall(pipeStall), .prevStall(prevStall), .hazStall(hazStall));
 
 
 	// dff hf(.d(halt), .q(haltOut), .clk(clk), .rst(rst | doBranch | jumpOut));
@@ -70,7 +70,7 @@ module proc (/*AUTOARG*/
 					.nextPc(eNextPc), .instr(eInstr), .regWrt(eRegWrt), .regWrtOut(regWrtEn), 
 					.regWrtSrc(eRegWrtSrc), .memOut(memOut), .regWriteData(regWriteData),
 					.writeReg(eWriteReg), .writeRegOut(writeReg), .fwdData(fwdData), .regWrtSrcOut(mRegWrtSrc),
-					.stall(pipeStall), .prevStall(prevStall));
+					.stall(pipeStall), .prevStall(prevStall), .hazStall(hazStall));
 
 
 	dff clrPipeFF(.d(clearPipe), .q(flushPipe), .clk(clk), .rst(rst));
@@ -84,16 +84,26 @@ module proc (/*AUTOARG*/
 
 	// assign wbRegA = dInstr[10:8];
 	// assign wbRegB = dInstr[7:5];
-	assign memFwdA = (eRegWrt & (eWriteReg == regA)) | (prevMFwdA & prevStall);
-	assign memFwdB = (eRegWrt & (eWriteReg == regB)) | (prevMFwdB & prevStall);
+	assign memFwdA = (eRegWrt & (memFwdCheckReg == regA)) | (prevMFwdA & prevStall);
+	assign memFwdB = (eRegWrt & (memFwdCheckReg == regB)) | (prevMFwdB & prevStall);
 
 
 	assign wbFwdA = ((regWrtEn & (writeReg == regA)) | (prevWFwdA & prevStall)) & ~memFwdA;//~(eRegWrt | (eRegWrt & (eWriteReg != regA)));
 	assign wbFwdB = ((regWrtEn & (writeReg == regB)) | (prevWFwdB & prevStall)) & ~memFwdB;//~(eRegWrt | (eRegWrt & (eWriteReg != regB)));
 
-	assign writeData = (mRegWrtSrc == 3'h0) ? memOut : regWriteData;
+	
+
+	assign writeData = (mRegWrtSrc == 3'h0) ? memOut : (regWrtEn & prevJump) ? fwdData : (hazStall) ? savedData : regWriteData;
 
 
+
+	// for jalr writeReg is r7 but dep in on r0 which is in instruct so not fowarding mem like should and then forwarding wb which is giving the wrong data
+	assign memFwdCheckReg = (eRegWrt & jumpOut) ? eInstr[10:8] : eWriteReg;
+
+
+
+	dff rwdA[15:0](.d(regWriteData), .q(savedData), .clk(clk), .rst(rst));
+	
 
 	dff mFwdA(.d(memFwdA), .q(prevMFwdA), .clk(clk), .rst(rst));
 	dff wFwdA(.d(wbFwdA), .q(prevWFwdA), .clk(clk), .rst(rst));
@@ -123,7 +133,7 @@ module proc (/*AUTOARG*/
 				// writeAData = regAData;
 			end
 			2'b10: begin
-				regAData = fwdData;
+				regAData = (eRegWrtSrc != 3'h0) ? fwdData : memOut;
 				// writeAData = regWriteData;
 			end
 			default: hasErr[0] = 1'h1;
@@ -143,7 +153,7 @@ module proc (/*AUTOARG*/
 				// writeBData = regBData;
 			end 
 			2'b10: begin
-				regBData = fwdData;
+				regBData = (eRegWrtSrc != 3'h0) ? fwdData : memOut;
 				// writeBData = regWriteData;
 			end
 			default: hasErr[1] = 1'h1;
@@ -173,6 +183,7 @@ module proc (/*AUTOARG*/
 	assign extraStall = (~iMemStall) ? 1'h0 | fStall : hazStall | fStall;
 
 	dff hazStallf(.d(extraStall), .q(hazStall), .clk(clk), .rst(rst));
+	dff pjf(.d(jumpOut), .q(prevJump), .clk(clk), .rst(rst));
 
 
 	assign fStall = (dMemEn & ~dMemWrt) & ((regB == regRt) | (regB == regRs) | dOp == 5'h0);// & dOp != 5'b10001 & dOp != 5'b10000 & dOp != 5'b10011;

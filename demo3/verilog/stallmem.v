@@ -111,7 +111,7 @@ module stallmem (DataOut, Done, Stall, CacheHit, err, Addr, DataIn, Rd, Wr, crea
             if ({1'b0, Addr} > largest) largest = Addr;  // avoid negative numbers
          end
          if(ready & Rd & ~Wr & ~err) begin
-               $display("Mem[%d]=%4h", Addr, {mem[Addr], mem[Addr+8'h1]});
+               // $display("Mem[%d]=%4h", Addr, {mem[Addr], mem[Addr+8'h1]});
          end
          if (createdump) begin
             mcd = $fopen("dumpfile");

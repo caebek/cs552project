@@ -39,7 +39,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 		intReturn, intCin, intMemToReg, ffRst, tempRegWrt, tempMemWrt, tempMemEn, tempJump, tempHalt;
 	wire [2:0] intAluSrc, intRegWrtSrc, intBrType;
 	wire [3:0] intAluOp;
-	wire [15:0] intReg1Data, intReg2Data, tempInstr, iOut, nPC;
+	wire [15:0] intReg1Data, intReg2Data, tempInstr, iOut, nPc;
 
 
 
@@ -82,7 +82,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 	assign nPc = nextPcIn;
 	
-	dffEn fPC[15:0](.d(nPc), .q(nextPcOut), .clk(clk), .rst(ffRst), .en(~stall));
+	dffEn fPC[15:0](.d(nextPcIn), .q(nextPcOut), .clk(clk), .rst(ffRst), .en(~stall));
 	dffEn fInst[15:0](.d(tempInstr), .q(instrOut), .clk(clk), .rst(rst), .en(~stall | hazStall));
 	dffEn reg1F[15:0](.d(intReg1Data), .q(reg1Data), .clk(clk), .rst(ffRst), .en(~stall));
 	dffEn reg2F[15:0](.d(intReg2Data), .q(reg2Data), .clk(clk), .rst(ffRst), .en(~stall));

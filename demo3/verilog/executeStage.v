@@ -2,10 +2,10 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 					memEn, jump, invA, invB, return, cin, memToReg, writeReg, aluSrc,regWrtSrc,
 					brType, aluOp, reg1Data, reg2Data, reg1DataOut, reg2DataOut, clk, rst, jumpPc,
 					setVal, doBranch, aluOut, regWrtOut, memWrtOut, memEnOut, regWrtSrcOut, writeRegOut,
-					haltOut, flushPipe, jumpOut, stall);
+					haltOut, flushPipe, jumpOut, stall, prevStall, hazStall);
 	
 	input halt, sign, pcOffSel, regWrt, memWrt, memEn, jump, invA, invB,
-		return, cin, memToReg, clk, rst, flushPipe, stall;
+		return, cin, memToReg, clk, rst, flushPipe, stall, prevStall, hazStall;
 	input [2:0] aluSrc, regWrtSrc, brType, writeReg;
 	input [3:0] aluOp;
 	input [15:0] reg1Data, reg2Data, nextPc, instr;
@@ -42,12 +42,12 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	// assign regWrtSrcOut = regWrtSrc; 
 	// assign haltOut = halt;
 
-	assign haltOut = doBranch | stall ? 1'h0 : tempHalt;
-	assign regWrtOut = stall ? 1'h0 : tempRegWrt;
-	assign memWrtOut = stall ? 1'h0 : tempMemWrt;
-	assign memEnOut = stall ? 1'h0 : tempMemEn;
-	assign jumpOut = stall ? 1'h0 : tempJump;
-	assign doBranch = stall ? 1'h0 : tempDoBranch;
+	assign haltOut = doBranch | jumpOut | stall ? 1'h0 : tempHalt;
+	assign regWrtOut = stall  & ~doBranch & ~jumpOut ? 1'h0 : tempRegWrt;
+	assign memWrtOut = prevStall ? 1'h0 : tempMemWrt;
+	assign memEnOut = prevStall ? 1'h0 : tempMemEn;
+	assign jumpOut = /*stall ? 1'h0 : */tempJump;
+	assign doBranch = /*stall ? 1'h0 : */tempDoBranch;
 
 	assign tempInstr = doBranch ? 16'h0800 : instr;
 	assign ffRst = rst | doBranch | jumpOut | flushPipe;
@@ -61,14 +61,14 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	dffEn jmpF(.d(jump), .q(tempJump), .clk(clk), .rst(ffRst), .en(~stall));
 
 
-	dffEn regWrtSrcF[2:0] (.d(regWrtSrc), .q(regWrtSrcOut), .clk(clk), .rst(ffRst), .en(~stall));
+	dffEn regWrtSrcF[2:0] (.d(regWrtSrc), .q(regWrtSrcOut), .clk(clk), .rst(rst), .en(~stall));
 	dffEn wrtRegF[2:0] (.d(writeReg), .q(writeRegOut), .clk(clk), .rst(ffRst), .en(~stall));
 
 	dffEn reg1F[15:0](.d(reg1Data), .q(reg1DataOut), .clk(clk), .rst(ffRst), .en(~stall));
 	dffEn reg2F[15:0](.d(reg2Data), .q(reg2DataOut), .clk(clk), .rst(ffRst), .en(~stall));
 	dffEn instrF[15:0](.d(tempInstr), .q(instrOut), .clk(clk), .rst(rst), .en(~stall));
-	dffEn nextPcF[15:0](.d(nextPc), .q(nextPcOut), .clk(clk), .rst(ffRst), .en(~stall));
-	dffEn jmpPcF[15:0](.d(intJumpPc), .q(jumpPc), .clk(clk), .rst(ffRst), .en(~stall));
+	dffEn nextPcF[15:0](.d(nextPc), .q(nextPcOut), .clk(clk), .rst(rst), .en(~stall));
+	dffEn jmpPcF[15:0](.d(intJumpPc), .q(jumpPc), .clk(clk), .rst(rst), .en(1'h1));
 	dffEn aluOutF[15:0](.d(intAluOut), .q(aluOut), .clk(clk), .rst(ffRst), .en(~stall));
 	dffEn setValF[15:0](.d(intSetVal), .q(setVal), .clk(clk), .rst(ffRst), .en(~stall));
 
