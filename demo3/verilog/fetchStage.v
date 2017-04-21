@@ -11,7 +11,7 @@ module fetchStage(clk, rst, halt, doBranch, branchPc, nextPc, instr, stall, err,
 	reg hasErr;
 	reg [15:0] usePc;
 
-	assign memStall =  intMemStall | ~done;
+	assign memStall =  intMemStall;
 
 	// assign stallOut = memStall;
 	// assign stallOut = stall | memStall;
@@ -25,13 +25,6 @@ module fetchStage(clk, rst, halt, doBranch, branchPc, nextPc, instr, stall, err,
 	// if halt = 1 -> mem wEn = 0
 	// if stall = 1 -> mem wEn = 0
 
-
-	//need to ripple stall through pipeline? 
-
-
-
-	// memory2c_align iMem(.data_out(preInstr), .addr(usePc), .enable(1'h1), .wr(1'h0), .createdump(1'h0), 
-	// .clk(clk), .rst(rst), .err(err));
 
 	register pcReg(.clk(clk), .rst(rst), .wData(nPc), .rData(curPc), .wEn( (~halt & done) | doBranch));
 	stallmem iMem(.DataOut(preInstr), .Done(done), .Stall(intMemStall), .CacheHit(iCacheHit), .err(memErr), 

@@ -23,7 +23,7 @@ module proc (/*AUTOARG*/
 
 	wire fErr, dErr, eErr, mErr, regWrtEn, dHalt, halt, sign, pcOffSel, dRegWrt, eRegWrt, dMemWrt, eMemWrt, 
 			dMemEn, eMemEn, jump, invA, invB, return, cin, memToReg, doBranch, memFwdA, memFwdB, wbFwdA, wbFwdB, 
-			stall, jumpOut, iMemStall, flushPipe, clearPipe, prevMFwdA, prevMFwdB, prevWFwdA, prevWFwdB, hazStall, extraStall, prevJump;
+			stall, jumpOut, iMemStall, flushPipe, clearPipe, prevMFwdA, prevMFwdB, prevWFwdA, prevWFwdB, hazStall, extraStall, prevJump, prevRegWrt;
 	wire [2:0] regWrtAddr, dWriteReg, eWriteReg, aluSrc, regWrtSrc, eRegWrtSrc, brType, writeReg, regA, regB, regRt, regRs, mRegWrtSrc, memFwdCheckReg;
 	wire [3:0] aluOp;
 	wire [4:0] dOp;
@@ -39,17 +39,17 @@ module proc (/*AUTOARG*/
 
 
 	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt & ~pipeStall), .doBranch(doBranch | jumpOut), 
-		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(fStall | hazStall), .err(fErr), .stallOut(iMemStall),
+		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(fStall), .err(fErr), .stallOut(iMemStall),
 		.flushPipe(flushPipe));
 
 
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
-		.err(dErr), .regWrtData(writeData), .regWrtEn(regWrtEn), .regWrtAddr(writeReg), 
+		.err(dErr), .regWrtData(writeData), .regWrtEn(regWrtEn & ~(hazStall & prevStall) & ~dMemEn), .regWrtAddr(writeReg), 
 		.halt(dHalt), .sign(sign), .pcOffSel(pcOffSel), .regWrt(dRegWrt), .memWrt(dMemWrt), 
 		.memEn(dMemEn), .jump(jump), .invA(invA), .invB(invB), .return(return), .cin(cin), 
 		.memToReg(memToReg), .writeReg(dWriteReg), .aluSrc(aluSrc), 
 		.regWrtSrc(regWrtSrc), .brType(brType), .aluOp(aluOp), .reg1Data(dReg1Data), 
-		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(pipeStall | hazStall), .doBranch(flushPipe), .hazStall(hazStall));
+		.reg2Data(dReg2Data), .clk(clk), .rst(rst), .stall(pipeStall), .doBranch(flushPipe), .hazStall(hazStall));
 
 	// Flop outputs
 
@@ -75,7 +75,7 @@ module proc (/*AUTOARG*/
 
 	dff clrPipeFF(.d(clearPipe), .q(flushPipe), .clk(clk), .rst(rst));
 	dff stalleFF(.d(pipeStall), .q(prevStall), .clk(clk), .rst(rst));
-
+	dff regwF(.d(regWrtEn), .q(prevRegWrt), .clk(clk), .rst(rst));
 	// Forward logic
 
 	// outputs of decode that w
@@ -93,7 +93,7 @@ module proc (/*AUTOARG*/
 
 	
 
-	assign writeData = (mRegWrtSrc == 3'h0) ? memOut : (regWrtEn & prevJump) ? fwdData : (hazStall) ? savedData : regWriteData;
+	assign writeData = (mRegWrtSrc == 3'h0) ? memOut : (regWrtEn & prevJump) ? fwdData : ((regWrtEn & eInstr[15:11] == 5'h00)) ? savedData : regWriteData;
 
 
 
