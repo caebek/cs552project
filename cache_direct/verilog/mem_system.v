@@ -64,6 +64,7 @@ module mem_system(/*AUTOARG*/
 	wire hit, dirty, valid,  cacheErr, memStall, memErr, useData, flopHit;
 	wire [15:0] cacheOut, memOut, writeData;
 	wire [4:0] tagOut; 
+	wire [3:0] busy;
 
 	assign err = cacheErr | memErr | (|hasErr);
 	// assign CacheHit = hit;// & valid;
@@ -140,7 +141,7 @@ module mem_system(/*AUTOARG*/
 					// index = Addr[10:3];
 					// Tag_In = Addr[15:11];
 					// cacheOff = Addr[2:0];
-					needData = hit & valid;
+					// needData = hit & valid;
 					fwdHit = 1'h1;
 					comp = 1'h1;
 					// TODO maybe no valid
@@ -150,7 +151,7 @@ module mem_system(/*AUTOARG*/
 					// stall = 1'h1;
 					intHit = hit & valid;
 					// fwdHit = 1'h1;
-					DataOut = cacheOut & intHit;
+					DataOut = cacheOut;
 					// DataOut	 = done ? cacheOut : 16'h0;
 					// nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD : 
 					// 				(hit & valid & ~Rd & Wr) ? CHECK_WRT :
@@ -158,8 +159,8 @@ module mem_system(/*AUTOARG*/
 					// 				(~hit & valid & dirty) ? WB_1 :
 					// 				MEM_RD_1;
 					nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD : 
-									(hit & valid & ~Rd & Wr) ? CHECK_WRT :
-									(hit & valid & ~Rd & ~Wr) ? WAIT_REQ :
+									(hit & valid & ~Rd & Wr) ? CHECK_WRT : 
+									(hit & valid & ~Rd & ~Wr) ? WAIT_REQ : 
 									(hit & valid & Rd & Wr) ? ERR :  
 									(~hit & valid & dirty) ? WB_1 :
 									MEM_RD_1;

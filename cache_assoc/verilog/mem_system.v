@@ -76,6 +76,7 @@ module mem_system(/*AUTOARG*/
 	wire iHit, dHit, iDirty, dDirty,  iValid, dValid,  iCacheErr, dCacheErr, memStall, memErr, useData, intWay, way, hit, dirty, valid, victim, wasRdWrt, flopHit;
 	wire [15:0] iCacheOut, dCacheOut, memOut, writeData;
 	wire [4:0] iTagOut, dTagOut; 
+	wire [3:0] busy;
 
 	assign err = iCacheErr | dCacheErr | memErr | (|hasErr);
 	// assign CacheHit = hit;// & valid;
@@ -153,7 +154,7 @@ module mem_system(/*AUTOARG*/
 					(~dValid) ? 1'h1 : // just d invalid
 					intWay; // both valid, so "randomly" pick
 
-					
+
 	always@(*) begin
 		cacheOrMem = 2'b00; // 01 mem 10 cache, 11 err, 00 DataOut = 0 
 		hasErr = 1'h0;

@@ -1,6 +1,0 @@
-1 0 0 69 // wrt miss
-1 0 6 1 // wrt hit
-0 1 0 69 // rd hit
-1 0 8192 -1 // wrt miss, need writeback
-0 1 0 69 // miss 
-// wr rd addr val
