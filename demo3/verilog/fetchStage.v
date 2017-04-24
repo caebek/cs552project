@@ -62,6 +62,15 @@ module fetchStage(clk, rst, halt, doBranch, branchPc, nextPc, instr, stall, err,
 
 	// nextPc
 	assign nPc = (stall) ? curPc : pcIncr;
+	assign intNextPc = (~done) ? nextPc : nPc;
+
+	dffEn fPC[15:0](.d(intNextPc), .q(nextPc), .clk(clk), .rst(rst), .en(done));
+	dffEn fInst[15:0](.d(preInstr), .q(tempInstr), .clk(clk), .rst(rst), .en(done));
+	
+
+	assign instr = (doBranch) ? 16'h0800 : tempInstr; // prevents us from getting a halt while everything is resetting
+
+
 
 	// if stall pc we fetch is same as last cycle (usePc)
 	// else its either pcIncr or branchPc (depending on branch)
@@ -97,7 +106,7 @@ module fetchStage(clk, rst, halt, doBranch, branchPc, nextPc, instr, stall, err,
 	// if we are take a branch we need to clear the pipeline
 	// when doBranch = 1, preInstr needs to be instr at 
 	assign willBr = (~done) ? needBr | doBranch : doBranch;
-	assign intNextPc = (~done) ? nextPc : nPc;
+	
 
 	assign intBrPc	 = (doBranch) ? branchPc : 
 						(~done) ? brPc : 
@@ -107,10 +116,7 @@ module fetchStage(clk, rst, halt, doBranch, branchPc, nextPc, instr, stall, err,
 	
 
 	dff brF(.d(willBr), .q(needBr), .clk(clk), .rst(rst));
-	dffEn fPC[15:0](.d(intNextPc), .q(nextPc), .clk(clk), .rst(rst), .en(~stall));
-	dffEn fInst[15:0](.d(preInstr), .q(tempInstr), .clk(clk), .rst(rst), .en(~stall));
 	dff memStallF(.d(memStall), .q(stallOut), .clk(clk), .rst(rst));
-	assign instr = (doBranch) ? 16'h0800 : tempInstr; // prevents us from getting a halt while everything is resetting
 	// assign instr = (flushPipe) ? 16'h0800 : actInstr;
 	// assign instr = tempInstr;
    // assign haltEn = preInstr == 16'h0;

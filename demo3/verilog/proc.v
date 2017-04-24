@@ -40,7 +40,7 @@ module proc (/*AUTOARG*/
 
 	fetchStage fetch(.clk(clk), .rst(rst), .halt(halt & ~pipeStall), .doBranch(doBranch | jumpOut), 
 		.branchPc(jumpPc), .nextPc(fNextPc), .instr(fInstr), .stall(fStall), .err(fErr), .stallOut(iMemStall),
-		.flushPipe(flushPipe));
+		.flushPipe(flushPipe), .memStall(memStall));
 
 
 	decodeStage decode(.instrIn(fInstr), .instrOut(dInstr), .nextPcIn(fNextPc), .nextPcOut(dNextPc), 
