@@ -52,7 +52,7 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 		.regWrt(intRegWrt), .memWrt(intMemWrt), .memToReg(intMemToReg), .memEn(intMemEn), 
 		.jump(intJump), .invA(intInvA), .invB(intInvB), .aluSrc(intAluSrc), .err(intCtrlErr), 
 		.regDst(regDst), .regWrtSrc(intRegWrtSrc), .aluOp(intAluOp), .cin(intCin), 
-		.return(intReturn), .brType(intBrType), .stall(hazStall));
+		.return(intReturn), .brType(intBrType), .stall(hazStall | memStall));
 
 
 	// determine which reg to write to here but we need to pass
@@ -108,6 +108,6 @@ module decodeStage(instrIn, instrOut, nextPcIn, nextPcOut, err, regWrtData, regW
 
 	dff aluOpF[3:0] (.d(intAluOp), .q(aluOp), .clk(clk), .rst(ffRst));
 
-	assign ffRst = rst | doBranch | memStall;
+	assign ffRst = rst | doBranch;// | memStall;
 
 endmodule
