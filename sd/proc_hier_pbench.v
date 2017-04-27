@@ -158,15 +158,15 @@ module proc_hier_pbench();
    // Signal indicating a valid instruction read request to cache
    // Above assignment is a dummy example
    
-   // assign ICacheHit = DUT.p0.readData;
+   // assign ICacheHit = DUT.p0.fetch.iCacheHit;
    // Signal indicating a valid instruction cache hit
    // Above assignment is a dummy example
 
-   // assign DCacheReq = DUT.p0.readData;
+   // assign DCacheReq = MemRead | MemWrite;
    // Signal indicating a valid instruction data read or write request to cache
    // Above assignment is a dummy example
    //    
-   // assign DCacheHit = DUT.p0.readData;
+   // assign DCacheHit = DUT.p0.memory.dCacheHit;
    // Signal indicating a valid data cache hit
    // Above assignment is a dummy example
    

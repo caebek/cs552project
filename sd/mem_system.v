@@ -6,7 +6,7 @@ module mem_system(/*AUTOARG*/
    // Outputs
    DataOut, Done, Stall, CacheHit, err, 
    // Inputs
-   Addr, DataIn, Rd, Wr, createdump, clk, rst
+   Addr, DataIn, Rd, Wr, createdump, clk, rst, cancel
    );
    
    input [15:0] Addr;
@@ -15,7 +15,7 @@ module mem_system(/*AUTOARG*/
    input        Wr;
    input        createdump;
    input        clk;
-   input        rst;
+   input        rst, cancel;
    
    output reg [15:0] DataOut;
    output Done;
@@ -44,6 +44,11 @@ module mem_system(/*AUTOARG*/
 	localparam iCACHE_WRT = 5'hE;
 	localparam iWAIT_2 = 5'hF;
 
+	localparam WAIT_1 = 5'h10;
+	localparam WAIT_2 = 5'h11;
+	localparam WAIT_3 = 5'h12;
+	localparam WAIT_4 = 5'h13;
+
 	localparam dWB_1 = 5'h14;
 	localparam dWB_2 = 5'h15;
 	localparam dWB_3 = 5'h16;
@@ -64,7 +69,7 @@ module mem_system(/*AUTOARG*/
 	reg hasErr;
 
 
-	reg validIn, iComp, iCacheWrt, dComp, dCacheWrt, memRd, memWrt, done, stall, needData, intHit, fwdHit, useI, useD;
+	reg validIn, iComp, iCacheWrt, dComp, dCacheWrt, memRd, memWrt, done, stall, needData, intHit, fwdHit, useI, useD, updateAddr;
 	reg [1:0] cacheOrMem;
 	reg [2:0] cacheOff, memOff;
 	// reg [3:0] offset;
@@ -73,9 +78,10 @@ module mem_system(/*AUTOARG*/
 	reg [15:0] cacheIn, memIn, memAddr;
 
 
-	wire iHit, dHit, iDirty, dDirty,  iValid, dValid,  iCacheErr, dCacheErr, memStall, memErr, useData, intWay, way, hit, dirty, valid, victim, wasRdWrt, flopHit;
-	wire [15:0] iCacheOut, dCacheOut, memOut, writeData;
-	wire [4:0] iTagOut, dTagOut; 
+	wire iHit, dHit, iDirty, dDirty,  iValid, dValid,  iCacheErr, dCacheErr, memStall, memErr, useData, intWay, way, hit, 
+	dirty, valid, victim, wasRdWrt, flopHit, hitAndValid;
+	wire [15:0] iCacheOut, dCacheOut, memOut, writeData, useAddr;
+	wire [4:0] iTagOut, dTagOut, nState; 
 	wire [3:0] busy;
 
 	assign err = (iCacheErr & (Rd | Wr)) | (dCacheErr  & (Rd | Wr)) | memErr | (|hasErr);
@@ -144,16 +150,25 @@ module mem_system(/*AUTOARG*/
 
 	// your code here
 
+	assign nState = (cancel) ? WAIT_1 : nextState;
+
 
 	assign hit = iHit | dHit;
 	assign valid = iValid | dValid;
 	assign dirty = iDirty | dDirty;
+
+	assign hitAndValid = (iHit & iValid) | (dHit & dValid);
+
 
 	assign victim = (~iValid & ~dValid) ? 1'h0 : //both invalid
 					(~iValid) ? 1'h0 : // just i invalid
 					(~dValid) ? 1'h1 : // just d invalid
 					intWay; // both valid, so "randomly" pick
 
+	// dffEn addrF[15:0](.d(Addr), .q(useAddr), .clk(clk), .rst(rst), .en(updateAddr));
+	assign useAddr = (updateAddr) ? Addr : 
+					(rst) ? 1'h0 : 
+					useAddr;
 
 	always@(*) begin
 		cacheOrMem = 2'b00; // 01 mem 10 cache, 11 err, 00 DataOut = 0 
@@ -164,9 +179,9 @@ module mem_system(/*AUTOARG*/
 		dComp = 1'h0;
 		iCacheWrt = 1'h0;
 		dCacheWrt = 1'h0;
-		index = Addr[10:3];
-		tagIn = Addr[15:11];
-		cacheOff = Addr[2:0];
+		index = useAddr[10:3];
+		tagIn = useAddr[15:11];
+		cacheOff = useAddr[2:0];
 		DataOut = 16'h0;
 		cacheIn = 16'h0;
 		memRd = 1'h0;
@@ -177,26 +192,42 @@ module mem_system(/*AUTOARG*/
 		fwdHit = 1'h0;
 		useI = 1'h0;
 		useD = 1'h0;
+		updateAddr = 1'h0;
 
 		// CacheHit = 1'h0;
 		case(curState)
+			WAIT_1: begin
+				stall = 1'h1;
+				done = 1'h0;
+				nextState = WAIT_2;
+			end
+			WAIT_2: begin
+				stall = 1'h1;
+				done = 1'h0;
+				nextState = WAIT_3;
+			end
+			WAIT_3: begin
+				stall = 1'h1;
+				done = 1'h0;
+				nextState = WAIT_4;
+			end
+			WAIT_4: begin
+				stall = 1'h1;
+				done = 1'h0;
+				nextState = WAIT_REQ;
+			end
 			WAIT_REQ: begin
 				nextState = {Wr, Rd};
 				needData = 1'h0;
-
+				stall = Rd | Wr;
+				updateAddr = Rd | Wr;
 			end
 			CHECK_RD: begin
-					// index = Addr[10:3];
-					// Tag_In = Addr[15:11];
-					// cacheOff = Addr[2:0];
-					// needData = hit & valid;//(iHit & iValid) | (dHit & dValid);
+					updateAddr = 1'h1;
 					iComp = 1'h1;
 					dComp = 1'h1;
-					done = hit & valid;
-					stall	= ~(hit & valid);
-					// TODO maybe no valid
-					// done = 1'h0;
-					// stall = 1'h1;
+					done = hitAndValid;
+					stall	= ~hitAndValid;
 					useI = iHit & iValid;
 					useD = dHit & dValid;
 					DataOut = (useI) ? iCacheOut :
@@ -204,69 +235,32 @@ module mem_system(/*AUTOARG*/
 								16'h0;
 					
 					fwdHit = 1'h1;
-					intHit = hit & valid;//(iHit & iValid) | (dHit & dValid);
-					// DataOut	 = done ? (iHit & iValid) ? iCacheOut : dCacheOut : 16'h0;
-					// nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD : 
-					// 				(hit & valid & ~Rd & Wr) ? CHECK_WRT :
-					// 				(hit & valid & ~Rd & ~Wr) ? WAIT_REQ : 
-					// 				(~hit & valid & dirty) ? WB_1 :
-					// 				MEM_RD_1;
 
+					intHit = hitAndValid;//(iHit & iValid) | (dHit & dValid);
 
-					// nextState = (hit & valid) ? WAIT_2 : 
-					// 				(~hit & valid & dirty) ? WB_1 :
-					// 				MEM_RD_1;
-
-
-
-					nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD :
-								(hit & valid & ~Rd & Wr) ? CHECK_WRT :
-								(hit & valid & ~Rd & ~Wr) ? WAIT_REQ :
-								(hit & valid & Rd & Wr) ? ERR :
+					nextState = (hitAndValid & Rd & ~Wr) ? CHECK_RD :
+								(hitAndValid & ~Rd & Wr) ? CHECK_WRT :
+								(hitAndValid & ~Rd & ~Wr) ? WAIT_REQ :
+								(hitAndValid & Rd & Wr) ? ERR :
 								(victim) ? 
 									(dValid & dDirty) ? dWB_1 : dMEM_RD_1: 
 									(iValid & iDirty) ? iWB_1 : iMEM_RD_1 ;
 
 
-					// nextState = (iHit & iValid) ? iWAIT_2 :
-					// 			(dHit & dValid) ? dWAIT_2 :
-					// 			(victim) ? 
-					// 				(dValid & dDirty) ? dWB_1 : dMEM_RD_1: 
-					// 				(iValid & iDirty) ? iWB_1 : iMEM_RD_1 ;
-
-								// (~iHit & iValid & iDirty & (~dValid | dValid & ~dDirty)) ? dMEM_RD_1 : 
-								// (~dHit & dValid & dDirty) ? dWB_1 :
-								// (victim) ? dMEM_RD_1 : iMEM_RD_1; 
-
 			end
 			CHECK_WRT: begin
+				updateAddr = 1'h1;
 				iComp = 1'h1;
 				dComp = 1'h1;
 				cacheIn	= writeData;
 				iCacheWrt = 1'h1;
 				dCacheWrt = 1'h1;
-				// needData = 1'h0;
-				// TODO Maybe not here
-				needData = hit & valid;//iHit & iValid; 
+				needData = hitAndValid;//iHit & iValid; 
 
-				//TODO maybe no valid
-				intHit = hit & valid;//(iHit & iValid) | (dHit & dValid);
+				intHit = hitAndValid;//(iHit & iValid) | (dHit & dValid);
 				done = 1'h0;
 				stall = 1'h1;
-				// nextState = (hit & valid & Rd & ~Wr) ? CHECK_RD : 
-				// 				(hit & valid & ~Rd & Wr) ? CHECK_WRT :
-				// 				(hit & valid & ~Rd & ~Wr) ? WAIT_REQ : 
-				// 				(~hit & valid & dirty) ? WB_1 :
-				// 				MEM_RD_1;
-
-				// nextState = (hit & valid) ? WAIT_2 :
-				// 				(~hit & valid & dirty) ? WB_1 : 
-				// 				MEM_RD_1;
-				// nextState = (iHit & iValid) ? iWAIT_2 :
-				// 			(dHit & dValid) ? dWAIT_2 :
-				// 			(~iHit & iValid & iDirty) ? iWB_1 : 
-				// 			(~dHit & dValid & dDirty) ? dWB_1 :
-				// 			(victim) ? dMEM_RD_1 : iMEM_RD_1;
+				
 				nextState = (iHit & iValid) ? iWAIT_2 :
 							(dHit & dValid) ? dWAIT_2 :
 							(victim) ? 
@@ -667,7 +661,7 @@ module mem_system(/*AUTOARG*/
 
 	dff flop(.d(needData), .q(useData), .clk(clk), .rst(rst));
 	dff hitFlop(.d(intHit), .q(flopHit), .clk(clk), .rst(rst | fwdHit));
-	dff stateFlop [4:0](.d(nextState), .q(curState), .clk(clk), .rst(rst));
+	dff stateFlop [4:0](.d(nState), .q(curState), .clk(clk), .rst(rst));
 	dff dataFlop [15:0](.d(DataIn), .q(writeData), .clk(clk), .rst(rst));
 
 

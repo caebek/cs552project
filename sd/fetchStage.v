@@ -16,8 +16,8 @@ module fetchStage(clk, rst, halt, doBranch, branchPc, nextPc, instr, hazStall, i
     // memory2c iMem(.data_out(preInstr), .addr(usePc), .enable(1'h1), .wr(1'h0), .createdump(1'h0), 
     // .clk(clk), .rst(rst));
 
-    stallmem iMem(.DataOut(preInstr), .Done(done), .Stall(iMemStall), .CacheHit(iCacheHit), .err(memErr), 
-        .Addr(pcToIncr), .Rd(1'h1), .Wr(1'h0), .createdump(halt), .clk(clk), .rst(rst), .DataIn(16'h0));
+    mem_system iMem(.DataOut(preInstr), .Done(done), .Stall(iMemStall), .CacheHit(iCacheHit), .err(memErr), 
+        .Addr(pcToIncr), .Rd(1'h1), .Wr(1'h0), .createdump(halt), .clk(clk), .rst(rst), .DataIn(16'h0), .cancel(doBranch & ~needBr));
 
 
     // memory2c_align iMem(.data_out(preInstr), .addr(pcToIncr), .enable(1'h1), .wr(1'h0), .createdump(halt), 
