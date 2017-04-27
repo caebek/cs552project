@@ -71,7 +71,8 @@ module executeStage(instr, nextPc, instrOut, nextPcOut, err, halt, sign, pcOffSe
 	dff wrtRegF[2:0] (.d(writeReg), .q(writeRegOut), .clk(clk), .rst(ffRst));
 
 	dff reg1F[15:0](.d(reg1Data), .q(reg1DataOut), .clk(clk), .rst(ffRst));
-	dff reg2F[15:0](.d(reg2Data), .q(reg2DataOut), .clk(clk), .rst(ffRst));
+	// dff reg2F[15:0](.d(reg2Data), .q(reg2DataOut), .clk(clk), .rst(ffRst));
+	dffEn reg2F[15:0](.d(reg2Data), .q(reg2DataOut), .clk(clk), .rst(ffRst), .en(ffEn));
 	// dff instrF[15:0](.d(instr), .q(instrOut), .clk(clk), .rst(rst));
 	dff nextPcF[15:0](.d(nextPc), .q(nextPcOut), .clk(clk), .rst(ffRst));
 	dff jmpPcF[15:0](.d(intJumpPc), .q(jumpPc), .clk(clk), .rst(ffRst));
